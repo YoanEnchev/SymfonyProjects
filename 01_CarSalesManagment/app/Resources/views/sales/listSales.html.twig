@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <table>
+        <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Travelled Distance</th>
+            <th>Price with Discount</th>
+            <th>Price without Discount</th>
+            <th>Discount</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sale in sales %}
+            <tr>
+                <td>{{ sale.name }}</td>
+                <td>{{ sale.make }}</td>
+                <td>{{ sale.model }}</td>
+                <td>{{ sale.travelled_distance }}</td>
+                <td>{{ sale.price_discount }}</td>
+                <td>{{ sale.price_no_discount }}</td>
+                <td>{{ sale.discount }} %</td>
+                <td>
+                    <a href="{{ path('singleSaleDetails', {'id': sale.id})}}">View Details</a>
+                    <a href="{{ path('listParts', {'id': sale.car_id})}}">View Parts</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

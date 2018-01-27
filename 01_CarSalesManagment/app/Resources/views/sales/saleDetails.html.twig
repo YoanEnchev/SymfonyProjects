@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <table>
+        <tbody>
+        <tr>
+            <td>Customer Name</td>
+            <td>{{ sale.name }}</td>
+        </tr>
+        <tr>
+            <td>Model</td>
+            <td>{{ sale.model }}</td>
+        </tr>
+        <tr>
+            <td>Make</td>
+            <td>{{ sale.make }}</td>
+        </tr>
+        <tr>
+            <td>Travelled Distance</td>
+            <td>{{ sale.travelled_distance }}</td>
+        </tr>
+        <tr>
+            <td>Discount Price</td>
+            <td>{{ sale.price_discount }}</td>
+        </tr>
+        <tr>
+            <td>Original Price</td>
+            <td>{{ sale.price_no_discount }}</td>
+        </tr>
+        <tr>
+            <td>Discount</td>
+            <td>{{ sale.discount }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
