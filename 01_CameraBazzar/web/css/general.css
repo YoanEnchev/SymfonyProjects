@@ -1,0 +1,13 @@
+form {
+    width: 400px;
+    margin: 20px auto;
+}
+
+button[type="submit"] {
+    margin-top:10px;
+}
+
+img.viewDetails {
+    width: 300px;
+    height: 300px;
+}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<table class="table">
+    <tbody>
+        <tr class="table-active">
+            <td>Username</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr class="table-info">
+            <td>Email</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr class="table-success">
+            <td>Phone</td>
+            <td>{{ user.phone | default("Not specified") }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

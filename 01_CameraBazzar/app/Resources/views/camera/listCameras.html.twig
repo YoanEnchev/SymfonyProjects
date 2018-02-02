@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<section id="viewAds" class="centerAllAds">
+    {%  for camera in cameras %}
+    <div class="ads">
+        <div class="advert centerInsideAd">
+            <h3 class="makeAndModel">{{ camera.make }} {{ camera.model }}</h3>
+            <img src="{{ camera.imageUrl }}">
+            <div class="inStock">
+                In Stock
+            </div>
+            <h3 class="price">{{ camera.price }} $</h3>
+            <div class="actions">
+                <a class="viewDetails" href="{{ path('viewDetails', {'id': camera.id}) }}">View Details</a>
+                <a class="buyNow">Buy Now</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
