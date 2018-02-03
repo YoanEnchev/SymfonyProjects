@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td scope="row">Make</td>
+                <td>{{ camera.make }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Model</td>
+                <td>{{ camera.model }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Price</td>
+                <td>{{ camera.price }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Quantity</td>
+                <td>{{ camera.quantity }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Min Shutter Speed</td>
+                <td>{{ camera.minShutterSpeed }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Max Shutter Speed</td>
+                <td>{{ camera.maxShutterSpeed }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Min ISO</td>
+                <td>{{ camera.minIso }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Max ISO</td>
+                <td>{{ camera.maxIso }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Full Frame</td>
+                <td>{{ camera.isFullFrame }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Resolution</td>
+                <td>{{ camera.videoResolution }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Light Metering</td>
+                <td>{{ camera.lightMetering }}</td>
+            </tr>
+            <tr>
+                <td scope="row">Description</td>
+                <td>{{ camera.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <img class="viewDetails" src="{{ camera.imageUrl }}" >
+{% endblock %}
+

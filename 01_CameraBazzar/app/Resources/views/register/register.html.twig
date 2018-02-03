@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>User creation</h1>
+
+    <form name="app_bundle_user_type" method="post">
+        <div>
+            <label for="app_bundle_user_type_username" class="required">Username</label>
+            <input type="text" class="form-control" id="app_bundle_user_type_username" name="app_bundle_user_type[username]" required="required">
+        </div>
+        <div>
+            <label for="app_bundle_user_type_email" class="required">Email</label>
+            <input type="email" class="form-control" id="app_bundle_user_type_email" name="app_bundle_user_type[email]" required="required">
+        </div>
+        <div>
+            <label for="app_bundle_user_type_plainPassword_first" class="required">Password</label>
+            <input type="password" class="form-control" id="app_bundle_user_type_plainPassword_first" name="app_bundle_user_type[plainPassword][first]" required="required">
+        </div>
+        <div>
+            <label for="app_bundle_user_type_plainPassword_second" class="required">Repeat Password</label>
+            <input type="password" class="form-control" id="app_bundle_user_type_plainPassword_second" name="app_bundle_user_type[plainPassword][second]" required="required">
+        </div>
+        <div>
+            <label for="app_bundle_user_type_phone" class="required">Phone</label>
+            <input type="text" class="form-control" id="app_bundle_user_type_phone" name="app_bundle_user_type[phone]" required="required">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register!</button>
+        {{ form_row(form._token) }}
+        </form>
+{% endblock %}
