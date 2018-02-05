@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+    Sell Camera
+{% endblock %}
 {% block main %}
     <form name="camera" method="post">
         <div class="form-group">
@@ -17,12 +19,6 @@
                 <label for="camera_price" class="required">Price:</label>
                 <input type="text" id="camera_price" class="form-control"
                        name="camera[price]" required="required">
-            </div>
-            <div>
-                <label for="camera_quantity" class="required">Quantity:</label>
-                <input type="text" id="camera_quantity" class="form-control"
-                       name="camera[quantity]"
-                       required="required">
             </div>
             <div>
                 <label for="camera_minShutterSpeed" class="required">Min Shutter Speed:</label>

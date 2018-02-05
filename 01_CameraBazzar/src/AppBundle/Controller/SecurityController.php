@@ -42,11 +42,13 @@ class SecurityController extends Controller
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function regiserAction(Request $request, UserPasswordEncoderInterface $encoder)
+    public function regiserAction(Request $request,  AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         if($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($encoder->encodePassword($user, $user->getPlainPassword()));
@@ -64,7 +66,8 @@ class SecurityController extends Controller
         }
 
         return $this->render('register/register.html.twig',array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' =>  $error,
         ));
     }
 }

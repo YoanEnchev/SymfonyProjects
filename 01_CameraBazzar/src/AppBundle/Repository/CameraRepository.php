@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class CameraRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function filterByMake($make)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.make = :make')
+            ->setParameter('make', $make)
+            ->getQuery();
+
+        return $query->execute();
+    }
 }

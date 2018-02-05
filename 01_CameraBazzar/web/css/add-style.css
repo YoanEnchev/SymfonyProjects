@@ -1,11 +1,18 @@
-.advert {
+.advert, .advert-small {
     border: 2px solid black;
-    width: 250px;
-    height: 400px;
+    width: 265px;
     transition: all .2s ease-in-out;
 }
 
-.advert img {
+.advert {
+    height: 400px;
+}
+
+.advert-small {
+    height: 350px;
+}
+
+.advert img, .advert-small img {
     width: 180px;
     height: 180px;
 }
@@ -20,9 +27,9 @@
     text-align: center;
 }
 
-.viewDetails, .buyNow, .inStock {
+.viewDetails, .contactSeller, .inStock, .outOfStock, .editCamera, .deleteCamera {
     text-align: center;
-    width: 100px;
+    width: 110px;
     height: 30px;
     border: 1px solid white;
     border-radius: 5px;
@@ -34,8 +41,12 @@
     background: rgba(0, 0, 200, 0.9);
 }
 
-.buyNow {
+.contactSeller, .editCamera {
     background: rgba(176, 0, 255, 0.9)
+}
+
+.deleteCamera {
+    background: rgba(150, 0, 0, 0.9);
 }
 
 .centerInsideAd {
@@ -54,11 +65,20 @@
     flex-wrap: wrap;
 }
 
+.centerInsideAd * {
+    margin: 7px auto;
+}
+
+.actions * {
+    margin: 7px 7px;
+}
+
 .actions {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .inStock {
@@ -66,18 +86,22 @@
     margin: 10px;
 }
 
+.outOfStock {
+    background: rgba(255, 0, 0, 0.9);
+    margin: 10px;
+}
 
-.advert:hover {
+.deleteCamera {
+    margin-top: 10px;
+}
+
+.advert:hover, .advert-small:hover {
     position: relative;
     transform: scale(1.1, 1.1);
 }
 
-.viewDetails:hover, .buyNow:hover {
+.viewDetails:hover, .contactSeller:hover, .editCamera:hover, .deleteCamera:hover {
     background: red;
     cursor: pointer;
 }
 
-
-.grow:hover {
-    transform: scale(1.1);
-}

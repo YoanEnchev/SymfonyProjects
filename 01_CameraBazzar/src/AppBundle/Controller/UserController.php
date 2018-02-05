@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,7 +16,11 @@ class UserController extends Controller
     public function viewProfile()
     {
         $user = $this->getUser();
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $userSells = $repo->getUserSells($user->getUsername());
+
         return $this->render('user/profile.html.twig',
-            array('user' => $user));
+            array('user' => $user,
+                'userSells' => $userSells));
     }
 }

@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"email", "username"}, message="It's already taken.")
+ * @UniqueEntity(fields={"email", "username"}, message="is already taken.")
  */
 class User implements UserInterface, Serializable
 {
@@ -74,6 +74,11 @@ class User implements UserInterface, Serializable
      *     )
      */
     private $roles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Camera", mappedBy="user")
+     */
+    private $cameras;
 
     public function __construct()
     {

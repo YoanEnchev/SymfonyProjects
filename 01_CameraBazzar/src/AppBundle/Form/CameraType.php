@@ -20,7 +20,6 @@ class CameraType extends AbstractType
             ->add('make', TextType::class)
             ->add('model', TextType::class)
             ->add('price', NumberType ::class)
-            ->add('quantity', NumberType::class)
             ->add('maxShutterSpeed', NumberType::class)
             ->add('minShutterSpeed', NumberType::class)
             ->add('minIso', NumberType::class)

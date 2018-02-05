@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+    Login
+{% endblock %}
 {% block main %}
     {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div></div>
+        <div class="alert alert-danger" role="alert">
+            <strong>Error!</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
     {% endif %}
 
 

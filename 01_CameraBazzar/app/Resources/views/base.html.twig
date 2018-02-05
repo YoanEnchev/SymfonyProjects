@@ -17,7 +17,7 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Cameras</a>
+        <a class="navbar-brand" href="{{ path('homepage') }}">Camera Bazaar</a>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 {% if app.user %}
@@ -46,6 +46,11 @@
     </nav>
 {% endblock %}
 {% block main %}{% endblock %}
+{% block footer %}
+    <footer class="footer navbar-fixed-bottom bg-inverse">
+        Camera Bazaar
+    </footer>
+{% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>

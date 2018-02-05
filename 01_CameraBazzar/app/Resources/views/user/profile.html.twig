@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+    Profile
+{% endblock %}
 {% block main %}
 <table class="table">
     <tbody>
@@ -17,4 +19,23 @@
         </tr>
     </tbody>
 </table>
+<h1>Your sells:</h1>
+    <section id="viewAds" class="centerAllAds">
+        {% for camera in userSells %}
+            <div class="ads">
+                <div class="advert centerInsideAd">
+                    <h3 class="makeAndModel">{{ camera.make }} {{ camera.model }}</h3>
+                    <img src="{{ camera.imageUrl }}">
+                    <h3 class="price">{{ camera.price }} $</h3>
+                    <div class="actions">
+                        <a class="viewDetails" href="{{ path('viewDetails', {'id': camera.id}) }}">View Details</a>
+                            <a class="editCamera" href="{{ path('editCamera', {'id': camera.id}) }}">Edit</a>
+                        <a class="deleteCamera" href="{{ path('deleteCamera', {'id': camera.id}) }}">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <h1>No cameras are published for sell.</h1>
+        {% endfor %}
+    </section>
 {% endblock %}

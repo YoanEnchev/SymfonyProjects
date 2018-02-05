@@ -10,5 +10,16 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getUserSells($username)
+    {
+        $sql = "SELECT cameras.id, make, model, price, quantity, image_url AS imageUrl FROM cameras
+        INNER JOIN users on users.id = cameras.user_id
+        WHERE username = :username";
 
+        $params = array(
+            'username' => $username,
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
 }
