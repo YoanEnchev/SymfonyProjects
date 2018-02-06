@@ -1,5 +1,5 @@
 form {
-    width: 400px;
+    width: 425px;
     margin: 20px auto;
 }
 
@@ -48,7 +48,7 @@ html {
     min-height: 110%;
 }
 
-#searchByMake {
+#make_filter_make {
     display: inline-block;
     width: 325px;
     position: relative;

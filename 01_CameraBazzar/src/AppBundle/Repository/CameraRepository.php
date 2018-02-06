@@ -13,7 +13,7 @@ class CameraRepository extends \Doctrine\ORM\EntityRepository
     public function filterByMake($make)
     {
         $query = $this->createQueryBuilder('c')
-            ->where('c.make = :make')
+            ->where('upper(c.make) = upper(:make)')
             ->setParameter('make', $make)
             ->getQuery();
 

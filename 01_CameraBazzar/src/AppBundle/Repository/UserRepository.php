@@ -22,4 +22,16 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
+
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM users
+        WHERE id = :id;";
+
+        $params = array(
+            'id' => $id,
+        );
+
+        $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }
