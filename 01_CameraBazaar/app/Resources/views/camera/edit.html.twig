@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Edit Camera
+{% endblock %}
+{% block main %}
+<form name="camera" method="post" action="{{ path('editCamera', {'id': camera.id}) }}">
+    <div class="form-group">
+        <div>
+            <label for="camera_make" class="required">Make:</label>
+            <input type="text" id="camera_make" class="form-control"
+                   name="camera[make]" required="required" value="{{ camera.make }}">
+        </div>
+        <div>
+            <label for="camera_model" class="required">Model:</label>
+            <input type="text" id="camera_model" class="form-control"
+                   name="camera[model]" required="required" value="{{ camera.model }}">
+        </div>
+        <div>
+            <label for="camera_price" class="required">Price:</label>
+            <input type="text" id="camera_price" class="form-control"
+                   name="camera[price]" required="required" value="{{ camera.price }}">
+        </div>
+        <div>
+            <label for="camera_minShutterSpeed" class="required">Min Shutter Speed:</label>
+            <input type="text" id="camera_minShutterSpeed" class="form-control"
+                   name="camera[minShutterSpeed]" required="required" value="{{ camera.minShutterSpeed }}">
+        </div>
+        <div>
+            <label for="camera_maxShutterSpeed" class="required">Max Shutter Speed:</label>
+            <input type="text" class="form-control"
+                   id="camera_maxShutterSpeed"
+                   name="camera[maxShutterSpeed]"
+                   required="required" value="{{ camera.maxShutterSpeed }}">
+        </div>
+        <div>
+            <label for="camera_minIso" class="required">Min ISO:</label>
+            <input type="text" id="camera_minIso" class="form-control"
+                   name="camera[minIso]"
+                   required="required"
+                   value="{{ camera.minIso }}">
+        </div>
+        <div>
+            <label for="camera_maxIso" class="required">Max ISO:</label>
+            <input type="text" id="camera_maxIso" class="form-control"
+                   name="camera[maxIso]"
+                   required="required"
+                   value="{{ camera.maxIso }}"></div>
+        <div>
+            <label for="camera_isFullFrame" class="required">Full Frame:</label>
+            <select id="camera_isFullFrame" class="form-control"
+                    name="camera[isFullFrame]">
+                {% if camera.isFullFrame %}
+                    <option value="1" selected>yes</option>
+                    <option value="0">no</option>
+                {% else %}
+                    <option value="1">yes</option>
+                    <option value="0" selected>no</option>
+                {% endif %}
+            </select>
+        </div>
+        <div>
+            <label for="camera_videoResolution" class="required">Video resolution:</label>
+            <input type="text" class="form-control"
+                   id="camera_videoResolution"
+                   name="camera[videoResolution]"
+                   required="required"
+                   value="{{ camera.videoResolution }}">
+        </div>
+        <div><label for="camera_description" class="required">Description:</label>
+            <input type="text" class="form-control"
+                   id="camera_description"
+                   name="camera[description]"
+                   required="required"
+                   value="{{ camera.description }}">
+        </div>
+        <div>
+            <label for="camera_imageURL" class="required">Image URL:</label>
+            <input type="text" id="camera_imageURL" class="form-control"
+                   name="camera[imageURL]"
+                   required="required"
+                   value="{{ camera.imageUrl }}"></div>
+        <div>
+            <label for="camera_lightMetering" class="required">Light metering:</label>
+            <input type="text" class="form-control"
+                   id="camera_lightMetering"
+                   name="camera[lightMetering]"
+                   required="required"
+                   value="{{ camera.lightMetering }}">
+        </div>
+        {{ form_row(form._token) }}
+        <div>
+            <button type="submit" id="camera_submit" name="camera[submit]"
+                    class="btn btn-primary mb-2">Edit
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
