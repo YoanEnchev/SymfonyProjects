@@ -45,13 +45,6 @@ class Camera
     /**
      * @var int
      *
-     * @ORM\Column(name="quantity", type="integer")
-     */
-    private $quantity;
-
-    /**
-     * @var int
-     *
      * @ORM\Column(name="min_shutter_speed", type="smallint")
      */
     private $minShutterSpeed;
@@ -200,29 +193,6 @@ class Camera
         return $this->price;
     }
 
-    /**
-     * Set quantity
-     *
-     * @param integer $quantity
-     *
-     * @return Camera
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    /**
-     * Get quantity
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
 
     /**
      * Set minShutterSpeed

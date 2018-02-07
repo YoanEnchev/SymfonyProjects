@@ -35,7 +35,11 @@
         </tr>
         <tr class="table-info">
             <td>Full Frame</td>
-            <td>{{ camera.isFullFrame }}</td>
+            {% if camera.isFullFrame %}
+                <td>yes</td>
+            {% else %}
+                <td>no</td>
+            {% endif %}
         </tr>
         <tr class="table-warning">
             <td>Resolution</td>
@@ -61,24 +65,26 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary mb-2" href="{{ path('getSellerContacts', {'id': camera.id}) }}" id="contactInDetails">Contact Seller</a>
-<h1>Seller Cameras:</h1>
-<section id="viewAds" class="centerAllAds">
-    {% for camera in sellerCameras %}
-        <div class="ads">
-            <div class="advert-small centerInsideAd">
-                <h3 class="makeAndModel">{{ camera.make }} {{ camera.model }}</h3>
-                <img src="{{ camera.imageUrl }}">
-                <h3 class="price">{{ camera.price }} $</h3>
-                <div class="actions">
-                    <a class="viewDetails" href="{{ path('viewDetails', {'id': camera.id}) }}">View Details</a>
-                    <a class="contactSeller" href="{{ path('getSellerContacts', {'id': camera.id}) }}">Contact Seller</a>
+    <a class="btn btn-primary mb-2" href="{{ path('getSellerContacts', {'id': camera.id}) }}" id="contactInDetails">Contact
+        Seller</a>
+    <h1>Seller Cameras:</h1>
+    <section id="viewAds" class="centerAllAds">
+        {% for camera in sellerCameras %}
+            <div class="ads">
+                <div class="advert-small centerInsideAd">
+                    <h3 class="makeAndModel">{{ camera.make }} {{ camera.model }}</h3>
+                    <img src="{{ camera.imageUrl }}">
+                    <h3 class="price">{{ camera.price }} $</h3>
+                    <div class="actions">
+                        <a class="viewDetails" href="{{ path('viewDetails', {'id': camera.id}) }}">View Details</a>
+                        <a class="contactSeller" href="{{ path('getSellerContacts', {'id': camera.id}) }}">Contact
+                            Seller</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <h1>No cameras are published for sell.</h1>
-    {% endfor %}
-</section>
+        {% else %}
+            <h1>No cameras are published for sell.</h1>
+        {% endfor %}
+    </section>
 {% endblock %}
 

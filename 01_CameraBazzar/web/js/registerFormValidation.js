@@ -15,7 +15,7 @@
 
     const passwordRegex_length = /^.{6,30}$/;
     const passwordRegex_symbols = /^(.*[A-Z].*[a-z].*[0-9].*)$/;
-    const passwordRegex_complete = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,30}$/;
+    const passwordRegex_complete = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
 
     const phoneRegex = /.*/;
 

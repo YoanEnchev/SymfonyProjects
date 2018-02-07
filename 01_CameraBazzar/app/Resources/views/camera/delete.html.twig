@@ -49,8 +49,13 @@
                 <label for="camera_isFullFrame" class="required">Full Frame:</label>
                 <select id="camera_isFullFrame" class="form-control" disabled
                         name="camera[isFullFrame]">
-                    <option value="1">yes</option>
-                    <option value="0">no</option>
+                    {% if camera.isFullFrame %}
+                        <option value="1" selected>yes</option>
+                        <option value="0">no</option>
+                    {% else %}
+                        <option value="1">yes</option>
+                        <option value="0" selected>no</option>
+                    {% endif %}
                 </select>
             </div>
             <div>

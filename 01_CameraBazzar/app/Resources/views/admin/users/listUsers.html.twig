@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <form name="username_filter" method="post">
+                <input type="text" id="username_filter_username" name="username_filter[username]" required="required"
+                       placeholder="Search username">
+                <button type="submit" id="username_filter_submit" name="username_filter[submit]"
+                        class="btn btn-primary mb-2">Submit</button>
+                {{ form_row(form._token) }}
+    </form>
 
     <table class="table table-striped">
         <thead>
