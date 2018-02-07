@@ -1,5 +1,5 @@
 form {
-    width: 400px;
+    width: 425px;
     margin: 20px auto;
 }
 
@@ -13,10 +13,44 @@ img.viewDetails {
 }
 
 a:hover {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 footer {
     color: white;
     text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+label.required:after {
+    content:" *";
+    color:red;
+}
+
+.errorMsg {
+    font-size: 14px;
+    color: red;
+}
+
+img.viewDetails {
+    background-color: white;
+    width: 200px;
+    height:200px;
+}
+
+#contactInDetails {
+    margin-left: 10px;
+}
+
+html {
+    min-height: 110%;
+}
+
+#make_filter_make {
+    display: inline-block;
+    width: 325px;
+    position: relative;
+    bottom: -2px;
 }

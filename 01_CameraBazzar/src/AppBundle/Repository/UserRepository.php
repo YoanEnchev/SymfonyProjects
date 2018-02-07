@@ -12,7 +12,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getUserSells($username)
     {
-        $sql = "SELECT cameras.id, make, model, price, quantity, image_url FROM cameras
+        $sql = "SELECT cameras.id, make, model, price, image_url AS imageUrl FROM cameras
         INNER JOIN users on users.id = cameras.user_id
         WHERE username = :username";
 
@@ -21,5 +21,17 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         );
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM users
+        WHERE id = :id;";
+
+        $params = array(
+            'id' => $id,
+        );
+
+        $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
     }
 }

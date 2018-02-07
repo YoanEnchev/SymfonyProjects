@@ -32,3 +32,7 @@ security:
     encoders:
         AppBundle\Entity\User:
             algorithm: bcrypt
+    access_control:
+        - { path: ^/cameras, roles: ROLE_USER }
+        - { path: ^/users, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }

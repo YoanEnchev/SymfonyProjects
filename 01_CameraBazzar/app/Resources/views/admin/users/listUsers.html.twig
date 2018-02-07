@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <form name="username_filter" method="post">
+                <input type="text" id="username_filter_username" name="username_filter[username]" required="required"
+                       placeholder="Search username">
+                <button type="submit" id="username_filter_submit" name="username_filter[submit]"
+                        class="btn btn-primary mb-2">Submit</button>
+                {{ form_row(form._token) }}
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td scope="row">{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone|default('Not specified') }}</td>
+                <td>
+                    <a href="{{ path('banUser', {'id':  user.id }) }}">Ban</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

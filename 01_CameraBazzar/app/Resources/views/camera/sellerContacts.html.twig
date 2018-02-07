@@ -1,36 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    Profile
+    Contact Seller
 {% endblock %}
 {% block main %}
-<table class="table">
-    <tbody>
+    <table class="table">
+        <tbody>
         <tr class="table-active">
             <td>Username</td>
-            <td>{{ user.username }}</td>
+            <td>{{ seller.username }}</td>
         </tr>
         <tr class="table-info">
             <td>Email</td>
-            <td>{{ user.email }}</td>
+            <td>{{ seller.email }}</td>
         </tr>
         <tr class="table-success">
             <td>Phone</td>
-            <td>{{ user.phone | default("Not specified") }}</td>
+            <td>{{ seller.phone | default("Not specified") }}</td>
         </tr>
-    </tbody>
-</table>
-<h1>Your sells:</h1>
+        </tbody>
+    </table>
+
+    <h1>Seller Cameras:</h1>
     <section id="viewAds" class="centerAllAds">
-        {% for camera in userSells %}
+        {% for camera in sellerCameras %}
             <div class="ads">
-                <div class="advert centerInsideAd">
+                <div class="advert-small centerInsideAd">
                     <h3 class="makeAndModel">{{ camera.make }} {{ camera.model }}</h3>
                     <img src="{{ camera.imageUrl }}">
                     <h3 class="price">{{ camera.price }} $</h3>
                     <div class="actions">
                         <a class="viewDetails" href="{{ path('viewDetails', {'id': camera.id}) }}">View Details</a>
-                            <a class="editCamera" href="{{ path('editCamera', {'id': camera.id}) }}">Edit</a>
-                        <a class="deleteCamera" href="{{ path('deleteCamera', {'id': camera.id}) }}">Delete</a>
+                        <a class="contactSeller" href="{{ path('getSellerContacts', {'id': camera.id}) }}">Contact Seller</a>
                     </div>
                 </div>
             </div>
@@ -39,3 +39,4 @@
         {% endfor %}
     </section>
 {% endblock %}
+

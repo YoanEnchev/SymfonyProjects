@@ -17,7 +17,7 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Cameras</a>
+        <a class="navbar-brand" href="{{ path('homepage') }}">Camera Bazaar</a>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 {% if app.user %}
@@ -33,6 +33,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('viewProfile') }}">View Profile<span class="sr-only">(current)</span></a>
                     </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('listUsers') }}">View Users<span class="sr-only">(current)</span></a>
+                    </li>
+                    {% endif %}
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('login') }}">Login</a>
@@ -47,7 +52,7 @@
 {% endblock %}
 {% block main %}{% endblock %}
 {% block footer %}
-    <footer class="bg-inverse">
+    <footer class="footer navbar-fixed-bottom bg-inverse">
         Camera Bazaar
     </footer>
 {% endblock %}

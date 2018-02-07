@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Camera;
+use AppBundle\Entity\User;
 use AppBundle\Form\CameraType;
+use AppBundle\Form\MakeFilter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +19,22 @@ class CameraController extends Controller
      */
     public function viewDetails(int $id)
     {
-        $repo = $this->getDoctrine()->getRepository(Camera::class);
-        $camera = $repo->find($id);
+        $cameraRepo = $this->getDoctrine()->getRepository(Camera::class);
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        $camera = $cameraRepo->find($id);
+
+        if($camera === null) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        $seller = $camera->getUser();
+
+        $sellerCameras = $userRepo->getUserSells($seller->getUsername());
 
         return $this->render('camera/details.html.twig',
-            array('camera' => $camera));
+            array('camera' => $camera,
+                'sellerCameras' => $sellerCameras));
     }
 
     /**
@@ -52,13 +65,26 @@ class CameraController extends Controller
     /**
      * @Route("/cameras/listCameras", name="listCameras")
      */
-    public function listCameras()
+    public function listCameras(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Camera::class);
         $cameras = $repo->findAll();
 
+        $camera_form = new Camera();
+        $form = $this->createForm(MakeFilter::class, $camera_form);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $cameras = $repo->findBy(array('make' => $camera_form->getMake()));
+
+            return $this->render('camera/listCameras.html.twig',
+                array('cameras' => $cameras,
+                    'form' => $form->createView()));
+        }
+
         return $this->render('camera/listCameras.html.twig',
-            array('cameras' => $cameras));
+            array('cameras' => $cameras,
+                'form' => $form->createView()));
     }
 
     /**
@@ -121,5 +147,29 @@ class CameraController extends Controller
         return $this->render('camera/delete.html.twig',
             array('camera' => $camera,
                 'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/cameras/{id}/sellerContacts", name="getSellerContacts")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function getSellerContacts($id)
+    {
+        $cameraRepo = $this->getDoctrine()->getRepository(Camera::class);
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        $camera = $cameraRepo->find($id);
+
+        if($camera === null) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        $seller = $camera->getUser();
+        $sellerCameras = $userRepo->getUserSells($seller->getUsername());
+
+        return $this->render('camera/sellerContacts.html.twig',
+           array('seller' => $seller,
+               'sellerCameras' => $sellerCameras));
     }
 }
