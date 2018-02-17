@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <form name="smartphone_product" method="post">
+        <div id="smartphone_product">
+            <div class="form-group">
+                <label for="smartphone_product_make" class="required">Make</label>
+                <input type="text" class="form-control" id="smartphone_product_make" name="smartphone_product[make]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_model" class="required">Model</label>
+                <input type="text" class="form-control" id="smartphone_product_model" name="smartphone_product[model]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_originalPrice" class="required">Original price</label>
+                <input type="text" class="form-control" id="smartphone_product_originalPrice" name="smartphone_product[originalPrice]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_imageAddress" class="required">Image address</label>
+                <input type="text" class="form-control" id="smartphone_product_imageAddress" name="smartphone_product[imageAddress]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_discount" class="required">Discount</label>
+                <input type="text" class="form-control" id="smartphone_product_discount" name="smartphone_product[discount]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_ram" class="required">Ram</label>
+                <input type="text" class="form-control" id="smartphone_product_ram" name="smartphone_product[ram]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_resolution" class="required">Resolution</label>
+                <input type="text" class="form-control" id="smartphone_product_resolution" name="smartphone_product[resolution]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_frontCameraResolution" class="required">Front Camera Resolution (Mpx)</label>
+                <input type="text" class="form-control" id="smartphone_product_frontCameraResolution" name="smartphone_product[frontCameraResolution]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_backCameraResolution" class="required">Back Camera Resolution (Mpx)</label>
+                <input type="text" class="form-control" id="smartphone_product_backCameraResolution" name="smartphone_product[backCameraResolution]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_screenDiagonalSize" class="required">Screen diagonal size (Inches)</label>
+                <input type="text" class="form-control" id="smartphone_product_screenDiagonalSize" name="smartphone_product[screenDiagonalSize]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_memory" class="required">Memory (GB)</label>
+                <input type="text" class="form-control" id="smartphone_product_memory" name="smartphone_product[memory]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_processorFrequency" class="required">Processor frequency (MHz)</label>
+                <input type="text" class="form-control" id="smartphone_product_processorFrequency" name="smartphone_product[processorFrequency]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_color" class="required">Color</label>
+                <input type="text" class="form-control" id="smartphone_product_color" name="smartphone_product[color]" required="required">
+            </div>
+            {{ form_row(form._token) }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="smartphone_product_submit" name="smartphone_product[submit]">Submit</button>
+            </div>
+    </form>
+{% endblock %}
+

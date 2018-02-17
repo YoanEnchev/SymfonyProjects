@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <form name="laptop_product" method="post">
+        <div id="laptop_product">
+            <div class="form-group">
+                <label for="laptop_product_make" class="required">Make</label>
+                <input type="text" class="form-control" id="laptop_product_make" name="laptop_product[make]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_model" class="required">Model</label>
+                <input type="text" class="form-control" id="laptop_product_model" name="laptop_product[model]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_originalPrice" class="required">Original price</label>
+                <input type="text" class="form-control" id="laptop_product_originalPrice" name="laptop_product[originalPrice]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_imageAddress" class="required">Image address</label>
+                <input type="text" class="form-control" id="laptop_product_imageAddress" name="laptop_product[imageAddress]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_discount" class="required">Discount</label>
+                <input type="text" class="form-control" id="laptop_product_discount" name="laptop_product[discount]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_ram" class="required">RAM (GB)</label>
+                <input type="text" class="form-control" id="laptop_product_ram" name="laptop_product[ram]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_processorFrequency" class="required">Processor Frequency (MHz)</label>
+                <input type="text" class="form-control" id="laptop_product_processorFrequency" name="laptop_product[processorFrequency]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_processorMake" class="required">Processor Make</label>
+                <input type="text" class="form-control" id="laptop_product_processorMake" name="laptop_product[processorMake]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_processorModel" class="required">Processor Model</label>
+                <input type="text" class="form-control" id="laptop_product_processorModel" name="laptop_product[processorModel]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_videoCardMake" class="required">Video Card Make</label>
+                <input type="text" class="form-control" id="laptop_product_videoCardMake" name="laptop_product[videoCardMake]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_capacity" class="required">Capacity (GB)</label>
+                <input type="text" class="form-control" id="laptop_product_capacity" name="laptop_product[capacity]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_processorCores" class="required">Processor Cores</label>
+                <input type="text" class="form-control" id="laptop_product_processorCores" name="laptop_product[processorCores]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_operationSystem" class="required">Operation system</label>
+                <input type="text" class="form-control" id="laptop_product_operationSystem" name="laptop_product[operationSystem]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="laptop_product_weight" class="required">Weight</label>
+                <input type="text" class="form-control" id="laptop_product_weight" name="laptop_product[weight]" required="required">
+            </div>
+            {{ form_row(form._token) }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="laptop_product_submit" name="laptop_product[submit]">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

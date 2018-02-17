@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <form name="tablet_product" method="post">
+        <div id="tablet_product">
+            <div class="form-group">
+                <label for="tablet_product_make" class="required">Make</label>
+                <input type="text" class="form-control" id="tablet_product_make" name="tablet_product[make]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tablet_product_model" class="required">Model</label>
+                <input type="text" class="form-control" id="tablet_product_model" name="tablet_product[model]" required="required"></div>
+
+            <div class="form-group">
+                <label for="tablet_product_originalPrice" class="required">Original price</label>
+                <input type="number" class="form-control" id="tablet_product_originalPrice" name="tablet_product[originalPrice]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tablet_product_imageAddress" class="required">Image address</label>
+                <input type="text" class="form-control" id="tablet_product_imageAddress" name="tablet_product[imageAddress]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tablet_product_discount" class="required">Discount</label>
+                <input type="number" class="form-control" id="tablet_product_discount" name="tablet_product[discount]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tablet_product_ram" class="required">Ram (GB)</label>
+                <input type="number" class="form-control" id="tablet_product_ram" name="tablet_product[ram]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tablet_product_capacity" class="required">Capacity (GB)</label>
+                <input type="number" class="form-control" id="tablet_product_capacity" name="tablet_product[capacity]" required="required">
+            </div>
+            <div class="form-group">
+                <label for="tablet_product_displayDiagonal" class="required">Display Diagonal (Inches)</label>
+                <input type="number" class="form-control" id="tablet_product_displayDiagonal" name="tablet_product[displayDiagonal]" required="required">
+            </div>
+            <div class="form-group">
+                <label for="tablet_product_processorFrequency" class="required">Processor Frequency (MHz)</label>
+                <input type="text" class="form-control" id="tablet_product_processorFrequency" name="tablet_product[processorFrequency]" required="required">
+            </div>
+            <div class="form-group">
+                <label for="tablet_product_processorCores" class="required">Processor Cores</label>
+                <input type="number" class="form-control" id="tablet_product_processorCores" name="tablet_product[processorCores]" required="required">
+            </div>
+            <div class="form-group">
+                <label for="tablet_product_operationSystem" class="required">Operation system</label>
+                <input type="text" class="form-control" id="tablet_product_operationSystem" name="tablet_product[operationSystem]" required="required">
+            </div>
+            {{ form_row(form._token) }}
+            <div>
+                <button type="submit" class="btn btn-primary" id="tablet_product_submit" name="tablet_product[submit]">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
