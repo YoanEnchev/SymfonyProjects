@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Laptop Specifications
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td scope="row">Make</td>
+            <td scope="row">{{ laptop.make }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Model</td>
+            <td scope="row">{{ laptop.model }}</td>
+
+        </tr>
+        <tr>
+            <td scope="row">RAM (GB)</td>
+            <td scope="row">{{ laptop.ram }}</td>
+        </tr>
+
+        <tr>
+            <td scope="row">Processor Frequency (MHz)</td>
+            <td scope="row">{{ laptop.processor_frequency }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Processor Make</td>
+            <td scope="row">{{ laptop.processor_make }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Processor Model</td>
+            <td scope="row">{{ laptop.processor_model }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Video Card Make</td>
+            <td scope="row">{{ laptop.video_card_make }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Capacity (GB)</td>
+            <td scope="row">{{ laptop.capacity }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Processor Cores</td>
+            <td scope="row">{{ laptop.processor_cores }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Operation System</td>
+            <td scope="row">{{ laptop.operation_system }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Weight</td>
+            <td scope="row">{{ laptop.weight }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+

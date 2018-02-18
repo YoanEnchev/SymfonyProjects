@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Add TV
+{% endblock %}
+
+{% block main %}
+    <form name="tv_product" method="post">
+        <div id="tv_product">
+            <div class="form-group">
+                <label for="tv_product_make" class="required">Make</label>
+                <input type="text" class="form-control" id="tv_product_make" name="tv_product[make]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_model" class="required">Model</label>
+                <input type="text" class="form-control" id="tv_product_model" name="tv_product[model]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_originalPrice" class="required">Original price</label>
+                <input type="text" class="form-control" id="tv_product_originalPrice" name="tv_product[originalPrice]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_imageAddress" class="required">Image address</label>
+                <input type="text" class="form-control" id="tv_product_imageAddress" name="tv_product[imageAddress]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_discount" class="required">Discount</label>
+                <input type="text" class="form-control" id="tv_product_discount" name="tv_product[discount]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_screenDiagonalSize" class="required">Screen Diagonal Size (Inches)</label>
+                <input type="text" class="form-control" id="tv_product_screenDiagonalSize" name="tv_product[screenDiagonalSize]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_isSmart">Is Smart</label>
+                <input type="checkbox" class="form-control" id="tv_product_isSmart" name="tv_product[isSmart]" value="1">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_hasUSBPort">Has USB Port</label>
+                <input type="checkbox" class="form-control" id="tv_product_hasUSBPort" name="tv_product[hasUSBPort]" value="1">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_resolution" class="required">Resolution</label>
+                <input type="text" class="form-control" id="tv_product_resolution" name="tv_product[resolution]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_powerConsummation" class="required">Power Consummation (Watts)</label>
+                <input type="text" class="form-control" id="tv_product_powerConsummation" name="tv_product[powerConsummation]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_weight" class="required">Weight (Kg)</label>
+                <input type="text"  class="form-control" id="tv_product_weight" name="tv_product[weight]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tv_product_color" class="required">Color</label>
+                <input type="text" class="form-control" id="tv_product_color" name="tv_product[color]" required="required">
+            </div>
+
+            {{ form_row(form._token) }}
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="tv_product_submit" name="tv_product[submit]">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

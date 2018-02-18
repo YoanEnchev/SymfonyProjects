@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block  stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/add-style.css') }}">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% endblock %}
+</head>
+<body>
+{% block navigation %}
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{{ path('homepage') }}">Tech Shop</a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}">Logout<span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">(current)</span></a>
+                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login') }}">Login<span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('listAllSmartphones') }}">Smartphone</a>
+                        <a class="dropdown-item" href="{{ path('listAllTVs') }}">TV</a>
+                        <a class="dropdown-item" href="{{ path('listAllLaptops') }}">Laptop</a>
+                        <a class="dropdown-item" href="{{ path('listAllTablets') }}">Tablet</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add Product
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('createSmartphone') }}">Smartphone</a>
+                        <a class="dropdown-item" href="{{ path('createTV') }}">TV</a>
+                        <a class="dropdown-item" href="{{ path('createLaptop') }}">Laptop</a>
+                        <a class="dropdown-item" href="{{ path('createTablet') }}">Tablet</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+{% block main %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <section id="viewAds">
+        <div id="ads" class="ads centerAllAds">
+            {% for tablet in tablets %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ tablet.image_address }}">
+                        <div class="centerInsideAd tv">
+                            <h3 class="description">{{ tablet.make }}</h3>
+                            <h3 class="description">{{ tablet.model }}</h3>
+                            {% if tablet.discount == 0 %}
+                                <h3 class="price">{{ tablet.original_price }} $</h3>
+                            {% else %}
+                                <h3 class="price"><span
+                                            class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }} $
+                                </h3>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{{ path('viewTabletSpecifications', {'id': tablet.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                                </a>
+                                <button class="addToCart">
+                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                    Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>p
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

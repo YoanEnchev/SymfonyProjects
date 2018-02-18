@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <section id="viewAds">
+        <div id="ads" class="ads centerAllAds">
+            {% for phone in smartphones %}
+                <div class="advert">
+                    <div class="centerInsideAd">
+                        <img src="{{ phone.image_address }}">
+                        <h3 class="description">{{ phone.make }} {{ phone.model }}</h3>
+                        {% if phone.discount == 0 %}
+                            <h3 class="price">{{ phone.original_price }} $</h3>
+                        {% else %}
+                            <h3 class="price"><span
+                                        class="oldPrice">{{ phone.original_price }}</span> {{ phone.promotion_price }} $
+                            </h3>
+                        {% endif %}
+                        <div class="buttons">
+                            <a href="{{ path('viewSmartphoneSpecifications', {'id': phone.id}) }}">
+                            <button class="viewDetails">
+                                View Details
+                            </button>
+                            </a>
+                            <button class="addToCart">
+                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

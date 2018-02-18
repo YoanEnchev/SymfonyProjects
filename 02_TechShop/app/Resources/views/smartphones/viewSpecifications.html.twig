@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Smartphone Specifications
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td scope="row">Make</td>
+            <td scope="row">{{ smartphone.make }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Model</td>
+            <td scope="row">{{ smartphone.model }}</td>
+
+        </tr>
+        <tr>
+            <td scope="row">RAM (GB)</td>
+            <td scope="row">{{ smartphone.ram }}</td>
+        </tr>
+
+        <tr>
+            <td scope="row">Resolution</td>
+            <td scope="row">{{ smartphone.resolution }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Front Camera (Mpx)</td>
+            <td scope="row">{{ smartphone.front_camera_resolution }} W</td>
+        </tr>
+        <tr>
+            <td scope="row">Back Camera (Mpx)</td>
+            <td scope="row">{{ smartphone.back_camera_resolution }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Screen Diagonal (inches)</td>
+            <td scope="row">{{ smartphone.screen_diagonal_size }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Processor Frequency (MHz)</td>
+            <td scope="row">{{ smartphone.processor_frequency }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Color</td>
+            <td scope="row">{{ smartphone.color}}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+

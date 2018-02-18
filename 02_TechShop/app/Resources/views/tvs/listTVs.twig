@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TV{% endblock %}
+
+{% block main %}
+    <section id="viewAds">
+        <div id="ads" class="ads centerAllAds">
+            {% for tv in tvs %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ tv.image_address }}">
+                        <div class="centerInsideAd tv">
+                            <h3 class="description">{{ tv.make }}</h3>
+                            <h3 class="description">{{ tv.model }}</h3>
+                            {% if tv.discount == 0 %}
+                                <h3 class="price">{{ tv.original_price }} $</h3>
+                            {% else %}
+                                <h3 class="price"><span
+                                            class="oldPrice">{{ tv.original_price }}</span> {{ tv.promotion_price }} $
+                                </h3>
+                            {% endif %}
+                            <div class="buttons">
+                                <a  href="{{ path('viewTVSpecifications', {id: tv.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
+                                <button class="addToCart">
+                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                    Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
