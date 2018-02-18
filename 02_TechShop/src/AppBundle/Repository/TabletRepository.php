@@ -20,4 +20,16 @@ class TabletRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
+
+    public function specificationsForOne($id)
+    {
+        $sql = "SELECT * FROM products
+        INNER JOIN tablets on products.id = tablets.product_id
+        WHERE tablets.product_id = :id";
+        $params = array(
+            'id' => $id,
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll()[0];
+    }
 }

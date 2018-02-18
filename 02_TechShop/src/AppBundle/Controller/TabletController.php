@@ -54,4 +54,18 @@ class TabletController extends Controller
         return $this->render('tablets/addTablet.html.twig',
             array('form' => $form->createView()));
     }
+
+    /**
+     * @Route("/tablet/{id}", name="viewTabletSpecifications")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewSpecificationsForOne($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Tablet::class);
+        $tablet = $repo->specificationsForOne($id);
+
+        return $this->render('tablets/viewSpecifications.html.twig',
+            array('tablet' => $tablet));
+    }
 }

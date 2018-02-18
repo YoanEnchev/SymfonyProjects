@@ -14,13 +14,16 @@
                                 <h3 class="price">{{ laptop.original_price }} $</h3>
                             {% else %}
                                 <h3 class="price"><span
-                                            class="oldPrice">{{ laptop.original_price }}</span> {{ laptop.promotion_price }} $
+                                            class="oldPrice">{{ laptop.original_price }}</span> {{ laptop.promotion_price }}
+                                    $
                                 </h3>
                             {% endif %}
                             <div class="buttons">
-                                <button class="viewDetails">
-                                    View Details
-                                </button>
+                                <a href="{{ path('viewLaptopSpecifications', {id: laptop.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
                                 <button class="addToCart">
                                     <i class="fa fa-shopping-cart" style="font-size:14px"></i>
                                     Add To Cart

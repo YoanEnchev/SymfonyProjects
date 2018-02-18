@@ -55,4 +55,18 @@ class SmartphoneController extends Controller
         return $this->render('smartphones/addSmartphone.html.twig',
             array('form' => $form->createView()));
     }
+
+    /**
+     * @Route("/smartphone/{id}", name="viewSmartphoneSpecifications")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewSpecificationsForOne($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Smartphone::class);
+        $smartphone = $repo->specificationsForOne($id);
+
+        return $this->render('smartphones/viewSpecifications.html.twig',
+            array('smartphone' => $smartphone));
+    }
 }

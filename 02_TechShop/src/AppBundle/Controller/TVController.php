@@ -55,4 +55,18 @@ class TVController extends Controller
         return $this->render('tvs/addTV.html.twig',
             array('form' => $form->createView()));
     }
+
+    /**
+     * @Route("/tv/{id}", name="viewTVSpecifications")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewSpecificationsForOne($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(TV::class);
+        $tv = $repo->specificationsForOne($id);
+
+        return $this->render('tvs/viewSpecifications.html.twig',
+            array('tv' => $tv));
+    }
 }

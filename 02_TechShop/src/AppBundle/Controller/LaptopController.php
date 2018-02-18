@@ -54,4 +54,18 @@ class LaptopController extends Controller
         return $this->render('laptops/addLaptop.html.twig',
             array('form' => $form->createView()));
     }
+
+    /**
+     * @Route("/laptop/{id}", name="viewLaptopSpecifications")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewSpecificationsForOne($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Laptop::class);
+        $laptop = $repo->specificationsForOne($id);
+
+        return $this->render('laptops/viewSpecifications.html.twig',
+            array('laptop' => $laptop));
+    }
 }

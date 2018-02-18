@@ -20,9 +20,11 @@
                                 </h3>
                             {% endif %}
                             <div class="buttons">
-                                <button class="viewDetails">
-                                    View Details
-                                </button>
+                                <a  href="{{ path('viewTVSpecifications', {id: tv.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
                                 <button class="addToCart">
                                     <i class="fa fa-shopping-cart" style="font-size:14px"></i>
                                     Add To Cart

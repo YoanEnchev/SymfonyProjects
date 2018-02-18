@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+TV Specifications
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td scope="row">Make</td>
+            <td scope="row">{{ tv.make }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Model</td>
+            <td scope="row">{{ tv.model }}</td>
+
+        </tr>
+        <tr>
+            <td scope="row">Screen Diagonal Size</td>
+            <td scope="row">{{ tv.screen_diagonal_size }}</td>
+        </tr>
+
+        <tr>
+            <td scope="row">Smart</td>
+            <td scope="row">
+                {% if tv.is_smart %}
+                Yes
+                {% else %}
+                No
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <td scope="row">USB Port</td>
+            <td scope="row">
+                {% if tv.is_smart %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">Resolution</td>
+            <td scope="row">{{ tv.resolution }}</td>
+        </tr>
+        <tr>
+            <td scope="row">Power Consummations</td>
+            <td scope="row">{{ tv.power_consummation }} W</td>
+        </tr>
+        <tr>
+            <td scope="row">Weight</td>
+            <td scope="row">{{ tv.weight }} g</td>
+        </tr>
+        <tr>
+            <td scope="row">Color</td>
+            <td scope="row">{{ tv.color }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+

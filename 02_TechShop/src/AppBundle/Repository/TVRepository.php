@@ -20,4 +20,16 @@ class TVRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
+
+    public function specificationsForOne($id)
+    {
+        $sql = "SELECT * FROM products
+        INNER JOIN tvs on products.id = tvs.product_id
+        WHERE tvs.product_id = :id";
+        $params = array(
+            'id' => $id,
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll()[0];
+    }
 }
