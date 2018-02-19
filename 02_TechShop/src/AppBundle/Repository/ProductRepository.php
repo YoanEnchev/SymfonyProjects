@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Product;
 
 /**
  * ProductRepository
@@ -12,21 +11,5 @@ use AppBundle\Entity\Product;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function insertNewProduct(Product $product)
-    {
-        $sql = "INSERT INTO products (make, model, original_price, type, image_address, date_added, discount, promotion_price)
-        VALUES (:make, :model, :originalPrice, :type, :imageAddress, :dateAdded, :discount, :promotionPrice);";
-        $params = array(
-            'make' => $product->getMake(),
-            'model' => $product->getModel(),
-            'originalPrice' => $product->getOriginalPrice(),
-            'type' => $product->getType(),
-            'imageAddress' => $product->getImageAddress(),
-            'dateAdded' => $product->getDateAdded(),
-            'discount' => $product->getDiscount(),
-            'promotionPrice' => $product->getPromotionPrice(),
-        );
 
-        $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
-    }
 }

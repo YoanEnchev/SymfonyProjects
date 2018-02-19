@@ -1,0 +1,64 @@
+section.shopingCart {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+section.shopingCart img {
+    width: 150px;
+    height: 150px;
+}
+
+section.shopingCart div.makeAndPrice {
+    display: inline-block;
+}
+
+section.shopingCart div.remove {
+    display: inline-block;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+section.shopingCart div.product-in-cart {
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between
+}
+
+section.shopingCart button {
+    text-align: center;
+    width: 110px;
+    height: 30px;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 0 5px;
+    color: white;
+    background: #1d36ff;
+}
+
+section.shopingCart div.makeAndPrice {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+button:hover {
+    background: red;
+    cursor: pointer;
+}
+
+section.shopingCart .buyProduct {
+    background: red;
+}

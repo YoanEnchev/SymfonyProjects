@@ -70,9 +70,19 @@ class User implements UserInterface, Serializable
      */
     private $roles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     * @ORM\JoinTable(name="users_products_in_cart",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $productsInShoppingCart;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->productsInShoppingCart = new ArrayCollection();
     }
 
     /**
@@ -206,6 +216,22 @@ class User implements UserInterface, Serializable
     }
 
     /**
+     * @param Product $product
+     * @return $this
+     */
+    public function addToShoppingCart(Product $product)
+    {
+        $this->productsInShoppingCart[] = $product;
+
+        return $this;
+    }
+
+    public function removeProdFromCart(Product $productToRemove)
+    {
+        $this->productsInShoppingCart->removeElement($productToRemove);
+    }
+
+    /**
      * Returns the Role granted to the user.
      *
      * <code>
@@ -224,8 +250,7 @@ class User implements UserInterface, Serializable
     public function getRoles()
     {
         $stringRoles = [];
-        foreach ($this->roles as $role)
-        {
+        foreach ($this->roles as $role) {
             /** @var $role Role */
             $stringRoles[] = $role->getRole();
         }
@@ -293,6 +318,26 @@ class User implements UserInterface, Serializable
             $this->username,
             $this->password
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProductsInShoppingCart()
+    {
+        return $this->productsInShoppingCart;
+    }
+
+    /**
+     * @param mixed $productsInShoppingCart
+     *
+     * @return User
+     */
+    public function setProductsInShoppingCart($productsInShoppingCart)
+    {
+        $this->productsInShoppingCart = $productsInShoppingCart;
+
+        return $this;
     }
 }
 
