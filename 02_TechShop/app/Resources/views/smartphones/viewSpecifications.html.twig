@@ -43,9 +43,17 @@
         </tr>
         <tr>
             <td scope="row">Color</td>
-            <td scope="row">{{ smartphone.color}}</td>
+            <td scope="row">{{ smartphone.color }}</td>
         </tr>
         </tbody>
     </table>
+    {% if app.user %}
+        <a href="{{ path('addToWishlist', {'productId': smartphone.product_id}) }}">
+            <button class="addToWishlist">
+                <i class="fa fa-heart" style="font-size:24px"></i>
+                Add To Wishlist
+            </button>
+        </a>
+    {% endif %}
 {% endblock %}
 

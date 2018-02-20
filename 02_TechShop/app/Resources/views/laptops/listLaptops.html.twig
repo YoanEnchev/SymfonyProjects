@@ -24,10 +24,14 @@
                                         View Details
                                     </button>
                                 </a>
-                                <button class="addToCart">
-                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                    Add To Cart
-                                </button>
+                                {% if app.user %}
+                                    <a href="{{ path('addProdToCart', {'productId': laptop.id}) }}">
+                                        <button class="addToCart">
+                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                            Add To Cart
+                                        </button>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

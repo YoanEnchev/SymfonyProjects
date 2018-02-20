@@ -14,22 +14,28 @@
                                 <h3 class="price">{{ tablet.original_price }} $</h3>
                             {% else %}
                                 <h3 class="price"><span
-                                            class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }} $
+                                            class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }}
+                                    $
                                 </h3>
                             {% endif %}
                             <div class="buttons">
                                 <a href="{{ path('viewTabletSpecifications', {'id': tablet.id}) }}">
-                                <button class="viewDetails">
-                                    View Details
-                                </button>
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
                                 </a>
-                                <button class="addToCart">
-                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                    Add To Cart
-                                </button>
+                                {% if app.user %}
+                                    <a href="{{ path('addProdToCart', {'productId': tablet.id}) }}">
+                                        <button class="addToCart">
+                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                            Add To Cart
+                                        </button>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
-                    </div>p
+                    </div>
+                    p
                 </div>
             {% endfor %}
         </div>

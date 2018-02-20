@@ -79,10 +79,20 @@ class User implements UserInterface, Serializable
      */
     private $productsInShoppingCart;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     * @ORM\JoinTable(name="users_products_wishlist",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $productsInWishlist;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->productsInShoppingCart = new ArrayCollection();
+        $this->productsInWishlist = new ArrayCollection();
     }
 
     /**
@@ -221,7 +231,10 @@ class User implements UserInterface, Serializable
      */
     public function addToShoppingCart(Product $product)
     {
-        $this->productsInShoppingCart[] = $product;
+
+        if ( !$this->productsInShoppingCart->contains($product) ) {
+            $this->productsInShoppingCart[] = $product;
+        }
 
         return $this;
     }
@@ -229,6 +242,24 @@ class User implements UserInterface, Serializable
     public function removeProdFromCart(Product $productToRemove)
     {
         $this->productsInShoppingCart->removeElement($productToRemove);
+    }
+
+    /**
+     * @param Product $product
+     * @return $this
+     */
+    public function addToWishlist(Product $product)
+    {
+        if ( !$this->productsInWishlist->contains($product) ) {
+            $this->productsInWishlist[] = $product;
+        }
+
+        return $this;
+    }
+
+    public function removeProdFromWishlist(Product $productToRemove)
+    {
+        $this->productsInWishlist->removeElement($productToRemove);
     }
 
     /**
@@ -338,6 +369,22 @@ class User implements UserInterface, Serializable
         $this->productsInShoppingCart = $productsInShoppingCart;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductsInWishlist()
+    {
+        return $this->productsInWishlist;
+    }
+
+    /**
+     * @param mixed $productsInWishlist
+     */
+    public function setProductsInWishlist($productsInWishlist)
+    {
+        $this->productsInWishlist = $productsInWishlist;
     }
 }
 

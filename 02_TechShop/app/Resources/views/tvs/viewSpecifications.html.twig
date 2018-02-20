@@ -60,5 +60,13 @@ TV Specifications
         </tr>
         </tbody>
     </table>
+    {% if app.user %}
+        <a href="{{ path('addToWishlist', {'productId': tv.product_id}) }}">
+            <button class="addToWishlist">
+                <i class="fa fa-heart" style="font-size:24px"></i>
+                Add To Wishlist
+            </button>
+        </a>
+    {% endif %}}
 {% endblock %}
 

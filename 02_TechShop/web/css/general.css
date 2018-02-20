@@ -9,5 +9,17 @@ form {
 }
 
 a:hover {
-    cursor: pointer;
+    cursor: pointer !important;
+}
+
+button.addToWishlist {
+    background: #ff0032;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    border:none;
+    padding: 5px;
+    width: 250px;
+    margin-left: 15px;
+    margin-top: 15px;
 }
