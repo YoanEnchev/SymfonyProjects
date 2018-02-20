@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/shopping-cart.css') }}">
+{% endblock %}
+
+{% block main %}
+    <section class="shopingCart">
+        {% for prod in wishlist %}
+            <div class="product-in-cart">
+                <div>
+                    <img class="prod-image"
+                         src="{{ prod.imageAddress }}"/>
+                </div>
+                <div class="makeAndPrice">
+                    <h3>{{ prod.make }} {{ prod.model }}</h3>
+                    {% if prod.discount == 0 %}
+                        <h3 class="price">{{ prod.originalPrice }} $</h3>
+                    {% else %}
+                        <h3 class="price"><span
+                                    class="oldPrice">{{ prod.originalPrice }}</span> {{ prod.promotionPrice }} $
+                        </h3>
+                    {% endif %}
+                    <div class="buttons">
+                        {% if prod.type == 'smartphone' %}
+                            <a href="{{ path('viewSmartphoneSpecifications', {'id': prod.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% elseif prod.type == 'tablet' %}
+                            <a href="{{ path('viewTabletSpecifications', {'id': prod.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% elseif prod.type == 'laptop' %}
+                            <a href="{{ path('viewLaptopSpecifications', {'id': prod.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% elseif prod.type == 'tv' %}
+                            <a href="{{ path('viewTVSpecifications', {'id': prod.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% endif %}
+                        <button class="buyProduct">
+                            Buy Product
+                        </button>
+                    </div>
+                </div>
+                <a href="{{ path('removeFromWishlist', {'productId': prod.id}) }}">
+                    <div class="remove">
+                        x
+                    </div>
+                </a>
+            </div>
+        {% else %}
+            <h1>No products In Wishlist.</h1>
+        {% endfor %}
+    </section>
+{% endblock %}
