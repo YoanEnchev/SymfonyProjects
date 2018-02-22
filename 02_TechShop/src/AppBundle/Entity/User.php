@@ -88,6 +88,12 @@ class User implements UserInterface, Serializable
      */
     private $productsInWishlist;
 
+    /**
+     * One User has Many Reviews.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -385,6 +391,22 @@ class User implements UserInterface, Serializable
     public function setProductsInWishlist($productsInWishlist)
     {
         $this->productsInWishlist = $productsInWishlist;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param mixed $reviews
+     */
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
     }
 }
 

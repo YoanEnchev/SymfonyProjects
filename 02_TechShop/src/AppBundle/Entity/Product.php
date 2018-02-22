@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -77,6 +78,12 @@ class Product
      */
     private $dateAdded;
 
+    /**
+     * One Product has Many Reviews.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="product")
+     */
+    private $reviews;
+
     public function __construct(string $make, string $model, float $originalPrice, string $imageAddress, int $discount)
     {
         $this->setMake($make);
@@ -86,6 +93,7 @@ class Product
         $this->setDiscount($discount);
         $this->setPromotionPrice($originalPrice, $discount);
         $this->setDateAdded(new \DateTime("now"));
+        $this->reviews = new ArrayCollection();
     }
 
     /**
@@ -282,6 +290,61 @@ class Product
         $this->dateAdded = $dateAdded;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param $reviews
+     * @return Product
+     */
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * @param Review $review
+     */
+    public function addReview(Review $review)
+    {
+        $this->reviews[] = $review;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function countOfReviews()
+    {
+        return $count = sizeof($this->reviews);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function averageGrade()
+    {
+        $sum = 0;
+
+        if( $this->countOfReviews() == 0)
+        {
+            return 0;
+        }
+
+        foreach ($this->reviews as $review)
+        {
+            $sum += $review->getGrade();
+        }
+
+        return $sum / $this->countOfReviews();
     }
 }
 

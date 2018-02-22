@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use AppBundle\Entity\Review;
 use AppBundle\Entity\Smartphone;
+use AppBundle\Form\ReviewType;
 use AppBundle\Form\SmartphoneProduct;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,7 +37,7 @@ class SmartphoneController extends Controller
         $form = $this->createForm(SmartphoneProduct::class);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $smartphone = new Smartphone($data['ram'], $data['resolution'], $data['frontCameraResolution'], $data['backCameraResolution'],
                 $data['screenDiagonalSize'], $data['memory'], $data['processorFrequency'], $data['color']);
@@ -59,14 +61,42 @@ class SmartphoneController extends Controller
     /**
      * @Route("/smartphone/{id}", name="viewSmartphoneSpecifications")
      * @param $id
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewSpecificationsForOne($id)
+    public function viewSpecificationsForOne($id, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Smartphone::class);
         $smartphone = $repo->specificationsForOne($id);
 
+        $repo_product = $this->getDoctrine()->getRepository(Product::class);
+        $product = $repo_product->find($id);
+        $review = new Review();
+        $productReviews = $product->getReviews();
+        $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
+
+        $form = $this->createForm(ReviewType::class, $review);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $grade = $review->getGrade();
+            if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade) { // valid grade
+                $review->setGradeWords();
+                $review->setUser($this->getUser());
+                $review->setProduct($product);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($review);
+                $em->flush();
+            } else { //invalid grade
+                return $this->redirectToRoute('homepage');
+            }
+        }
+
         return $this->render('smartphones/viewSpecifications.html.twig',
-            array('smartphone' => $smartphone));
+            array('smartphone' => $smartphone,
+                'reviews' => $productReviews,
+                'averageGrade' => $averageGrade,
+                'form' => $form->createView()));
     }
 }
