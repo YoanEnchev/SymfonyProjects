@@ -37,7 +37,7 @@ section.wrapper {
     margin: 10px auto;
 }
 
-#rateUser, .review-heading {
+.review-heading {
     margin-left: 140px;
 }
 
@@ -59,4 +59,16 @@ h3.averageGrade, #average {
 .viewReviews {
     margin-left: 144px;
     margin-bottom: 40px;
+}
+
+#average {
+    margin-left: -8px;
+}
+
+#rateUser {
+    margin-left: 133px;
+}
+
+textarea {
+    height:110px;
 }

@@ -4,7 +4,13 @@
     Laptop Specifications
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/jquery.rateyo.min.css') }}">
+{% endblock %}
+
 {% block main %}
+    <section class="wrapper">
     <table class="table table-striped">
         <tbody>
         <tr>
@@ -55,13 +61,65 @@
         </tr>
         </tbody>
     </table>
-    {% if app.user %}
+    <div class="actions">
+        {% if app.user %}
+            <a href="{{ path('addToWishlist', {'productId': laptop.product_id}) }}">
+                <button class="addToWishlist">
+                    <i class="fa fa-heart" style="font-size:24px"></i>
+                    Add To Wishlist
+                </button>
+            </a>
+        {% endif %}
         <a href="{{ path('addToWishlist', {'productId': laptop.product_id}) }}">
-            <button class="addToWishlist">
-                <i class="fa fa-heart" style="font-size:24px"></i>
-                Add To Wishlist
+            <button class="orderNow">
+                Order Now
             </button>
         </a>
+    </div>
+    <div class="viewReviews">
+        <h2>Reviews:</h2>
+        <div id="average"></div>
+        <h3 class="averageGrade">({{ averageGrade }})</h3>
+        <input type="hidden" value="{{ averageGrade }}" id="average-grade">
+
+        {% for review in reviews %}
+            <div class="review">
+                <h4>{{ review.user.username }}: {{ review.gradeWords }}</h4>
+                <p>{{ review.comment }}</p>
+            </div>
+        {% else %}
+            <h2>No reviews for this product yet.</h2>
+        {% endfor %}
+    </div>
+    {% if app.user %}
+        <h2 class="review-heading">Leave Rating:</h2>
+        <div id="rateUser"></div>
+        <form name="app_bundle_review_type" method="post">
+            <div id="app_bundle_review_type">
+                <div class="form-group">
+                    <input type="hidden" id="app_bundle_review_type_grade" name="app_bundle_review_type[grade]"
+                           class="form-control" required="required">
+                </div>
+                <div class="form-group">
+                    <label for="app_bundle_review_type_comment" class="required">Comment</label>
+                    <textarea id="app_bundle_review_type_comment" name="app_bundle_review_type[comment]"
+                              required="required" class="form-control"></textarea>
+                </div>
+                {{ form_row(form._token) }}
+                <div class="form-group">
+                    <button type="submit" id="app_bundle_review_type_submit" class="btn btn-primary"
+                            name="app_bundle_review_type[submit]">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </form>
     {% endif %}
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/jquery.rateyo.min.js') }}"></script>
+    <script src="{{ asset('js/handleRating.js') }}"></script>
 {% endblock %}
 

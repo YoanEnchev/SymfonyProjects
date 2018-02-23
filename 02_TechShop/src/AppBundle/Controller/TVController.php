@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use AppBundle\Entity\Review;
 use AppBundle\Entity\TV;
+use AppBundle\Form\ReviewType;
 use AppBundle\Form\TVProduct;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -59,14 +61,42 @@ class TVController extends Controller
     /**
      * @Route("/tv/{id}", name="viewTVSpecifications")
      * @param $id
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewSpecificationsForOne($id)
+    public function viewSpecificationsForOne($id, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(TV::class);
         $tv = $repo->specificationsForOne($id);
 
+        $repo_product = $this->getDoctrine()->getRepository(Product::class);
+        $product = $repo_product->find($id);
+        $review = new Review();
+        $productReviews = $product->getReviews();
+        $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
+
+        $form = $this->createForm(ReviewType::class, $review);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $grade = $review->getGrade();
+            if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade) { // valid grade
+                $review->setGradeWords();
+                $review->setUser($this->getUser());
+                $review->setProduct($product);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($review);
+                $em->flush();
+            } else { //invalid grade
+                return $this->redirectToRoute('homepage');
+            }
+        }
+
         return $this->render('tvs/viewSpecifications.html.twig',
-            array('tv' => $tv));
+            array('tv' => $tv,
+                'reviews' => $productReviews,
+                'averageGrade' => $averageGrade,
+                'form' => $form->createView()));
     }
 }
