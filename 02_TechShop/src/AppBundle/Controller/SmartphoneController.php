@@ -75,6 +75,13 @@ class SmartphoneController extends Controller
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
 
+        $currentUser = $this->getUser();
+        $userReview = null;
+
+        if($currentUser) {
+            $userReview = $product->getUserReview($currentUser);
+        }
+
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
@@ -82,12 +89,15 @@ class SmartphoneController extends Controller
             $grade = $review->getGrade();
             if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade) { // valid grade
                 $review->setGradeWords();
-                $review->setUser($this->getUser());
+                $review->setUser($currentUser);
                 $review->setProduct($product);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($review);
                 $em->flush();
+
+                return $this->redirectToRoute('viewSmartphoneSpecifications', array('id' => $id));
+
             } else { //invalid grade
                 return $this->redirectToRoute('homepage');
             }
@@ -97,6 +107,72 @@ class SmartphoneController extends Controller
             array('smartphone' => $smartphone,
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
-                'form' => $form->createView()));
+                'form' => $form->createView(),
+                'userReview' => $userReview));
+    }
+
+    /**
+     * @Route("/smartphones/newToOld", name="listAllSmartphonesNewToOld")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewNewToOld()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
+        $smartphones = $repo->getAllSmartphonesNewToOld();
+
+        return $this->render('smartphones/listSmartphones.html.twig',
+            array('smartphones' => $smartphones));
+    }
+
+    /**
+     * @Route("/smartphones/oldToNew", name="listAllSmartphonesOldToNew")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewOldToNew()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
+        $smartphones = $repo->getAllSmartphonesOldToNew();
+
+        return $this->render('smartphones/listSmartphones.html.twig',
+            array('smartphones' => $smartphones));
+    }
+
+    /**
+     * @Route("/smartphones/highToLow", name="listAllSmartphonesHighToLow")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewHighToLow()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
+        $smartphones = $repo->getAllSmartphonesHighToLow();
+
+        return $this->render('smartphones/listSmartphones.html.twig',
+            array('smartphones' => $smartphones));
+    }
+
+    /**
+     * @Route("/smartphones/lowToHigh", name="listAllSmartphonesLowToHigh")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewLowToHigh()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
+        $smartphones = $repo->getAllSmartphonesLowToHigh();
+
+        return $this->render('smartphones/listSmartphones.html.twig',
+            array('smartphones' => $smartphones));
+    }
+
+    /**
+     * @Route("/smartphones/discount", name="listSmartphonesDiscount")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewOnlyDiscount()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
+        $smartphones = $repo->getOnlyDiscount();
+
+        return $this->render('smartphones/listSmartphones.html.twig',
+            array('smartphones' => $smartphones));
     }
 }

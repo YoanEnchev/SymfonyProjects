@@ -32,4 +32,63 @@ class TVRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll()[0];
     }
+
+    public function getAllTVsNewToOld()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY date_added DESC";
+        $params = array(
+            'type' => 'tv',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTVsOldToNew()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY date_added ASC";
+        $params = array(
+            'type' => 'tv',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTVsHighToLow()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY promotion_price DESC";
+        $params = array(
+            'type' => 'tv',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTVsLowToHigh()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY promotion_price ASC";
+        $params = array(
+            'type' => 'tv',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getOnlyDiscount()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND discount > 0";
+        $params = array(
+            'type' => 'tv',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
 }

@@ -74,6 +74,13 @@ class TabletController extends Controller
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
 
+        $currentUser = $this->getUser();
+        $userReview = null;
+
+        if($currentUser) {
+            $userReview = $product->getUserReview($currentUser);
+        }
+
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
@@ -81,12 +88,14 @@ class TabletController extends Controller
             $grade = $review->getGrade();
             if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade) { // valid grade
                 $review->setGradeWords();
-                $review->setUser($this->getUser());
+                $review->setUser($currentUser);
                 $review->setProduct($product);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($review);
                 $em->flush();
+
+                return $this->redirectToRoute('viewTabletSpecifications', array('id' => $id));
             } else { //invalid grade
                 return $this->redirectToRoute('homepage');
             }
@@ -96,6 +105,72 @@ class TabletController extends Controller
             array('tablet' => $tablet,
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
-                'form' => $form->createView()));
+                'form' => $form->createView(),
+                'userReview' => $userReview));
+    }
+
+    /**
+     * @Route("/tablets/newToOld", name="listAllTabletsNewToOld")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewNewToOld()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
+        $tablets = $repo->getAllTabletsNewToOld();
+
+        return $this->render('tablets/listTablets.html.twig',
+            array('tablets' => $tablets));
+    }
+
+    /**
+     * @Route("/tablets/oldToNew", name="listAllTabletsOldToNew")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewOldToNew()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
+        $tablets = $repo->getAllTabletsOldToNew();
+
+        return $this->render('tablets/listTablets.html.twig',
+            array('tablets' => $tablets));
+    }
+
+    /**
+     * @Route("/tablets/highToLow", name="listAllTabletsHighToLow")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewHighToLow()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
+        $tablets = $repo->getAllTabletsHighToLow();
+
+        return $this->render('tablets/listTablets.html.twig',
+            array('tablets' => $tablets));
+    }
+
+    /**
+     * @Route("/tablets/lowToHigh", name="listAllTabletsLowToHigh")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewLowToHigh()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
+        $tablets = $repo->getAllTabletsLowToHigh();
+
+        return $this->render('tablets/listTablets.html.twig',
+            array('tablets' => $tablets));
+    }
+
+    /**
+     * @Route("/tablets/discount", name="listTabletsDiscount")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewOnlyDiscount()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
+        $tablets = $repo->getOnlyDiscount();
+
+        return $this->render('tablets/listTablets.html.twig',
+            array('tablets' => $tablets));
     }
 }

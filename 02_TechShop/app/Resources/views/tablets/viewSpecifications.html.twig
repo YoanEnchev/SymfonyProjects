@@ -79,7 +79,7 @@
                 <h2>No reviews for this product yet.</h2>
             {% endfor %}
         </div>
-        {% if app.user %}
+        {% if app.user and userReview is null %}
             <h2 class="review-heading">Leave Rating:</h2>
             <div id="rateUser"></div>
             <form name="app_bundle_review_type" method="post">
@@ -102,6 +102,15 @@
                     </div>
                 </div>
             </form>
+        {% endif %}
+        {% if app.user and userReview is not null %}
+            <div class="yourReview">
+                <h2>Your Review:</h2>
+                <div class="review">
+                    <h4>{{ userReview.user.username }}: {{ userReview.gradeWords }}</h4>
+                    <p>{{ userReview.comment }}</p>
+                </div>
+            </div>
         {% endif %}
     </section>
 {% endblock %}

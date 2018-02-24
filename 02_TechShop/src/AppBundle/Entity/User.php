@@ -74,7 +74,7 @@ class User implements UserInterface, Serializable
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
      * @ORM\JoinTable(name="users_products_in_cart",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=false)}
      *      )
      */
     private $productsInShoppingCart;
@@ -83,7 +83,7 @@ class User implements UserInterface, Serializable
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
      * @ORM\JoinTable(name="users_products_wishlist",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=false)}
      *      )
      */
     private $productsInWishlist;

@@ -1,6 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
+    <div class="cover">
+        <div class="sortAndFilter">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByDate" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Date
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsNewToOld') }}">New to Old</a>
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsOldToNew') }}">Old To New</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Price
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsHighToLow') }}">High to Low</a>
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsLowToHigh') }}">Low To High</a>
+                </div>
+            </div>
+            <a href="{{ path('listLaptopsDiscount') }}">
+                <button type="button" class="btn onlySales">Only Sales</button>
+            </a>
+        </div>
+    </div>
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for laptop in laptops %}

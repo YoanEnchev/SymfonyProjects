@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    View Tablets
+{% endblock %}
+
 {% block main %}
+    <div class="cover">
+        <div class="sortAndFilter">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByDate" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Date
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllTabletsNewToOld') }}">New to Old</a>
+                    <a class="dropdown-item" href="{{ path('listAllTabletsOldToNew') }}">Old To New</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Price
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllTabletsHighToLow') }}">High to Low</a>
+                    <a class="dropdown-item" href="{{ path('listAllTabletsLowToHigh') }}">Low To High</a>
+                </div>
+            </div>
+            <a href="{{ path('listTabletsDiscount') }}">
+                <button type="button" class="btn onlySales">Only Sales</button>
+            </a>
+        </div>
+    </div>
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for tablet in tablets %}
@@ -35,7 +66,6 @@
                             </div>
                         </div>
                     </div>
-                    p
                 </div>
             {% endfor %}
         </div>

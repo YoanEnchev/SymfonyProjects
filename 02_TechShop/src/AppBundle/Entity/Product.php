@@ -334,17 +334,29 @@ class Product
     {
         $sum = 0;
 
-        if( $this->countOfReviews() == 0)
-        {
+        if ($this->countOfReviews() == 0) {
             return 0;
         }
 
-        foreach ($this->reviews as $review)
-        {
+        foreach ($this->reviews as $review) {
             $sum += $review->getGrade();
         }
 
         return $sum / $this->countOfReviews();
+    }
+
+    public function getUserReview(User $user): ?Review
+    {
+        /** @var Review $review**/
+        foreach ($this->getReviews() as $review)
+        {
+            if($review->getUser()->getId() == $user->getId())
+            {
+                return $review;
+            }
+        }
+
+        return null;
     }
 }
 

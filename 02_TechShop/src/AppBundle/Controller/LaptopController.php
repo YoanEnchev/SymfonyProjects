@@ -74,6 +74,13 @@ class LaptopController extends Controller
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
 
+        $currentUser = $this->getUser();
+        $userReview = null;
+
+        if($currentUser) {
+            $userReview = $product->getUserReview($currentUser);
+        }
+
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
@@ -81,12 +88,14 @@ class LaptopController extends Controller
             $grade = $review->getGrade();
             if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade) { // valid grade
                 $review->setGradeWords();
-                $review->setUser($this->getUser());
+                $review->setUser($currentUser);
                 $review->setProduct($product);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($review);
                 $em->flush();
+
+                return $this->redirectToRoute('viewLaptopSpecifications', array('id' => $id));
             } else { //invalid grade
                 return $this->redirectToRoute('homepage');
             }
@@ -96,6 +105,72 @@ class LaptopController extends Controller
             array('laptop' => $laptop,
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
-                'form' => $form->createView()));
+                'form' => $form->createView(),
+                'userReview' => $userReview));
+    }
+
+    /**
+     * @Route("/laptops/newToOld", name="listAllLaptopsNewToOld")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewNewToOld()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
+        $laptops = $repo->getAllLaptopsNewToOld();
+
+        return $this->render('laptops/listLaptops.html.twig',
+            array('laptops' => $laptops));
+    }
+
+    /**
+     * @Route("/laptops/oldToNew", name="listAllLaptopsOldToNew")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewOldToNew()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
+        $laptops = $repo->getAllLaptopsOldToNew();
+
+        return $this->render('laptops/listLaptops.html.twig',
+            array('laptops' => $laptops));
+    }
+
+    /**
+     * @Route("/laptops/highToLow", name="listAllLaptopsHighToLow")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewHighToLow()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
+        $laptops = $repo->getAllLaptopsHighToLow();
+
+        return $this->render('laptops/listLaptops.html.twig',
+            array('laptops' => $laptops));
+    }
+
+    /**
+     * @Route("/laptops/lowToHigh", name="listAllLaptopsLowToHigh")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewLowToHigh()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
+        $laptops = $repo->getAllLaptopsLowToHigh();
+
+        return $this->render('laptops/listLaptops.html.twig',
+            array('laptops' => $laptops));
+    }
+
+    /**
+     * @Route("/laptops/discount", name="listLaptopsDiscount")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewOnlyDiscount()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
+        $laptops = $repo->getOnlyDiscount();
+
+        return $this->render('laptops/listLaptops.html.twig',
+            array('laptops' => $laptops));
     }
 }

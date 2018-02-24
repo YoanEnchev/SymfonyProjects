@@ -32,4 +32,63 @@ class TabletRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll()[0];
     }
+
+    public function getAllTabletsNewToOld()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY date_added DESC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsOldToNew()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY date_added ASC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsHighToLow()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY promotion_price DESC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsLowToHigh()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type
+        ORDER BY promotion_price ASC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getOnlyDiscount()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND discount > 0";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
 }

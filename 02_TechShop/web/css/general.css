@@ -72,3 +72,48 @@ h3.averageGrade, #average {
 textarea {
     height:110px;
 }
+
+.yourReview {
+    margin-left: 140px;
+}
+
+.sortAndFilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.orderByDate, .orderByPrice, .onlySales {
+    color: white;
+    border: none;
+}
+
+.orderByDate {
+    background: #1d36ff;
+}
+
+.orderByPrice {
+    background: #da4c00;
+}
+
+.onlySales {
+    background: red;
+}
+
+.cover {
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+.orderByDate.dropdown-toggle:hover {
+    background-color: #1d36ff;
+    color:white;
+}
+
+.orderByPrice.dropdown-toggle:hover {
+    background-color: #da4c00;
+    color:white;
+}
