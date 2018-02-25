@@ -57,8 +57,14 @@
                         Add To Wishlist
                     </button>
                 </a>
+                <a href="{{ path('addProdToCart', {'productId': tablet.product_id}) }}">
+                    <button class="addToCart-big">
+                        <i class="fa fa-shopping-cart" style="font-size:24px"></i>
+                        Add To Cart
+                    </button>
+                </a>
             {% endif %}
-            <a href="{{ path('addToWishlist', {'productId': tablet.product_id}) }}">
+            <a href="{{ path('buySingleProduct', {'id': tablet.product_id}) }}">
                 <button class="orderNow">
                     Order Now
                 </button>
@@ -72,7 +78,11 @@
 
             {% for review in reviews %}
                 <div class="review">
-                    <h4>{{ review.user.username }}: {{ review.gradeWords }}</h4>
+                    <div class="heading">
+                        <h5>{{ review.user.username }}:</h5>
+                        <div class="stars-{{ review.grade }}"></div>
+                        <h5>{{ review.gradeWords }}</h5>
+                    </div>
                     <p>{{ review.comment }}</p>
                 </div>
             {% else %}
@@ -104,12 +114,13 @@
             </form>
         {% endif %}
         {% if app.user and userReview is not null %}
-            <div class="yourReview">
-                <h2>Your Review:</h2>
-                <div class="review">
-                    <h4>{{ userReview.user.username }}: {{ userReview.gradeWords }}</h4>
-                    <p>{{ userReview.comment }}</p>
+            <div class="yourReview review">
+                <div class="heading">
+                    <h5>Your Review:</h5>
+                    <div class="stars-{{ userReview.grade }}"></div>
+                    <h5>{{ userReview.gradeWords }}</h5>
                 </div>
+                <p>{{ userReview.comment }}</p>
             </div>
         {% endif %}
     </section>

@@ -79,12 +79,19 @@ class Product
     private $dateAdded;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    private $quantity;
+
+    /**
      * One Product has Many Reviews.
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="product")
      */
     private $reviews;
 
-    public function __construct(string $make, string $model, float $originalPrice, string $imageAddress, int $discount)
+    public function __construct(string $make, string $model, float $originalPrice, string $imageAddress, int $discount, int $quantity)
     {
         $this->setMake($make);
         $this->setModel($model);
@@ -93,6 +100,7 @@ class Product
         $this->setDiscount($discount);
         $this->setPromotionPrice($originalPrice, $discount);
         $this->setDateAdded(new \DateTime("now"));
+        $this->setQuantity($quantity);
         $this->reviews = new ArrayCollection();
     }
 
@@ -357,6 +365,25 @@ class Product
         }
 
         return null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param int $quantity
+     * @return Product
+     */
+    public function setQuantity(int $quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
     }
 }
 

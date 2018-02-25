@@ -40,7 +40,7 @@ class LaptopController extends Controller
             $data = $form->getData();
             $laptop = new Laptop($data['ram'], $data['processorFrequency'], $data['processorMake'], $data['processorModel'],
                 $data['videoCardMake'], $data['capacity'], $data['processorCores'], $data['operationSystem'], $data['weight']);
-            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount']);
+            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
 
             $product->setType('laptop');
             $laptop->setProduct($product);

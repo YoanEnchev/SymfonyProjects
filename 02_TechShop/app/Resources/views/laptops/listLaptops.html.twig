@@ -31,38 +31,40 @@
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for laptop in laptops %}
-                <div class="advert">
-                    <div>
-                        <img src="{{ laptop.image_address }}">
-                        <div class="centerInsideAd tv">
-                            <h3 class="description">{{ laptop.make }}</h3>
-                            <h3 class="description">{{ laptop.model }}</h3>
-                            {% if laptop.discount == 0 %}
-                                <h3 class="price">{{ laptop.original_price }} $</h3>
-                            {% else %}
-                                <h3 class="price"><span
-                                            class="oldPrice">{{ laptop.original_price }}</span> {{ laptop.promotion_price }}
-                                    $
-                                </h3>
-                            {% endif %}
-                            <div class="buttons">
-                                <a href="{{ path('viewLaptopSpecifications', {id: laptop.id}) }}">
-                                    <button class="viewDetails">
-                                        View Details
-                                    </button>
-                                </a>
-                                {% if app.user %}
-                                    <a href="{{ path('addProdToCart', {'productId': laptop.id}) }}">
-                                        <button class="addToCart">
-                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                            Add To Cart
+                {% if laptop.quantity > 0 %}
+                    <div class="advert">
+                        <div>
+                            <img src="{{ laptop.image_address }}">
+                            <div class="centerInsideAd tv">
+                                <h3 class="description">{{ laptop.make }}</h3>
+                                <h3 class="description">{{ laptop.model }}</h3>
+                                {% if laptop.discount == 0 %}
+                                    <h3 class="price">{{ laptop.original_price }} $</h3>
+                                {% else %}
+                                    <h3 class="price"><span
+                                                class="oldPrice">{{ laptop.original_price }}</span> {{ laptop.promotion_price }}
+                                        $
+                                    </h3>
+                                {% endif %}
+                                <div class="buttons">
+                                    <a href="{{ path('viewLaptopSpecifications', {id: laptop.id}) }}">
+                                        <button class="viewDetails">
+                                            View Details
                                         </button>
                                     </a>
-                                {% endif %}
+                                    {% if app.user %}
+                                        <a href="{{ path('addProdToCart', {'productId': laptop.id}) }}">
+                                            <button class="addToCart">
+                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                                Add To Cart
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
     </section>

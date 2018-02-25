@@ -41,7 +41,7 @@ class TVController extends Controller
             $data = $form->getData();
             $tv = new TV($data['screenDiagonalSize'], $data['isSmart'], $data['hasUSBPort'], $data['resolution'],
                 $data['powerConsummation'], $data['weight'], $data['color']);
-            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount']);
+            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
 
             $product->setType('tv');
             $tv->setProduct($product);

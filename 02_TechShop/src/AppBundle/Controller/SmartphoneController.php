@@ -41,7 +41,7 @@ class SmartphoneController extends Controller
             $data = $form->getData();
             $smartphone = new Smartphone($data['ram'], $data['resolution'], $data['frontCameraResolution'], $data['backCameraResolution'],
                 $data['screenDiagonalSize'], $data['memory'], $data['processorFrequency'], $data['color']);
-            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount']);
+            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
 
             $product->setType('smartphone');
             $smartphone->setProduct($product);

@@ -12,7 +12,7 @@ a:hover {
     cursor: pointer !important;
 }
 
-button.addToWishlist, button.orderNow {
+button.addToWishlist, button.orderNow, button.addToCart-big {
     color: white;
     font-weight: bold;
     font-size: 22px;
@@ -73,6 +73,10 @@ textarea {
     height:110px;
 }
 
+.review {
+    padding: 10px;
+}
+
 .yourReview {
     margin-left: 140px;
 }
@@ -116,4 +120,18 @@ textarea {
 .orderByPrice.dropdown-toggle:hover {
     background-color: #da4c00;
     color:white;
+}
+
+.addToCart-big {
+    background-color: #da4c00;
+}
+
+.review .heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.stars-1, .stars-2, .stars-3, .stars-4, .stars-5 {
+    margin-top: 4px;
 }

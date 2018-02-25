@@ -2,7 +2,7 @@
     border: 2px solid black;
     width: 250px;
     height: 375px;
-    margin: 0 10px;
+    margin: 10px 10px;
 }
 
 .advert img {
@@ -15,7 +15,7 @@
     width: 220px;
     margin: 2.5px auto;
     text-align: center;
-    font-size: 20px;
+    font-size: 17px;
     text-transform: uppercase;
 }
 
@@ -67,6 +67,7 @@ button.addToCart {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .advert button:hover {

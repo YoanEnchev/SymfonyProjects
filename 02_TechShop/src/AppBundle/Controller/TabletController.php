@@ -40,7 +40,7 @@ class TabletController extends Controller
             $data = $form->getData();
             $tablet = new Tablet($data['ram'], $data['capacity'], $data['displayDiagonal'], $data['processorFrequency'],
                 $data['processorCores'], $data['operationSystem']);
-            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount']);
+            $product = new Product($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
 
             $product->setType('tablet');
             $tablet->setProduct($product);

@@ -74,8 +74,15 @@
                         Add To Wishlist
                     </button>
                 </a>
+
+                <a href="{{ path('addProdToCart', {'productId': tv.product_id}) }}">
+                    <button class="addToCart-big">
+                        <i class="fa fa-shopping-cart" style="font-size:24px"></i>
+                        Add To Cart
+                    </button>
+                </a>
             {% endif %}
-            <a href="{{ path('addToWishlist', {'productId': tv.product_id}) }}">
+            <a href="v{{ path('buySingleProduct', {'id': tv.product_id}) }}">
                 <button class="orderNow">
                     Order Now
                 </button>
@@ -89,7 +96,11 @@
 
             {% for review in reviews %}
                 <div class="review">
-                    <h4>{{ review.user.username }}: {{ review.gradeWords }}</h4>
+                    <div class="heading">
+                        <h5>{{ review.user.username }}:</h5>
+                        <div class="stars-{{ review.grade }}"></div>
+                        <h5>{{ review.gradeWords }}</h5>
+                    </div>
                     <p>{{ review.comment }}</p>
                 </div>
             {% else %}
@@ -111,22 +122,18 @@
                                   required="required" class="form-control"></textarea>
                     </div>
                     {{ form_row(form._token) }}
-                    <div class="form-group">
-                        <button type="submit" id="app_bundle_review_type_submit" class="btn btn-primary"
-                                name="app_bundle_review_type[submit]">
-                            Submit
-                        </button>
-                    </div>
+c
                 </div>
             </form>
         {% endif %}
         {% if app.user and userReview is not null %}
-            <div class="yourReview">
-                <h2>Your Review:</h2>
-                <div class="review">
-                    <h4>{{ userReview.user.username }}: {{ userReview.gradeWords }}</h4>
-                    <p>{{ userReview.comment }}</p>
+            <div class="yourReview review">
+                <div class="heading">
+                    <h5>Your Review:</h5>
+                    <div class="stars-{{ userReview.grade }}"></div>
+                    <h5>{{ userReview.gradeWords }}</h5>
                 </div>
+                <p>{{ userReview.comment }}</p>
             </div>
         {% endif %}
     </section>
