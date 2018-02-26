@@ -82,7 +82,7 @@
                     </button>
                 </a>
             {% endif %}
-            <a href="v{{ path('buySingleProduct', {'id': tv.product_id}) }}">
+            <a href="{{ path('buySingleProduct', {'id': tv.product_id}) }}">
                 <button class="orderNow">
                     Order Now
                 </button>

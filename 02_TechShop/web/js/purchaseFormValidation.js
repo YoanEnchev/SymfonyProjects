@@ -5,7 +5,7 @@
     const cityBox = $('#single_purchase_city');
     const addressBox = $('#single_purchase_address');
     const cardNumberBox = $('#single_purchase_creditCardNumber');
-    const cardValidDate = $('#single_purchase_cardValidThrough');
+    const cardValidDate = $('#single_purchase_inputDateValidThrough');
 
     //regexes:
     const quantityRegex = /^\d+$/;
@@ -45,11 +45,14 @@
             textfield.css('border-color', 'green');
             textfield.css('background', '#EDF4EC');
             errorBox.text('');
-            checkIfExpired();
+
+            if(textfield === cardValidDate) {
+                checkIfExpiredAndValid();
+            }
         }
     }
 
-    function checkIfExpired() {
+    function checkIfExpiredAndValid() {
         let inputDate = cardValidDate.val();
         let monthAndYear = inputDate.split("/");
         let month = monthAndYear[0];
@@ -64,6 +67,13 @@
             cardValidDate.css('background', '#FAF4F4');
             dateErrorBox.text('Card Has Expired.');
         }
+
+        else if(month > 12 || month < 1) {
+            cardValidDate.css('border-color', 'red');
+            cardValidDate.css('background', '#FAF4F4');
+            dateErrorBox.text('Invalid month.');
+        }
+
         else {
             cardValidDate.css('border-color', 'green');
             cardValidDate.css('background', '#EDF4EC');
