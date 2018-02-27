@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'slick';
+    src: url('../../web/fonts/slick.ttf');
+}
+
 img {
     width: 100%;
     height: auto;
@@ -134,4 +139,20 @@ textarea {
 
 .stars-1, .stars-2, .stars-3, .stars-4, .stars-5 {
     margin-top: 4px;
+}
+
+section#latestProds {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.slick-arrow:before {
+    background: rgba(0,0,0,0.5);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+section#latestProds .advert {
+    border:none;
 }

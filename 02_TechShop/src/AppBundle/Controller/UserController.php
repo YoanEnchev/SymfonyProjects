@@ -63,6 +63,7 @@ class UserController extends Controller
     public function showShoppingCart()
     {
         $user = $this->getUser();
+        $user->clearShoppingCart(); //remove out of stock products
 
         return $this->render('user/shoppingCart.html.twig',
             array('shoppingCart' => $shoppingCart = $user->getProductsInShoppingCart()));
@@ -123,6 +124,7 @@ class UserController extends Controller
     public function showWishlist()
     {
         $user = $this->getUser();
+        $user->clearWishlist(); //remove out of stock products
 
         return $this->render('user/wishlist.html.twig',
             array('wishlist' => $wishlist = $user->getProductsInWishlist()));

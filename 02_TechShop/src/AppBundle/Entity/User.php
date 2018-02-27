@@ -208,6 +208,26 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
+    public function clearShoppingCart() //remove out of stock products
+    {
+        /** @var Product $prod */
+        foreach ($this->productsInShoppingCart as $prod) {
+            if($prod->getQuantity() < 0) {
+                $this->productsInShoppingCart->removeElement($prod);
+            }
+        }
+    }
+
+    public function clearWishlist() //remove out of stock products
+    {
+        /** @var Product $prod */
+        foreach ($this->getProductsInWishlist() as $prod) {
+            if($prod->getQuantity() < 0) {
+                $this->productsInWishlist->removeElement($prod);
+            }
+        }
+    }
+
     /**
      * Returns the salt that was originally used to encode the password.
      *

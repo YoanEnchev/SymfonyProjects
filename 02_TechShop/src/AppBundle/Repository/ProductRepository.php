@@ -11,5 +11,14 @@ namespace AppBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getNewestProds()
+    {
+        $sql = "SELECT * FROM products
+        WHERE quantity > 0
+        ORDER BY date_added DESC
+        LIMIT 10";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
 
 }

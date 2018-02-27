@@ -3,41 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../../web/css/add-style.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../web/css/jquery.rateyo.min.css">
+    <link rel="stylesheet" href="../../web/css/slick.css">
+    <link rel="stylesheet" href="../../web/css/slick-theme.css">
+    <style>
+        .responsive {
+            width: 500px;
+        }
+    </style>
 </head>
 <body>
-<div id="rateYo"></div>
-
-<div id="rateUser"></div>
-
-<h1>Reviews:</h1>
-<div class="review">
-    <h2>Username: Excellent</h2>
-    <p>Some Review of the user</p>
+<div class="slider responsive">
+    <div><h3>1</h3></div>
+    <div><h3>2</h3></div>
+    <div><h3>3</h3></div>
+    <div><h3>4</h3></div>
+    <div><h3>5</h3></div>
 </div>
-
 </body>
 <script src="../../web/js/jquery-3.3.1.min.js"></script>
-<script src="../../web/js/jquery.rateyo.min.js"></script>
+<script src="../../web/js/slick.min.js"></script>
 <script>
-    $(function () {
-
-        $("#rateYo").rateYo({
-            rating: 3.9,
-            readOnly: true
-        });
-
-    });
-
-    $(function () {
-
-        $("#rateUser").rateYo({
-            rating: 0,
-            fullStar: true
-        });
-    });
 </script>
-</body>
 </html>
