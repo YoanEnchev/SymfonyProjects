@@ -156,3 +156,19 @@ section#latestProds {
 section#latestProds .advert {
     border:none;
 }
+
+.latestProds-heading {
+    margin-left: 55px;
+    margin-top: 10px;
+}
+
+.notice {
+    width: 80%;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.notice span {
+    font-weight: 500;
+    margin-right: 5px;
+}

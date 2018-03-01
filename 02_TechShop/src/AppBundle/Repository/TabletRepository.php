@@ -30,7 +30,7 @@ class TabletRepository extends \Doctrine\ORM\EntityRepository
             'id' => $id,
         );
 
-        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll()[0];
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
 
     public function getAllTabletsNewToOld()

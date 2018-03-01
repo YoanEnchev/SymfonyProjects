@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
+use AppBundle\Form\UsernameFilter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
@@ -19,7 +22,7 @@ class UserController extends Controller
         $product = $prodRepo->find($productId);
 
         if($product === null) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('notFoundProd');
         }
 
         $user = $this->getUser();
@@ -43,7 +46,7 @@ class UserController extends Controller
         $product = $prodRepo->find($productId);
 
         if($product === null) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('notFoundProd');
         }
 
         $user = $this->getUser();
@@ -80,7 +83,7 @@ class UserController extends Controller
         $product = $prodRepo->find($productId);
 
         if($product === null) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('notFoundProd');
         }
 
         $user = $this->getUser();
@@ -104,7 +107,7 @@ class UserController extends Controller
         $product = $prodRepo->find($productId);
 
         if($product === null) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('notFoundProd');
         }
 
         $user = $this->getUser();
@@ -128,5 +131,43 @@ class UserController extends Controller
 
         return $this->render('user/wishlist.html.twig',
             array('wishlist' => $wishlist = $user->getProductsInWishlist()));
+    }
+
+    /**
+     * @Route("/admin/users", name="listUsers")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listUsers(Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $users = $repo->findAll();
+        $form = $this->createForm(UsernameFilter::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $username = $form["username"]->getData();
+            $user = $repo->findBy(array('username' => $username));
+            return $this->render('user/listUsers.html.twig',
+                array('users' => $user,
+                    'form' => $form->createView()));
+        }
+        return $this->render('user/listUsers.html.twig',
+            array('users' => $users,
+                'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/admin/users/banUser/{id}", name="banUser")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function banUser($id)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('listUsers');
     }
 }

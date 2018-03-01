@@ -67,7 +67,14 @@ class TVController extends Controller
     public function viewSpecificationsForOne($id, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(TV::class);
+
         $tv = $repo->specificationsForOne($id);
+
+        if($tv == null) {
+            return $this->redirectToRoute('notFoundProd');
+        }
+        $tv = $tv[0];
+
 
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
@@ -173,5 +180,50 @@ class TVController extends Controller
 
         return $this->render('tvs/listTVs.twig',
             array('tvs' => $tvs));
+    }
+
+    /**
+     * @Route("edit/tv/{id}", name="editTv")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editTv($id, Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(TV::class);
+        $tvBefore = $repo->specificationsForOne($id)[0];
+
+        $form = $this->createForm(TVProduct::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $productId = $tvBefore['product_id'];
+            $tvId = $tvBefore['id'];
+
+            $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+            $tv = $repo->find($tvId);
+            $product = $productRepo->find($productId);
+
+            $tv->editData($data['screenDiagonalSize'], $data['isSmart'], $data['hasUSBPort'], $data['resolution'],
+                $data['powerConsummation'], $data['weight'], $data['color']);
+            $product->editData($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
+
+
+            $product->setType('tv');
+            $tv->setProduct($product);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tv);
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('viewTVSpecifications', array('id' => $id));
+        }
+
+        return $this->render('tvs/editTv.html.twig',
+            array('tv' => $tvBefore,
+                'form' => $form->createView()));
     }
 }

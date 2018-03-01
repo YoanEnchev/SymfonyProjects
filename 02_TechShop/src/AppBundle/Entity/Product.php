@@ -115,6 +115,20 @@ class Product
     }
 
     /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return Product
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Set make
      *
      * @param string $make
@@ -384,6 +398,18 @@ class Product
         $this->quantity = $quantity;
 
         return $this;
+    }
+
+    public function editData(string $make, string $model, float $originalPrice, string $imageAddress,
+    int $discount, int $quantity)
+    {
+        $this->setMake($make);
+        $this->setModel($model);
+        $this->setOriginalPrice($originalPrice);
+        $this->setImageAddress($imageAddress);
+        $this->setDiscount($discount);
+        $this->setQuantity($quantity);
+        $this->setPromotionPrice($originalPrice, $discount);
     }
 }
 

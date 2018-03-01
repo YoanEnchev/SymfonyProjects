@@ -116,6 +116,20 @@ class Laptop
     }
 
     /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Laptop
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Set ram
      *
      * @param integer $ram
@@ -345,6 +359,20 @@ class Laptop
     public function setProduct(Product $product)
     {
         $this->product = $product;
+    }
+
+    public function editData(int $ram, int $processorFrequency, string $processorMake, string $processorModel, string $videoCardMake,
+                             int $capacity, int $processorCores, string $operationSystem, float $weight)
+    {
+        $this->setRam($ram);
+        $this->setProcessorFrequency($processorFrequency);
+        $this->setProcessorMake($processorMake);
+        $this->setProcessorModel($processorModel);
+        $this->setVideoCardMake($videoCardMake);
+        $this->setCapacity($capacity);
+        $this->setProcessorCores($processorCores);
+        $this->setOperationSystem($operationSystem);
+        $this->setWeight($weight);
     }
 }
 

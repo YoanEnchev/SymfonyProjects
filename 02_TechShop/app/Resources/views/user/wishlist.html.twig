@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block main %}
+    <div class="notice">
+        <p><span>Notice:</span>Products that have gone out of quantity are automatically removed from wishlist.</p>
+    </div>
     <section class="shopingCart">
         {% for prod in wishlist %}
             <div class="product-in-cart">

@@ -4,9 +4,6 @@
     const emailBox = $('#app_bundle_user_type_email');
     const passwordBox = $('#app_bundle_user_type_password_first');
     const repeatPasswordBox = $('#app_bundle_user_type_password_second');
-    const phoneBox = $('#app_bundle_user_type_phone');
-    const cityBox = $('#app_bundle_user_type_city');
-    const addressBox = $('#app_bundle_user_type_address');
 
     //regexes:
     const usernameRegex_length = /^.{3,30}$/;
@@ -18,8 +15,6 @@
     const passwordRegex_length = /^.{6,30}$/;
     const passwordRegex_symbols = /^(.*[A-Z].*[a-z].*[0-9].*)$/;
     const passwordRegex_complete = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
-
-    const notReqired_regex = /.*/;
 
     //error message boxes:
     const usernameError = $('#invalidUsername');
@@ -41,10 +36,6 @@
     passwordBox.keyup(() => passwordMatchAction('Passwords do not match.'));
 
     repeatPasswordBox.keyup(() => passwordMatchAction('Passwords do not match.'));
-
-    phoneBox.keyup(() => validAction(phoneBox, notReqired_regex));
-    cityBox.keyup(() => validAction(cityBox, notReqired_regex));
-    addressBox.keyup(() => validAction(addressBox, notReqired_regex));
 
 
     function invalidAction(textfield ,regex, errorBox, message) {

@@ -21,4 +21,15 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
     }
 
+    public function getProdByMakeAndType($make, $type)
+    {
+        $sql = "SELECT * FROM products
+        WHERE type=:type AND UPPER(make) = UPPER(:make)";
+        $params = array(
+            'type' => $type,
+            'make' => $make
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
 }

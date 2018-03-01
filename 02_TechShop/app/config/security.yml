@@ -28,3 +28,9 @@ security:
     encoders:
         AppBundle\Entity\User:
             algorithm: bcrypt
+    access_control:
+        - { path: ^/smartphone/create, roles: ROLE_ADMIN }
+        - { path: ^/tv/create, roles: ROLE_ADMIN}
+        - { path: ^/laptop/create, roles: ROLE_ADMIN }
+        - { path: ^/tablet/create, roles: ROLE_ADMIN}
+        - { path: ^/admin, roles: ROLE_ADMIN }

@@ -69,8 +69,16 @@ class SmartphoneController extends Controller
         $repo = $this->getDoctrine()->getRepository(Smartphone::class);
         $smartphone = $repo->specificationsForOne($id);
 
+        if($smartphone == null) {
+            return $this->redirectToRoute('notFoundProd');
+        }
+
+        $smartphone = $smartphone[0];
+
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
+
+
         $review = new Review();
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
@@ -174,5 +182,48 @@ class SmartphoneController extends Controller
 
         return $this->render('smartphones/listSmartphones.html.twig',
             array('smartphones' => $smartphones));
+    }
+
+    /**
+     * @Route("edit/smartphone/{id}", name="editSmartphone")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editLaptop($id, Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(Smartphone::class);
+        $smartphoneBefore = $repo->specificationsForOne($id)[0];
+
+        $form = $this->createForm(SmartphoneProduct::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $productId = $smartphoneBefore['product_id'];
+            $smartphoneId = $smartphoneBefore['id'];
+
+            $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+            $smartphone = $repo->find($smartphoneId);
+            $product = $productRepo->find($productId);
+
+            $smartphone->editData($data['ram'], $data['resolution'], $data['frontCameraResolution'], $data['backCameraResolution'],
+                $data['screenDiagonalSize'], $data['memory'], $data['processorFrequency'], $data['color']);
+            $product->editData($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
+            $product->setType('smartphone');
+            $smartphone->setProduct($product);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($smartphone);
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('viewSmartphoneSpecifications', array('id' => $id));
+        }
+
+        return $this->render('smartphones/editSmartphone.html.twig',
+            array('smartphone' => $smartphoneBefore,
+                'form' => $form->createView()));
     }
 }

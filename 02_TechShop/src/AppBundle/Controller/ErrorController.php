@@ -70,4 +70,31 @@ class ErrorController extends Controller
         return $this->render('error/invalidMonth.html.twig');
     }
 
+    /**
+     * @Route("error/invalidUsername", name="invalidUsername")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function invalidUsername()
+    {
+        return $this->render('error/invalidUsername.html.twig');
+    }
+
+    /**
+     * @Route("error/invalidPassword", name="invalidPassword")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function invalidPassword()
+    {
+        return $this->render('error/invalidPassword.html.twig');
+    }
+
+
+    /**
+     * @Route("error/notFoundProd", name="notFoundProd")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function notFoundProduct()
+    {
+        return $this->render('error/notFoundProd.html.twig');
+    }
 }

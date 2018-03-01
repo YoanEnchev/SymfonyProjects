@@ -286,5 +286,17 @@ class TV
 
         return $this;
     }
+
+    public function editData(int $screenDiagonalSize, bool $isSmart, bool $hasUSBPort, string $resolution,
+    int $powerConsummation, float $weight, string $color)
+    {
+        $this->setScreenDiagonalSize($screenDiagonalSize);
+        $this->setIsSmart($isSmart);
+        $this->setHasUSBPort($hasUSBPort);
+        $this->setResolution($resolution);
+        $this->setPowerConsummation($powerConsummation);
+        $this->setWeight($weight);
+        $this->setColor($color);
+    }
 }
 

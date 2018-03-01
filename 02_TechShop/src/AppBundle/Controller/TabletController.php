@@ -68,6 +68,12 @@ class TabletController extends Controller
         $repo = $this->getDoctrine()->getRepository(Tablet::class);
         $tablet = $repo->specificationsForOne($id);
 
+        if($tablet == null) {
+            return $this->redirectToRoute('notFoundProd');
+        }
+
+        $tablet = $tablet[0];
+
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
         $review = new Review();
@@ -172,5 +178,49 @@ class TabletController extends Controller
 
         return $this->render('tablets/listTablets.html.twig',
             array('tablets' => $tablets));
+    }
+
+    /**
+     * @Route("edit/tablet/{id}", name="editTablet")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editTablet($id, Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(Tablet::class);
+        $tabletBefore = $repo->specificationsForOne($id)[0];
+
+        $form = $this->createForm(TabletProduct::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $productId = $tabletBefore['product_id'];
+            $tabletId = $tabletBefore['id'];
+
+            $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+            $tablet = $repo->find($tabletId);
+            $product = $productRepo->find($productId);
+
+            $tablet->editData($data['ram'], $data['capacity'], $data['displayDiagonal'], $data['processorFrequency'],
+                $data['processorCores'], $data['operationSystem']);
+            $product->editData($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'], $data['quantity']);
+
+            $product->setType('tablet');
+            $tablet->setProduct($product);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tablet);
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('viewTabletSpecifications', array('id' => $id));
+        }
+
+        return $this->render('tablets/editTablet.html.twig',
+            array('tablet' => $tabletBefore,
+                'form' => $form->createView()));
     }
 }

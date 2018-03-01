@@ -31,7 +31,7 @@ class LaptopController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addTablet(Request $request)
+    public function addLaptop(Request $request)
     {
         $form = $this->createForm(LaptopProduct::class);
 
@@ -68,8 +68,15 @@ class LaptopController extends Controller
         $repo = $this->getDoctrine()->getRepository(Laptop::class);
         $laptop = $repo->specificationsForOne($id);
 
+        if($laptop == null) {
+            return $this->redirectToRoute('notFoundProd');
+        }
+
+        $laptop = $laptop[0];
+
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
+
         $review = new Review();
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
@@ -172,5 +179,49 @@ class LaptopController extends Controller
 
         return $this->render('laptops/listLaptops.html.twig',
             array('laptops' => $laptops));
+    }
+
+    /**
+     * @Route("edit/laptop/{id}", name="editLaptop")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editLaptop($id, Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(Laptop::class);
+        $laptopBefore = $repo->specificationsForOne($id)[0];
+
+        $form = $this->createForm(LaptopProduct::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $productId = $laptopBefore['product_id'];
+            $laptopId = $laptopBefore['id'];
+
+            $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+            $laptop = $repo->find($laptopId);
+            $product = $productRepo->find($productId);
+
+            $laptop->editData($data['ram'], $data['processorFrequency'], $data['processorMake'], $data['processorModel'],
+                $data['videoCardMake'], $data['capacity'], $data['processorCores'], $data['operationSystem'], $data['weight']);
+            $product->editData($data['make'], $data['model'], $data['originalPrice'], $data['imageAddress'], $data['discount'],
+                $data['quantity']);
+            $product->setType('laptop');
+            $laptop->setProduct($product);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($laptop);
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('viewLaptopSpecifications', array('id' => $id));
+        }
+
+        return $this->render('laptops/editLaptop.html.twig',
+            array('laptop' => $laptopBefore,
+                'form' => $form->createView()));
     }
 }
