@@ -49,18 +49,31 @@
                                     </h3>
                                 {% endif %}
                                 <div class="buttons">
-                                    <a href="{{ path('viewTVSpecifications', {id: tv.id}) }}">
-                                        <button class="viewDetails">
-                                            View Details
-                                        </button>
-                                    </a>
-                                    {% if app.user %}
-                                        <a href="{{ path('addProdToCart', {'productId': tv.id}) }}">
-                                            <button class="addToCart">
-                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                Add To Cart
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a href="{{ path('editTv', {'id': tv.id}) }}">
+                                            <button class="adminOnly">
+                                                Edit
                                             </button>
                                         </a>
+                                        <a href="{{ path('deleteTv', {'id': tv.id}) }}">
+                                            <button class="adminOnly">
+                                                Delete
+                                            </button>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('viewTVSpecifications', {id: tv.id}) }}">
+                                            <button class="viewDetails">
+                                                View Details
+                                            </button>
+                                        </a>
+                                        {% if app.user %}
+                                            <a href="{{ path('addProdToCart', {'productId': tv.id}) }}">
+                                                <button class="addToCart">
+                                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                                    Add To Cart
+                                                </button>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

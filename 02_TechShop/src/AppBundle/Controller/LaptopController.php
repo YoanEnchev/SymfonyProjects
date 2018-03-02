@@ -224,4 +224,29 @@ class LaptopController extends Controller
             array('laptop' => $laptopBefore,
                 'form' => $form->createView()));
     }
+
+    /**
+     * @Route("delete/laptop/{id}", name="deleteLaptop")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteLaptop($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Laptop::class);
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+        $laptop = $repo->specificationsForOne($id)[0];
+        $productId = $laptop['product_id'];
+        $laptopId = $laptop['id'];
+
+        $laptopDelete = $repo->find($laptopId);
+        $productDelete = $productRepo->find($productId);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($laptopDelete);
+        $em->remove($productDelete);
+        $em->flush();
+
+        return $this->redirectToRoute('listAllLaptops');
+    }
 }

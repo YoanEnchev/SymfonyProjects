@@ -34,3 +34,5 @@ security:
         - { path: ^/laptop/create, roles: ROLE_ADMIN }
         - { path: ^/tablet/create, roles: ROLE_ADMIN}
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/edit, roles: ROLE_ADMIN }
+        - { path: ^/delete, roles: ROLE_ADMIN }

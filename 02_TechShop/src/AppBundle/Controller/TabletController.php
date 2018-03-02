@@ -223,4 +223,29 @@ class TabletController extends Controller
             array('tablet' => $tabletBefore,
                 'form' => $form->createView()));
     }
+
+    /**
+     * @Route("delete/tablet/{id}", name="deleteTablet")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteTablet($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Tablet::class);
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+        $tv = $repo->specificationsForOne($id)[0];
+        $productId = $tv['product_id'];
+        $tvId = $tv['id'];
+
+        $tabletDelete = $repo->find($tvId);
+        $productDelete = $productRepo->find($productId);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tabletDelete);
+        $em->remove($productDelete);
+        $em->flush();
+
+        return $this->redirectToRoute('listAllTablets');
+    }
 }

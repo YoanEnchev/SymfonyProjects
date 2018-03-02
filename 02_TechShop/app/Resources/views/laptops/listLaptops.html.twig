@@ -51,18 +51,36 @@
                                     </h3>
                                 {% endif %}
                                 <div class="buttons">
-                                    <a href="{{ path('viewLaptopSpecifications', {id: laptop.id}) }}">
-                                        <button class="viewDetails">
-                                            View Details
-                                        </button>
-                                    </a>
-                                    {% if app.user %}
-                                        <a href="{{ path('addProdToCart', {'productId': laptop.id}) }}">
-                                            <button class="addToCart">
-                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                Add To Cart
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a href="{{ path('editLaptop', {'id': laptop.id}) }}">
+                                            <button class="adminOnly">
+                                                Edit
                                             </button>
                                         </a>
+                                        <a href="{{ path('deleteLaptop', {'id': laptop.id}) }}">
+                                            <button class="adminOnly">
+                                                Delete
+                                            </button>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('viewSmartphoneSpecifications', {'id': phone.id}) }}">
+                                            <button class="viewDetails">
+                                                View Details
+                                            </button>
+                                        </a>
+                                        <a href="{{ path('viewLaptopSpecifications', {'id': phone.id}) }}">
+                                            <button class="viewDetails">
+                                                View Details
+                                            </button>
+                                        </a>
+                                        {% if app.user %}
+                                            <a href="{{ path('addProdToCart', {'productId': laptop.id}) }}">
+                                                <button class="addToCart">
+                                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                                    Add To Cart
+                                                </button>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

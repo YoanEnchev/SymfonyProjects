@@ -37,7 +37,7 @@ class TVController extends Controller
         $form = $this->createForm(TVProduct::class);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $tv = new TV($data['screenDiagonalSize'], $data['isSmart'], $data['hasUSBPort'], $data['resolution'],
                 $data['powerConsummation'], $data['weight'], $data['color']);
@@ -70,7 +70,7 @@ class TVController extends Controller
 
         $tv = $repo->specificationsForOne($id);
 
-        if($tv == null) {
+        if ($tv == null) {
             return $this->redirectToRoute('notFoundProd');
         }
         $tv = $tv[0];
@@ -85,7 +85,7 @@ class TVController extends Controller
         $currentUser = $this->getUser();
         $userReview = null;
 
-        if($currentUser) {
+        if ($currentUser) {
             $userReview = $product->getUserReview($currentUser);
         }
 
@@ -196,7 +196,7 @@ class TVController extends Controller
         $form = $this->createForm(TVProduct::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $productId = $tvBefore['product_id'];
             $tvId = $tvBefore['id'];
@@ -225,5 +225,30 @@ class TVController extends Controller
         return $this->render('tvs/editTv.html.twig',
             array('tv' => $tvBefore,
                 'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("delete/tv/{id}", name="deleteTv")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteTv($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(TV::class);
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+        $tv = $repo->specificationsForOne($id)[0];
+        $productId = $tv['product_id'];
+        $tvId = $tv['id'];
+
+        $tvDelete = $repo->find($tvId);
+        $productDelete = $productRepo->find($productId);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tvDelete);
+        $em->remove($productDelete);
+        $em->flush();
+
+        return $this->redirectToRoute('listAllTVs');
     }
 }

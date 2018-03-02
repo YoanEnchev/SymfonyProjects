@@ -190,7 +190,7 @@ class SmartphoneController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editLaptop($id, Request $request)
+    public function editSmartphone($id, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Smartphone::class);
         $smartphoneBefore = $repo->specificationsForOne($id)[0];
@@ -225,5 +225,30 @@ class SmartphoneController extends Controller
         return $this->render('smartphones/editSmartphone.html.twig',
             array('smartphone' => $smartphoneBefore,
                 'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("delete/smartphone/{id}", name="deleteSmartphone")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteSmartphone($id)
+    {
+        $repo = $this->getDoctrine()->getRepository(Smartphone::class);
+        $productRepo = $this->getDoctrine()->getRepository(Product::class);
+
+        $smartphone = $repo->specificationsForOne($id)[0];
+        $productId = $smartphone['product_id'];
+        $tvId = $smartphone['id'];
+
+        $smartphoneDelete = $repo->find($tvId);
+        $productDelete = $productRepo->find($productId);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($smartphoneDelete);
+        $em->remove($productDelete);
+        $em->flush();
+
+        return $this->redirectToRoute('listAllSmartphones');
     }
 }

@@ -87,3 +87,7 @@ div.tv {
     position: relative;
     top: -33px;
 }
+
+.adminOnly {
+    background: red;
+}
