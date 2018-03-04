@@ -15,15 +15,27 @@ class LaptopController extends Controller
 {
     /**
      * @Route("/laptop", name="listAllLaptops")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAllSmartphones()
+    public function listAllLaptops(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Laptop::class);
         $laptops = $repo->getAllLaptops();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $laptops,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('laptops/listLaptops.html.twig',
-            array('laptops' => $laptops));
+            array('laptops' => $result));
     }
 
     /**
@@ -50,7 +62,7 @@ class LaptopController extends Controller
             $em->persist($laptop);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('listAllLaptops');
         }
 
         return $this->render('laptops/addLaptop.html.twig',
@@ -118,67 +130,127 @@ class LaptopController extends Controller
 
     /**
      * @Route("/laptops/newToOld", name="listAllLaptopsNewToOld")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewNewToOld()
+    public function viewNewToOld(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
         $laptops = $repo->getAllLaptopsNewToOld();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $laptops,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('laptops/listLaptops.html.twig',
-            array('laptops' => $laptops));
+            array('laptops' => $result));
     }
 
     /**
      * @Route("/laptops/oldToNew", name="listAllLaptopsOldToNew")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOldToNew()
+    public function viewOldToNew(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
         $laptops = $repo->getAllLaptopsOldToNew();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $laptops,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('laptops/listLaptops.html.twig',
-            array('laptops' => $laptops));
+            array('laptops' => $result));
     }
 
     /**
      * @Route("/laptops/highToLow", name="listAllLaptopsHighToLow")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewHighToLow()
+    public function viewHighToLow(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
         $laptops = $repo->getAllLaptopsHighToLow();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $laptops,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('laptops/listLaptops.html.twig',
-            array('laptops' => $laptops));
+            array('laptops' => $result));
     }
 
     /**
      * @Route("/laptops/lowToHigh", name="listAllLaptopsLowToHigh")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewLowToHigh()
+    public function viewLowToHigh(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
         $laptops = $repo->getAllLaptopsLowToHigh();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $laptops,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('laptops/listLaptops.html.twig',
-            array('laptops' => $laptops));
+            array('laptops' => $result));
     }
 
     /**
      * @Route("/laptops/discount", name="listLaptopsDiscount")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOnlyDiscount()
+    public function viewOnlyDiscount(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Laptop::class);
         $laptops = $repo->getOnlyDiscount();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $laptops,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('laptops/listLaptops.html.twig',
-            array('laptops' => $laptops));
+            array('laptops' => $result));
     }
 
     /**

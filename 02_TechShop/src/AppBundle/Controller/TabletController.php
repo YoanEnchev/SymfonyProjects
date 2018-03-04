@@ -15,15 +15,27 @@ class TabletController extends Controller
 {
     /**
      * @Route("/tablet", name="listAllTablets")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAllTablets()
+    public function showAllTablets(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Tablet::class);
         $tablets = $repo->getAllTablets();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tablets,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tablets/listTablets.html.twig',
-            array('tablets' => $tablets));
+            array('tablets' => $result));
     }
 
     /**
@@ -50,7 +62,7 @@ class TabletController extends Controller
             $em->persist($tablet);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('listAllTablets');
         }
 
         return $this->render('tablets/addTablet.html.twig',
@@ -117,67 +129,127 @@ class TabletController extends Controller
 
     /**
      * @Route("/tablets/newToOld", name="listAllTabletsNewToOld")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewNewToOld()
+    public function viewNewToOld(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
         $tablets = $repo->getAllTabletsNewToOld();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tablets,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tablets/listTablets.html.twig',
-            array('tablets' => $tablets));
+            array('tablets' => $result));
     }
 
     /**
      * @Route("/tablets/oldToNew", name="listAllTabletsOldToNew")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOldToNew()
+    public function viewOldToNew(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
         $tablets = $repo->getAllTabletsOldToNew();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tablets,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tablets/listTablets.html.twig',
-            array('tablets' => $tablets));
+            array('tablets' => $result));
     }
 
     /**
      * @Route("/tablets/highToLow", name="listAllTabletsHighToLow")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewHighToLow()
+    public function viewHighToLow(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
         $tablets = $repo->getAllTabletsHighToLow();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tablets,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tablets/listTablets.html.twig',
-            array('tablets' => $tablets));
+            array('tablets' => $result));
     }
 
     /**
      * @Route("/tablets/lowToHigh", name="listAllTabletsLowToHigh")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewLowToHigh()
+    public function viewLowToHigh(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
         $tablets = $repo->getAllTabletsLowToHigh();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tablets,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tablets/listTablets.html.twig',
-            array('tablets' => $tablets));
+            array('tablets' => $result));
     }
 
     /**
      * @Route("/tablets/discount", name="listTabletsDiscount")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOnlyDiscount()
+    public function viewOnlyDiscount(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Tablet::class);
         $tablets = $repo->getOnlyDiscount();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tablets,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tablets/listTablets.html.twig',
-            array('tablets' => $tablets));
+            array('tablets' => $result));
     }
 
     /**

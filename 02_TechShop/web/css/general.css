@@ -167,3 +167,11 @@ section#latestProds .advert {
     font-weight: 500;
     margin-right: 5px;
 }
+
+.pagination {
+    justify-content: center;
+}
+
+.navigation {
+    margin-top: 20px;
+}

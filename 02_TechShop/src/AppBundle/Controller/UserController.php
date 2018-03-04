@@ -142,8 +142,22 @@ class UserController extends Controller
     {
         $repo = $this->getDoctrine()->getRepository(User::class);
         $users = $repo->findAll();
+
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $users,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10)
+        );
+
+
         $form = $this->createForm(UsernameFilter::class);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
             $username = $form["username"]->getData();
             $user = $repo->findBy(array('username' => $username));
@@ -151,8 +165,9 @@ class UserController extends Controller
                 array('users' => $user,
                     'form' => $form->createView()));
         }
+
         return $this->render('user/listUsers.html.twig',
-            array('users' => $users,
+            array('users' => $result,
                 'form' => $form->createView()));
     }
 

@@ -16,15 +16,27 @@ class TVController extends Controller
 {
     /**
      * @Route("/tvs", name="listAllTVs")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAllTVs()
+    public function listAllTVs(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(TV::class);
         $tvs = $repo->getAllTVs();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tvs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tvs/listTVs.twig',
-            array('tvs' => $tvs));
+            array('tvs' => $result));
     }
 
     /**
@@ -51,7 +63,7 @@ class TVController extends Controller
             $em->persist($tv);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('listAllTVs');
         }
 
         return $this->render('tvs/addTV.html.twig',
@@ -119,67 +131,127 @@ class TVController extends Controller
 
     /**
      * @Route("/tvs/newToOld", name="listAllTVsNewToOld")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewNewToOld()
+    public function viewNewToOld(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(TV::class);
         $tvs = $repo->getAllTvsNewToOld();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tvs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tvs/listTVs.twig',
-            array('tvs' => $tvs));
+            array('tvs' => $result));
     }
 
     /**
      * @Route("/tvs/oldToNew", name="listAllTVsOldToNew")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOldToNew()
+    public function viewOldToNew(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(TV::class);
         $tvs = $repo->getAllTVsOldToNew();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tvs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tvs/listTVs.twig',
-            array('tvs' => $tvs));
+            array('tvs' => $result));
     }
 
     /**
      * @Route("/tvs/highToLow", name="listAllTVsHighToLow")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewHighToLow()
+    public function viewHighToLow(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(TV::class);
         $tvs = $repo->getAllTVsHighToLow();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tvs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tvs/listTVs.twig',
-            array('tvs' => $tvs));
+            array('tvs' => $result));
     }
 
     /**
      * @Route("/tvs/lowToHigh", name="listAllTVsLowToHigh")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewLowToHigh()
+    public function viewLowToHigh(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(TV::class);
         $tvs = $repo->getAllTVsLowToHigh();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tvs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tvs/listTVs.twig',
-            array('tvs' => $tvs));
+            array('tvs' => $result));
     }
 
     /**
      * @Route("/tvs/discount", name="listTVDiscount")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOnlyDiscount()
+    public function viewOnlyDiscount(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(TV::class);
         $tvs = $repo->getOnlyDiscount();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $tvs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('tvs/listTVs.twig',
-            array('tvs' => $tvs));
+            array('tvs' => $result));
     }
 
     /**

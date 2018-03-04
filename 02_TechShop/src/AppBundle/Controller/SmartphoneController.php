@@ -16,15 +16,27 @@ class SmartphoneController extends Controller
 {
     /**
      * @Route("/smartphones", name="listAllSmartphones")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAllSmartphones()
+    public function listAllSmartphones(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Smartphone::class);
         $smartphones = $repo->getAllSmartphones();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $smartphones,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('smartphones/listSmartphones.html.twig',
-            array('smartphones' => $smartphones));
+            array('smartphones' => $result));
     }
 
     /**
@@ -51,7 +63,7 @@ class SmartphoneController extends Controller
             $em->persist($smartphone);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('listAllSmartphones');
         }
 
         return $this->render('smartphones/addSmartphone.html.twig',
@@ -121,67 +133,127 @@ class SmartphoneController extends Controller
 
     /**
      * @Route("/smartphones/newToOld", name="listAllSmartphonesNewToOld")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewNewToOld()
+    public function viewNewToOld(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
         $smartphones = $repo->getAllSmartphonesNewToOld();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $smartphones,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('smartphones/listSmartphones.html.twig',
-            array('smartphones' => $smartphones));
+            array('smartphones' => $result));
     }
 
     /**
      * @Route("/smartphones/oldToNew", name="listAllSmartphonesOldToNew")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOldToNew()
+    public function viewOldToNew(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
         $smartphones = $repo->getAllSmartphonesOldToNew();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $smartphones,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('smartphones/listSmartphones.html.twig',
-            array('smartphones' => $smartphones));
+            array('smartphones' => $result));
     }
 
     /**
      * @Route("/smartphones/highToLow", name="listAllSmartphonesHighToLow")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewHighToLow()
+    public function viewHighToLow(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
         $smartphones = $repo->getAllSmartphonesHighToLow();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $smartphones,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('smartphones/listSmartphones.html.twig',
-            array('smartphones' => $smartphones));
+            array('smartphones' => $result));
     }
 
     /**
      * @Route("/smartphones/lowToHigh", name="listAllSmartphonesLowToHigh")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewLowToHigh()
+    public function viewLowToHigh(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
         $smartphones = $repo->getAllSmartphonesLowToHigh();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $smartphones,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('smartphones/listSmartphones.html.twig',
-            array('smartphones' => $smartphones));
+            array('smartphones' => $result));
     }
 
     /**
      * @Route("/smartphones/discount", name="listSmartphonesDiscount")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewOnlyDiscount()
+    public function viewOnlyDiscount(Request $request)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository(Smartphone::class);
         $smartphones = $repo->getOnlyDiscount();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $smartphones,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 8)
+        );
+
         return $this->render('smartphones/listSmartphones.html.twig',
-            array('smartphones' => $smartphones));
+            array('smartphones' => $result));
     }
 
     /**
