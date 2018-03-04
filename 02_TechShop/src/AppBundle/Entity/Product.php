@@ -91,6 +91,17 @@ class Product
      */
     private $reviews;
 
+    /**
+     *@ORM\OneToMany(targetEntity="AppBundle\Entity\ProductInCart", mappedBy="product")
+     */
+    private $productInCart;
+
+    /**
+     * One Product has Many Purchases.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductPurchase", mappedBy="product"))
+     */
+    private $purchases;
+
     public function __construct(string $make, string $model, float $originalPrice, string $imageAddress, int $discount, int $quantity)
     {
         $this->setMake($make);
@@ -410,6 +421,44 @@ class Product
         $this->setDiscount($discount);
         $this->setQuantity($quantity);
         $this->setPromotionPrice($originalPrice, $discount);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductInCart()
+    {
+        return $this->productInCart;
+    }
+
+    /**
+     * @param mixed $productInCart
+     * @return Product
+     */
+    public function setProductInCart($productInCart)
+    {
+        $this->productInCart = $productInCart;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPurchases()
+    {
+        return $this->purchases;
+    }
+
+    /**
+     * @param mixed $purchases
+     * @return Product
+     */
+    public function setPurchases($purchases)
+    {
+        $this->purchases = $purchases;
+
+        return $this;
     }
 }
 

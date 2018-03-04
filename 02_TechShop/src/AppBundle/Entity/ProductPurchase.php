@@ -69,8 +69,8 @@ class ProductPurchase
     private $inputDateValidThrough;
 
     /**
-     * One productPurchase has One product.
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Product")
+     * Many Purchases have One Product.
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="purchases")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
@@ -316,6 +316,15 @@ class ProductPurchase
         }
 
         return true;
+    }
+
+    public function setUserInfo(string $phone, string $city, string  $address, $creditCardNumber, string $inputValidThrough): void
+    {
+        $this->setPhone($phone);
+        $this->setCity($city);
+        $this->setAddress($address);
+        $this->setCreditCardNumber($creditCardNumber);
+        $this->setInputDateValidThrough($inputValidThrough);
     }
 }
 

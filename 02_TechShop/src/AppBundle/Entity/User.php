@@ -50,10 +50,10 @@ class User implements UserInterface, Serializable
     private $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ProductInCart")
      * @ORM\JoinTable(name="users_products_in_cart",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=false)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_in_cart_id", referencedColumnName="id", unique=false)}
      *      )
      */
     private $productsInShoppingCart;
@@ -139,12 +139,11 @@ class User implements UserInterface, Serializable
     }
 
     /**
-     * @param Product $product
-     * @return $this
+     * @param ProductInCart $product
+     * @return User
      */
-    public function addToShoppingCart(Product $product)
+    public function addToShoppingCart(ProductInCart $product)
     {
-
         if ( !$this->productsInShoppingCart->contains($product) ) {
             $this->productsInShoppingCart[] = $product;
         }
@@ -152,7 +151,7 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-    public function removeProdFromCart(Product $productToRemove)
+    public function removeProdFromCart(ProductInCart $productToRemove)
     {
         $this->productsInShoppingCart->removeElement($productToRemove);
     }
@@ -210,9 +209,9 @@ class User implements UserInterface, Serializable
 
     public function clearShoppingCart() //remove out of stock products
     {
-        /** @var Product $prod */
+        /** @var ProductInCart $prod */
         foreach ($this->productsInShoppingCart as $prod) {
-            if($prod->getQuantity() < 0) {
+            if($prod->getProduct()->getQuantity() <= 0) {
                 $this->productsInShoppingCart->removeElement($prod);
             }
         }
@@ -222,7 +221,7 @@ class User implements UserInterface, Serializable
     {
         /** @var Product $prod */
         foreach ($this->getProductsInWishlist() as $prod) {
-            if($prod->getQuantity() < 0) {
+            if($prod->getQuantity() <= 0) {
                 $this->productsInWishlist->removeElement($prod);
             }
         }
@@ -334,6 +333,32 @@ class User implements UserInterface, Serializable
     public function setReviews($reviews)
     {
         $this->reviews = $reviews;
+    }
+
+    public function totalCostOfShoppingCart(): float
+    {
+        $totalCost = 0;
+
+        /** @var ProductInCart $prodInCart */
+        foreach ($this->productsInShoppingCart as $prodInCart)
+        {
+            $totalCost += $prodInCart->getUserRequiredQuantity() * $prodInCart->getProduct()->getPromotionPrice();
+        }
+
+        return $totalCost;
+    }
+
+    public function allProdsFromCartAvaliable(): bool
+    {
+        $prodsInCart = $this->getProductsInShoppingCart();
+        /** @var ProductInCart $prodInCart */
+        foreach ($prodsInCart as $prodInCart) {
+            if($prodInCart->getUserRequiredQuantity() > $prodInCart->getProduct()->getQuantity()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

@@ -51,9 +51,11 @@
                                 </button>
                             </a>
                         {% endif %}
+                        <a href="{{ path('buySingleProduct', {'id': prod.id}) }}">
                         <button class="buyProduct">
                             Buy Product
                         </button>
+                        </a>
                     </div>
                 </div>
                 <a href="{{ path('removeFromWishlist', {'productId': prod.id}) }}">

@@ -97,4 +97,13 @@ class ErrorController extends Controller
     {
         return $this->render('error/notFoundProd.html.twig');
     }
+
+    /**
+     * @Route("error/tooMuchQtyInCartForProd", name="tooMuchQtyInCartForProd")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tooMuchQtyInCartForProd()
+    {
+        return $this->render('error/tooMuchQtyInCartForProd.html.twig');
+    }
 }
