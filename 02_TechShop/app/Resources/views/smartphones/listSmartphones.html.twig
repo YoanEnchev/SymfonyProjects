@@ -35,51 +35,49 @@
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for phone in smartphones %}
-                {% if phone.quantity > 0 %}
-                    <div class="advert">
-                        <div class="centerInsideAd">
-                            <img src="{{ phone.image_address }}">
-                            <h3 class="description">{{ phone.make }} {{ phone.model }}</h3>
-                            {% if phone.discount == 0 %}
-                                <h3 class="price">{{ phone.original_price }} $</h3>
+                <div class="advert">
+                    <div class="centerInsideAd">
+                        <img src="{{ phone.image_address }}">
+                        <h3 class="description">{{ phone.make }} {{ phone.model }}</h3>
+                        {% if phone.discount == 0 %}
+                            <h3 class="price">{{ phone.original_price }} $</h3>
+                        {% else %}
+                            <h3 class="price"><span
+                                        class="oldPrice">{{ phone.original_price }}</span> {{ phone.promotion_price }}
+                                $
+                            </h3>
+                        {% endif %}
+                        <div class="buttons">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('editSmartphone', {'id': phone.id}) }}">
+                                    <button class="adminOnly">
+                                        Edit
+                                    </button>
+                                </a>
+                                <a href="{{ path('deleteSmartphone', {'id': phone.id}) }}">
+                                    <button class="adminOnly">
+                                        Delete
+                                    </button>
+                                </a>
                             {% else %}
-                                <h3 class="price"><span
-                                            class="oldPrice">{{ phone.original_price }}</span> {{ phone.promotion_price }}
-                                    $
-                                </h3>
-                            {% endif %}
-                            <div class="buttons">
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <a href="{{ path('editSmartphone', {'id': phone.id}) }}">
-                                        <button class="adminOnly">
-                                            Edit
-                                        </button>
-                                    </a>
-                                    <a href="{{ path('deleteSmartphone', {'id': phone.id}) }}">
-                                        <button class="adminOnly">
-                                            Delete
-                                        </button>
-                                    </a>
-                                {% else %}
 
-                                    <a href="{{ path('viewSmartphoneSpecifications', {'id': phone.id}) }}">
-                                        <button class="viewDetails">
-                                            View Details
+                                <a href="{{ path('viewSmartphoneSpecifications', {'id': phone.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
+                                {% if app.user %}
+                                    <a href="{{ path('addProdToCart', {'productId': phone.id}) }}">
+                                        <button class="addToCart">
+                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                            Add To Cart
                                         </button>
                                     </a>
-                                    {% if app.user %}
-                                        <a href="{{ path('addProdToCart', {'productId': phone.id}) }}">
-                                            <button class="addToCart">
-                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                Add To Cart
-                                            </button>
-                                        </a>
-                                    {% endif %}
                                 {% endif %}
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
-                {% endif %}
+                </div>
             {% endfor %}
         </div>
     </section>

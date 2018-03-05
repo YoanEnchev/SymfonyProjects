@@ -2,7 +2,18 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <style>
+        @font-face {
+            font-family: slick;
+            font-weight: normal;
+            font-style: normal;
+            src: url('{{ asset('fonts/slick.eot') }}');
+            src: url('{{ asset('fonts/slick.eot') }}#iefix') format('embedded-opentype'), url("{{ asset('fonts/slick.woff') }}") format('woff'), url('{{ asset('fonts/slick.ttf') }}') format('truetype'), url('{{ asset('fonts/slick.svg') }}#slick') format('svg');
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('css/jquery.rateyo.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/slick-theme.css') }}">
 {% endblock %}
 
 {% block title %}
@@ -122,7 +133,12 @@
                                   required="required" class="form-control"></textarea>
                     </div>
                     {{ form_row(form._token) }}
-c
+                    <div class="form-group">
+                        <button type="submit" id="app_bundle_review_type_submit" class="btn btn-primary"
+                                name="app_bundle_review_type[submit]">
+                            Submit
+                        </button>
+                    </div>
                 </div>
             </form>
         {% endif %}
@@ -137,9 +153,48 @@ c
             </div>
         {% endif %}
     </section>
+    <section class="slider-products" id="other-tvs">
+        {% for tv in otherTvs %}
+            <div class="advert">
+                <div>
+                    <img src="{{ tv.image_address }}">
+                    <div class="centerInsideAd tv">
+                        <h3 class="description">{{ tv.make }}</h3>
+                        <h3 class="description">{{ tv.model }}</h3>
+                        {% if tv.discount == 0 %}
+                            <h3 class="price">{{ tv.original_price }} $</h3>
+                        {% else %}
+                            <h3 class="price"><span
+                                        class="oldPrice">{{ tv.original_price }}</span> {{ tv.promotion_price }}
+                                $
+                            </h3>
+                        {% endif %}
+                        <div class="buttons">
+                            <a href="{{ path('viewTVSpecifications', {id: tv.product_id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                            {% if app.user %}
+                                <a href="{{ path('addProdToCart', {'productId': tv.product_id}) }}">
+                                    <button class="addToCart">
+                                        <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                        Add To Cart
+                                    </button>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/jquery.rateyo.min.js') }}"></script>
     <script src="{{ asset('js/handleRating.js') }}"></script>
+    <script src="{{ asset('js/slick.min.js') }}"></script>
+    <script src="{{ asset('js/oneRowSliderHandle.js') }}"></script>
 {% endblock %}

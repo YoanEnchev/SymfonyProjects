@@ -14,7 +14,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
     public function getNewestProds()
     {
         $sql = "SELECT * FROM products
-        WHERE quantity > 0
+        WHERE quantity > 0 AND quantity > 0
         ORDER BY date_added DESC
         LIMIT 10";
 

@@ -78,6 +78,7 @@ class LaptopController extends Controller
     public function viewSpecificationsForOne($id, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Laptop::class);
+
         $laptop = $repo->specificationsForOne($id);
 
         if($laptop == null) {
@@ -88,6 +89,7 @@ class LaptopController extends Controller
 
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
+        $otherLaptops = $repo->getHighestQuantitiesProds();
 
         $review = new Review();
         $productReviews = $product->getReviews();
@@ -125,7 +127,8 @@ class LaptopController extends Controller
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
                 'form' => $form->createView(),
-                'userReview' => $userReview));
+                'userReview' => $userReview,
+                'otherLaptops' => $otherLaptops));
     }
 
     /**

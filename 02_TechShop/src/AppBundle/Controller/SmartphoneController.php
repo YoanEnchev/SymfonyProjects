@@ -89,6 +89,7 @@ class SmartphoneController extends Controller
 
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
+        $otherSmartphoness = $repo->getHighestQuantitiesProds();
 
 
         $review = new Review();
@@ -128,7 +129,8 @@ class SmartphoneController extends Controller
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
                 'form' => $form->createView(),
-                'userReview' => $userReview));
+                'userReview' => $userReview,
+                'otherSmartphoness' => $otherSmartphoness));
     }
 
     /**

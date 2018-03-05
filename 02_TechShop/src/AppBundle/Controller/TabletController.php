@@ -88,6 +88,8 @@ class TabletController extends Controller
 
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
+        $otherTablets = $repo->getHighestQuantitiesProds();
+
         $review = new Review();
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
@@ -124,7 +126,8 @@ class TabletController extends Controller
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
                 'form' => $form->createView(),
-                'userReview' => $userReview));
+                'userReview' => $userReview,
+                'otherTablets' => $otherTablets));
     }
 
     /**

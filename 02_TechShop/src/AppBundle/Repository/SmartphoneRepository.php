@@ -13,7 +13,7 @@ class SmartphoneRepository extends \Doctrine\ORM\EntityRepository
     public function getAllSmartphones()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type";
+        WHERE type = :type AND quantity > 0";
         $params = array(
             'type' => 'smartphone',
         );
@@ -36,7 +36,7 @@ class SmartphoneRepository extends \Doctrine\ORM\EntityRepository
     public function getAllSmartphonesNewToOld()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type
+        WHERE type = :type AND quantity > 0
         ORDER BY date_added DESC";
         $params = array(
             'type' => 'smartphone',
@@ -48,7 +48,7 @@ class SmartphoneRepository extends \Doctrine\ORM\EntityRepository
     public function getAllSmartphonesOldToNew()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type
+        WHERE type = :type AND quantity > 0
         ORDER BY date_added ASC";
         $params = array(
             'type' => 'smartphone',
@@ -60,7 +60,7 @@ class SmartphoneRepository extends \Doctrine\ORM\EntityRepository
     public function getAllSmartphonesHighToLow()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type
+        WHERE type = :type AND quantity > 0
         ORDER BY promotion_price DESC";
         $params = array(
             'type' => 'smartphone',
@@ -72,7 +72,7 @@ class SmartphoneRepository extends \Doctrine\ORM\EntityRepository
     public function getAllSmartphonesLowToHigh()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type
+        WHERE type = :type AND quantity > 0
         ORDER BY promotion_price ASC";
         $params = array(
             'type' => 'smartphone',
@@ -84,11 +84,21 @@ class SmartphoneRepository extends \Doctrine\ORM\EntityRepository
     public function getOnlyDiscount()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type AND discount > 0";
+        WHERE type = :type AND discount > 0 AND quantity > 0";
         $params = array(
             'type' => 'smartphone',
         );
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getHighestQuantitiesProds()
+    {
+        $sql = "SELECT * FROM products
+        INNER JOIN smartphones on smartphones.product_id = products.id
+        ORDER BY quantity DESC
+        LIMIT 5";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
     }
 }

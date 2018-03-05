@@ -35,53 +35,51 @@
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for tablet in tablets %}
-                {% if tablet.quantity > 0 %}
-                    <div class="advert">
-                        <div>
-                            <img src="{{ tablet.image_address }}">
-                            <div class="centerInsideAd tv">
-                                <h3 class="description">{{ tablet.make }}</h3>
-                                <h3 class="description">{{ tablet.model }}</h3>
-                                {% if tablet.discount == 0 %}
-                                    <h3 class="price">{{ tablet.original_price }} $</h3>
+                <div class="advert">
+                    <div>
+                        <img src="{{ tablet.image_address }}">
+                        <div class="centerInsideAd tv">
+                            <h3 class="description">{{ tablet.make }}</h3>
+                            <h3 class="description">{{ tablet.model }}</h3>
+                            {% if tablet.discount == 0 %}
+                                <h3 class="price">{{ tablet.original_price }} $</h3>
+                            {% else %}
+                                <h3 class="price"><span
+                                            class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }}
+                                    $
+                                </h3>
+                            {% endif %}
+                            <div class="buttons">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('editTablet', {'id': tablet.id}) }}">
+                                        <button class="adminOnly">
+                                            Edit
+                                        </button>
+                                    </a>
+                                    <a href="{{ path('deleteTablet', {'id': tablet.id}) }}">
+                                        <button class="adminOnly">
+                                            Delete
+                                        </button>
+                                    </a>
                                 {% else %}
-                                    <h3 class="price"><span
-                                                class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }}
-                                        $
-                                    </h3>
-                                {% endif %}
-                                <div class="buttons">
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <a href="{{ path('editTablet', {'id': tablet.id}) }}">
-                                            <button class="adminOnly">
-                                                Edit
+                                    <a href="{{ path('viewTabletSpecifications', {'id': tablet.id}) }}">
+                                        <button class="viewDetails">
+                                            View Details
+                                        </button>
+                                    </a>
+                                    {% if app.user %}
+                                        <a href="{{ path('addProdToCart', {'productId': tablet.id}) }}">
+                                            <button class="addToCart">
+                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                                Add To Cart
                                             </button>
                                         </a>
-                                        <a href="{{ path('deleteTablet', {'id': tablet.id}) }}">
-                                            <button class="adminOnly">
-                                                Delete
-                                            </button>
-                                        </a>
-                                    {% else %}
-                                        <a href="{{ path('viewTabletSpecifications', {'id': tablet.id}) }}">
-                                            <button class="viewDetails">
-                                                View Details
-                                            </button>
-                                        </a>
-                                        {% if app.user %}
-                                            <a href="{{ path('addProdToCart', {'productId': tablet.id}) }}">
-                                                <button class="addToCart">
-                                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                    Add To Cart
-                                                </button>
-                                            </a>
-                                        {% endif %}
                                     {% endif %}
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                {% endif %}
+                </div>
             {% endfor %}
         </div>
     </section>

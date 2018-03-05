@@ -136,9 +136,10 @@ textarea {
     margin-top: 4px;
 }
 
-section#latestProds {
+section#latestProds, .slider-products {
     width: 90%;
     margin: 10px auto;
+    z-index: 1;
 }
 
 .slick-arrow:before {
@@ -148,7 +149,7 @@ section#latestProds {
     border-radius: 50%;
 }
 
-section#latestProds .advert {
+.slider-products .advert {
     border:none;
 }
 
@@ -211,4 +212,24 @@ section.shopingCart>h1 {
 
 button {
     outline: none !important;
+}
+
+.slider-products {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.you-may-like {
+    margin-left: 80px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+#latestProds-heading {
+    margin-top: 25px;
+}
+
+#otherSmartphones img {
+    margin-bottom: 35px;
 }

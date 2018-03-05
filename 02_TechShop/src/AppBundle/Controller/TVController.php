@@ -90,6 +90,8 @@ class TVController extends Controller
 
         $repo_product = $this->getDoctrine()->getRepository(Product::class);
         $product = $repo_product->find($id);
+        $otherTvs = $repo->getHighestQuantitiesProds();
+
         $review = new Review();
         $productReviews = $product->getReviews();
         $averageGrade = number_format((float)$product->averageGrade(), 2, '.', '');
@@ -126,7 +128,8 @@ class TVController extends Controller
                 'reviews' => $productReviews,
                 'averageGrade' => $averageGrade,
                 'form' => $form->createView(),
-                'userReview' => $userReview));
+                'userReview' => $userReview,
+                'otherTvs' => $otherTvs));
     }
 
     /**

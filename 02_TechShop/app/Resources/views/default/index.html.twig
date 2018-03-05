@@ -2,7 +2,16 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/slick.css') }}" >
+    <style>
+        @font-face {
+            font-family: slick;
+            font-weight: normal;
+            font-style: normal;
+            src: url('{{ asset('fonts/slick.eot') }}');
+            src: url('{{ asset('fonts/slick.eot') }}#iefix') format('embedded-opentype'), url("{{ asset('fonts/slick.woff') }}") format('woff'), url('{{ asset('fonts/slick.ttf') }}') format('truetype'), url('{{ asset('fonts/slick.svg') }}#slick') format('svg');
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('css/slick-theme.css') }}">
 {% endblock %}
 
@@ -10,48 +19,16 @@
     <header class="masthead">
         <img src="{{ asset('images/header-bg.jpg') }}">
     </header>
-    <h2 class="latestProds-heading">View latest products:</h2>
-    <section id="latestProds">
-            {% for prod in prods %}
-                {% if prod.type == 'laptop' %}
-                    <div class="advert">
-                        <div>
-                            <img src="{{ prod.image_address }}">
-                            <div class="centerInsideAd tv">
-                                <h3 class="description">{{ prod.make }}</h3>
-                                <h3 class="description">{{ prod.model }}</h3>
-                                {% if prod.discount == 0 %}
-                                    <h3 class="price">{{ prod.original_price }} $</h3>
-                                {% else %}
-                                    <h3 class="price"><span
-                                                class="oldPrice">{{ prod.original_price }}</span> {{ prod.promotion_price }}
-                                        $
-                                    </h3>
-                                {% endif %}
-                                <div class="buttons">
-                                    <a href="{{ path('viewLaptopSpecifications', {id: prod.id}) }}">
-                                        <button class="viewDetails">
-                                            View Details
-                                        </button>
-                                    </a>
-                                    {% if app.user %}
-                                        <a href="{{ path('addProdToCart', {'productId': prod.id}) }}">
-                                            <button class="addToCart">
-                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                Add To Cart
-                                            </button>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if prod.type == 'smartphone' %}
-                    <div class="advert">
-                        <div class="centerInsideAd">
-                            <img src="{{ prod.image_address }}">
-                            <h3 class="description">{{ prod.make }} {{ prod.model }}</h3>
+    <h2 class="you-may-like" id="latestProds-heading">View latest products:</h2>
+    <section id="latestProds" class="slider-products">
+        {% for prod in prods %}
+            {% if prod.type == 'laptop' %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ prod.image_address }}">
+                        <div class="centerInsideAd tv">
+                            <h3 class="description">{{ prod.make }}</h3>
+                            <h3 class="description">{{ prod.model }}</h3>
                             {% if prod.discount == 0 %}
                                 <h3 class="price">{{ prod.original_price }} $</h3>
                             {% else %}
@@ -61,7 +38,7 @@
                                 </h3>
                             {% endif %}
                             <div class="buttons">
-                                <a href="{{ path('viewSmartphoneSpecifications', {'id': prod.id}) }}">
+                                <a href="{{ path('viewLaptopSpecifications', {id: prod.id}) }}">
                                     <button class="viewDetails">
                                         View Details
                                     </button>
@@ -77,76 +54,108 @@
                             </div>
                         </div>
                     </div>
-                {% endif %}
-                {% if prod.type == 'tablet' %}
-                    <div class="advert">
-                        <div>
-                            <img src="{{ prod.image_address }}">
-                            <div class="centerInsideAd tv">
-                                <h3 class="description">{{ prod.make }}</h3>
-                                <h3 class="description">{{ prod.model }}</h3>
-                                {% if prod.discount == 0 %}
-                                    <h3 class="price">{{ prod.original_price }} $</h3>
-                                {% else %}
-                                    <h3 class="price"><span
-                                                class="oldPrice">{{ prod.original_price }}</span> {{ prod.promotion_price }}
-                                        $
-                                    </h3>
-                                {% endif %}
-                                <div class="buttons">
-                                    <a href="{{ path('viewTabletSpecifications', {'id': prod.id}) }}">
-                                        <button class="viewDetails">
-                                            View Details
+                </div>
+            {% endif %}
+            {% if prod.type == 'smartphone' %}
+                <div class="advert">
+                    <div class="centerInsideAd">
+                        <img src="{{ prod.image_address }}">
+                        <h3 class="description">{{ prod.make }} {{ prod.model }}</h3>
+                        {% if prod.discount == 0 %}
+                            <h3 class="price">{{ prod.original_price }} $</h3>
+                        {% else %}
+                            <h3 class="price"><span
+                                        class="oldPrice">{{ prod.original_price }}</span> {{ prod.promotion_price }}
+                                $
+                            </h3>
+                        {% endif %}
+                        <div class="buttons">
+                            <a href="{{ path('viewSmartphoneSpecifications', {'id': prod.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                            {% if app.user %}
+                                <a href="{{ path('addProdToCart', {'productId': prod.id}) }}">
+                                    <button class="addToCart">
+                                        <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                        Add To Cart
+                                    </button>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if prod.type == 'tablet' %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ prod.image_address }}">
+                        <div class="centerInsideAd tv">
+                            <h3 class="description">{{ prod.make }}</h3>
+                            <h3 class="description">{{ prod.model }}</h3>
+                            {% if prod.discount == 0 %}
+                                <h3 class="price">{{ prod.original_price }} $</h3>
+                            {% else %}
+                                <h3 class="price"><span
+                                            class="oldPrice">{{ prod.original_price }}</span> {{ prod.promotion_price }}
+                                    $
+                                </h3>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{{ path('viewTabletSpecifications', {'id': prod.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
+                                {% if app.user %}
+                                    <a href="{{ path('addProdToCart', {'productId': prod.id}) }}">
+                                        <button class="addToCart">
+                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                            Add To Cart
                                         </button>
                                     </a>
-                                    {% if app.user %}
-                                        <a href="{{ path('addProdToCart', {'productId': prod.id}) }}">
-                                            <button class="addToCart">
-                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                Add To Cart
-                                            </button>
-                                        </a>
-                                    {% endif %}
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                {% endif %}
-                {% if prod.type == 'tv' %}
-                    <div class="advert">
-                        <div>
-                            <img src="{{ prod.image_address }}">
-                            <div class="centerInsideAd tv">
-                                <h3 class="description">{{ prod.make }}</h3>
-                                <h3 class="description">{{ prod.model }}</h3>
-                                {% if prod.discount == 0 %}
-                                    <h3 class="price">{{ prod.original_price }} $</h3>
-                                {% else %}
-                                    <h3 class="price"><span
-                                                class="oldPrice">{{ prod.original_price }}</span> {{ prod.promotion_price }}
-                                        $
-                                    </h3>
-                                {% endif %}
-                                <div class="buttons">
-                                    <a href="{{ path('viewTVSpecifications', {id: prod.id}) }}">
-                                        <button class="viewDetails">
-                                            View Details
+                </div>
+            {% endif %}
+            {% if prod.type == 'tv' %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ prod.image_address }}">
+                        <div class="centerInsideAd tv">
+                            <h3 class="description">{{ prod.make }}</h3>
+                            <h3 class="description">{{ prod.model }}</h3>
+                            {% if prod.discount == 0 %}
+                                <h3 class="price">{{ prod.original_price }} $</h3>
+                            {% else %}
+                                <h3 class="price"><span
+                                            class="oldPrice">{{ prod.original_price }}</span> {{ prod.promotion_price }}
+                                    $
+                                </h3>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{{ path('viewTVSpecifications', {id: prod.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
+                                {% if app.user %}
+                                    <a href="{{ path('addProdToCart', {'productId': prod.id}) }}">
+                                        <button class="addToCart">
+                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                            Add To Cart
                                         </button>
                                     </a>
-                                    {% if app.user %}
-                                        <a href="{{ path('addProdToCart', {'productId': prod.id}) }}">
-                                            <button class="addToCart">
-                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                                Add To Cart
-                                            </button>
-                                        </a>
-                                    {% endif %}
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                {% endif %}
-            {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
     </section>
 {% endblock %}
 
@@ -156,13 +165,29 @@
     <script>
         $('#latestProds').slick({
             infinite: true,
-            initialSlide: 3,
-            dots: true,
-            arrow:true,
-            speed: 300,
+            initialSlide: 0,
             slidesToShow: 3,
-            slidesToScroll: 3,
+            arrow: true,
+            dots: true,
+            speed: 300,
             centerMode: true,
+            rows: 2,
+            responsive: [
+                {
+                    breakpoint: 960,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 576,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
         });
     </script>
 {% endblock %}

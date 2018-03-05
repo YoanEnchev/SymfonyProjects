@@ -1,15 +1,5 @@
 @charset "UTF-8";
 
-/* Icons */
-@font-face
-{
-    font-family: slick;
-    font-weight: normal;
-    font-style: normal;
-
-    src: url('../../web/fonts/slick.eot');
-    src: url('../../web/fonts/slick.eot?#iefix') format('embedded-opentype'), url('../../web/fonts/slick.woff') format('woff'), url('../../web/fonts/slick.ttf') format('truetype'), url('../../web/fonts/slick.svg#slick') format('svg');
-}
 /* Arrows */
 .slick-prev,
 .slick-next
@@ -64,7 +54,7 @@
 {
     font-family: slick;
 
-    font-size: 20px;
+    font-size: 50px;
     line-height: 1;
 
     opacity: .75;
@@ -104,6 +94,8 @@
 .slick-next:before
 {
     content: '→';
+    position: relative;
+    left: -20px;
 }
 [dir='rtl'] .slick-next:before
 {
@@ -175,7 +167,7 @@
 .slick-dots li button:before
 {
     font-family: slick;
-    font-size: 6px;
+    font-size: 16px;
     line-height: 20px;
 
     position: absolute;
