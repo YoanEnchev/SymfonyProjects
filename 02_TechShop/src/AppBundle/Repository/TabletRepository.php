@@ -13,7 +13,7 @@ class TabletRepository extends \Doctrine\ORM\EntityRepository
     public function getAllTablets()
     {
         $sql = "SELECT * FROM products
-        WHERE type = :type";
+        WHERE type = :type AND quantity > 0";
         $params = array(
             'type' => 'tablet',
         );
@@ -30,6 +30,75 @@ class TabletRepository extends \Doctrine\ORM\EntityRepository
             'id' => $id,
         );
 
-        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll()[0];
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsNewToOld()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND quantity > 0
+        ORDER BY date_added DESC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsOldToNew()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND quantity > 0
+        ORDER BY date_added ASC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsHighToLow()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND quantity > 0
+        ORDER BY promotion_price DESC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getAllTabletsLowToHigh()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND quantity > 0
+        ORDER BY promotion_price ASC";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getOnlyDiscount()
+    {
+        $sql = "SELECT * FROM products
+        WHERE type = :type AND discount > 0 AND quantity > 0";
+        $params = array(
+            'type' => 'tablet',
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function getHighestQuantitiesProds()
+    {
+        $sql = "SELECT * FROM products
+        INNER JOIN tablets on tablets.product_id = products.id
+        ORDER BY quantity DESC
+        LIMIT 5";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
     }
 }

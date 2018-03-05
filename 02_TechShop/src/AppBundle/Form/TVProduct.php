@@ -20,6 +20,7 @@ class TVProduct extends AbstractType
             ->add('originalPrice', NumberType::class)
             ->add('imageAddress', TextType::class)
             ->add('discount', NumberType::class)
+            ->add('quantity', NumberType::class)
             ->add('screenDiagonalSize', NumberType::class)
             ->add('isSmart', CheckboxType::class)
             ->add('hasUSBPort', CheckboxType::class)

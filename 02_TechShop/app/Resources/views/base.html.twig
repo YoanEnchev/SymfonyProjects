@@ -26,10 +26,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('logout') }}">Logout<span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('shoppingCart') }}">Shopping Cart<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('wishlist') }}">Wish List<span
+                                    class="sr-only">(current)</span></a>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">(current)</span></a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">(current)</span></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('login') }}">Login<span class="sr-only">(current)</span></a>
                     </li>
@@ -46,18 +53,24 @@
                         <a class="dropdown-item" href="{{ path('listAllTablets') }}">Tablet</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Add Product
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('createSmartphone') }}">Smartphone</a>
-                        <a class="dropdown-item" href="{{ path('createTV') }}">TV</a>
-                        <a class="dropdown-item" href="{{ path('createLaptop') }}">Laptop</a>
-                        <a class="dropdown-item" href="{{ path('createTablet') }}">Tablet</a>
-                    </div>
-                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add Product
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{ path('createSmartphone') }}">Smartphone</a>
+                            <a class="dropdown-item" href="{{ path('createTV') }}">TV</a>
+                            <a class="dropdown-item" href="{{ path('createLaptop') }}">Laptop</a>
+                            <a class="dropdown-item" href="{{ path('createTablet') }}">Tablet</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('listUsers') }}">Ban Users<span class="sr-only">(current)</span></a>
+                    </li>
+
+                {% endif %}
             </ul>
         </div>
     </nav>

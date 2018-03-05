@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Add Smartphone
+{% endblock %}
+
 {% block main %}
     <form name="smartphone_product" method="post">
         <div id="smartphone_product">
@@ -26,6 +30,11 @@
             <div class="form-group">
                 <label for="smartphone_product_discount" class="required">Discount</label>
                 <input type="text" class="form-control" id="smartphone_product_discount" name="smartphone_product[discount]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="smartphone_product_quantity" class="required">Quantity</label>
+                <input type="text" class="form-control" id="smartphone_product_quantity" name="smartphone_product[quantity]" required="required">
             </div>
 
             <div class="form-group">
@@ -71,6 +80,7 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="smartphone_product_submit" name="smartphone_product[submit]">Submit</button>
             </div>
+        </div>
     </form>
 {% endblock %}
 

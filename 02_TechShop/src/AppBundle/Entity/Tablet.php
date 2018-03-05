@@ -250,5 +250,16 @@ class Tablet
     {
         $this->product = $product;
     }
+
+    public function editData(int $ram, int $capacity, int $displayDiagonal, int $processorFrequency, int $processorCores,
+    string $operationSystem)
+    {
+        $this->setRam($ram);
+        $this->setCapacity($capacity);
+        $this->setDisplayDiagonal($displayDiagonal);
+        $this->setProcessorFrequency($processorFrequency);
+        $this->setProcessorCores($processorCores);
+        $this->setOperationSystem($operationSystem);
+    }
 }
 

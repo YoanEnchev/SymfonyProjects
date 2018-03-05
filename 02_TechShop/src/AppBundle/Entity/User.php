@@ -39,27 +39,6 @@ class User implements UserInterface, Serializable
     private $password;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255, nullable=true)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     */
-    private $address;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Role")
@@ -70,9 +49,35 @@ class User implements UserInterface, Serializable
      */
     private $roles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ProductInCart")
+     * @ORM\JoinTable(name="users_products_in_cart",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_in_cart_id", referencedColumnName="id", unique=false)}
+     *      )
+     */
+    private $productsInShoppingCart;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     * @ORM\JoinTable(name="users_products_wishlist",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id", unique=false)}
+     *      )
+     */
+    private $productsInWishlist;
+
+    /**
+     * One User has Many Reviews.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->productsInShoppingCart = new ArrayCollection();
+        $this->productsInWishlist = new ArrayCollection();
     }
 
     /**
@@ -134,75 +139,39 @@ class User implements UserInterface, Serializable
     }
 
     /**
-     * Set phone
-     *
-     * @param string $phone
-     *
+     * @param ProductInCart $product
      * @return User
      */
-    public function setPhone($phone)
+    public function addToShoppingCart(ProductInCart $product)
     {
-        $this->phone = $phone;
+        if ( !$this->productsInShoppingCart->contains($product) ) {
+            $this->productsInShoppingCart[] = $product;
+        }
 
         return $this;
     }
 
-    /**
-     * Get phone
-     *
-     * @return string
-     */
-    public function getPhone()
+    public function removeProdFromCart(ProductInCart $productToRemove)
     {
-        return $this->phone;
+        $this->productsInShoppingCart->removeElement($productToRemove);
     }
 
     /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return User
+     * @param Product $product
+     * @return $this
      */
-    public function setCity($city)
+    public function addToWishlist(Product $product)
     {
-        $this->city = $city;
+        if ( !$this->productsInWishlist->contains($product) ) {
+            $this->productsInWishlist[] = $product;
+        }
 
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
+    public function removeProdFromWishlist(Product $productToRemove)
     {
-        return $this->city;
-    }
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return User
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
+        $this->productsInWishlist->removeElement($productToRemove);
     }
 
     /**
@@ -224,8 +193,7 @@ class User implements UserInterface, Serializable
     public function getRoles()
     {
         $stringRoles = [];
-        foreach ($this->roles as $role)
-        {
+        foreach ($this->roles as $role) {
             /** @var $role Role */
             $stringRoles[] = $role->getRole();
         }
@@ -237,6 +205,26 @@ class User implements UserInterface, Serializable
         $this->roles[] = $role;
 
         return $this;
+    }
+
+    public function clearShoppingCart() //remove out of stock products
+    {
+        /** @var ProductInCart $prod */
+        foreach ($this->productsInShoppingCart as $prod) {
+            if($prod->getProduct()->getQuantity() <= 0) {
+                $this->productsInShoppingCart->removeElement($prod);
+            }
+        }
+    }
+
+    public function clearWishlist() //remove out of stock products
+    {
+        /** @var Product $prod */
+        foreach ($this->getProductsInWishlist() as $prod) {
+            if($prod->getQuantity() <= 0) {
+                $this->productsInWishlist->removeElement($prod);
+            }
+        }
     }
 
     /**
@@ -293,6 +281,84 @@ class User implements UserInterface, Serializable
             $this->username,
             $this->password
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProductsInShoppingCart()
+    {
+        return $this->productsInShoppingCart;
+    }
+
+    /**
+     * @param mixed $productsInShoppingCart
+     *
+     * @return User
+     */
+    public function setProductsInShoppingCart($productsInShoppingCart)
+    {
+        $this->productsInShoppingCart = $productsInShoppingCart;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductsInWishlist()
+    {
+        return $this->productsInWishlist;
+    }
+
+    /**
+     * @param mixed $productsInWishlist
+     */
+    public function setProductsInWishlist($productsInWishlist)
+    {
+        $this->productsInWishlist = $productsInWishlist;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param mixed $reviews
+     */
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
+    }
+
+    public function totalCostOfShoppingCart(): float
+    {
+        $totalCost = 0;
+
+        /** @var ProductInCart $prodInCart */
+        foreach ($this->productsInShoppingCart as $prodInCart)
+        {
+            $totalCost += $prodInCart->getUserRequiredQuantity() * $prodInCart->getProduct()->getPromotionPrice();
+        }
+
+        return $totalCost;
+    }
+
+    public function allProdsFromCartAvaliable(): bool
+    {
+        $prodsInCart = $this->getProductsInShoppingCart();
+        /** @var ProductInCart $prodInCart */
+        foreach ($prodsInCart as $prodInCart) {
+            if($prodInCart->getUserRequiredQuantity() > $prodInCart->getProduct()->getQuantity()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

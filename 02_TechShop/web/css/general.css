@@ -7,3 +7,229 @@ form {
     max-width: 700px;
     margin: 10px auto;
 }
+
+a:hover {
+    cursor: pointer !important;
+}
+
+button.addToWishlist, button.orderNow, button.addToCart-big {
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    border:none;
+    padding: 5px;
+    width: 250px;
+    margin: 15px 35px;
+
+}
+
+button.addToWishlist {
+    background: #ff0032;
+}
+
+button.orderNow {
+    background: #256dff;
+    float: right;
+}
+
+section.wrapper {
+    max-width: 1000px;
+    margin: 10px auto;
+}
+
+.review-heading {
+    margin-left: 140px;
+}
+
+.review-heading {
+    margin-top: 20px;
+}
+
+div.actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+h3.averageGrade, #average {
+    display: inline-block;
+}
+
+.viewReviews {
+    margin-left: 144px;
+    margin-bottom: 40px;
+}
+
+#average {
+    margin-left: -8px;
+}
+
+#rateUser {
+    margin-left: 133px;
+}
+
+textarea {
+    height:110px;
+}
+
+.review {
+    padding: 10px;
+}
+
+.yourReview {
+    margin-left: 140px;
+}
+
+.sortAndFilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.orderByDate, .orderByPrice, .onlySales {
+    color: white;
+    border: none;
+}
+
+.orderByDate {
+    background: #1d36ff;
+}
+
+.orderByPrice {
+    background: #da4c00;
+}
+
+.onlySales {
+    background: red;
+}
+
+.cover {
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+.orderByDate.dropdown-toggle:hover {
+    background-color: #1d36ff;
+    color:white;
+}
+
+.orderByPrice.dropdown-toggle:hover {
+    background-color: #da4c00;
+    color:white;
+}
+
+.addToCart-big {
+    background-color: #da4c00;
+}
+
+.review .heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.stars-1, .stars-2, .stars-3, .stars-4, .stars-5 {
+    margin-top: 4px;
+}
+
+section#latestProds, .slider-products {
+    width: 90%;
+    margin: 10px auto;
+    z-index: 1;
+}
+
+.slick-arrow:before {
+    background: rgba(0,0,0,0.5);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.slider-products .advert {
+    border:none;
+}
+
+.latestProds-heading {
+    margin-left: 55px;
+    margin-top: 10px;
+}
+
+.notice {
+    width: 80%;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.notice span {
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+.navigation {
+    margin-top: 20px;
+}
+
+.setQuantity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.setQuantity {
+    margin: 0;
+}
+
+.totalSum {
+    margin-top: 12px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.totalSum h3 {
+    display: inline-block;
+    margin-right: 20px;
+    position: relative;
+    bottom: -5px;
+}
+
+section.shopingCart>h1 {
+    text-align: center;
+}
+
+button {
+    outline: none !important;
+}
+
+.slider-products {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.you-may-like {
+    margin-left: 80px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+#latestProds-heading {
+    margin-top: 25px;
+}
+
+#otherSmartphones img {
+    margin-bottom: 35px;
+}

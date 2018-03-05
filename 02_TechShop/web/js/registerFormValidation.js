@@ -2,9 +2,8 @@
     //fields:
     const usermameBox = $('#app_bundle_user_type_username');
     const emailBox = $('#app_bundle_user_type_email');
-    const passwordBox = $('#app_bundle_user_type_plainPassword_first');
-    const repeatPasswordBox = $('#app_bundle_user_type_plainPassword_second');
-    const phoneBox = $('#app_bundle_user_type_phone');
+    const passwordBox = $('#app_bundle_user_type_password_first');
+    const repeatPasswordBox = $('#app_bundle_user_type_password_second');
 
     //regexes:
     const usernameRegex_length = /^.{3,30}$/;
@@ -16,8 +15,6 @@
     const passwordRegex_length = /^.{6,30}$/;
     const passwordRegex_symbols = /^(.*[A-Z].*[a-z].*[0-9].*)$/;
     const passwordRegex_complete = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
-
-    const phoneRegex = /.*/;
 
     //error message boxes:
     const usernameError = $('#invalidUsername');
@@ -39,8 +36,6 @@
     passwordBox.keyup(() => passwordMatchAction('Passwords do not match.'));
 
     repeatPasswordBox.keyup(() => passwordMatchAction('Passwords do not match.'));
-
-    phoneBox.keyup(() => validAction(phoneBox, phoneRegex));
 
 
     function invalidAction(textfield ,regex, errorBox, message) {

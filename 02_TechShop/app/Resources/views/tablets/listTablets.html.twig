@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Tablets
+{% endblock %}
+
 {% block main %}
+    <div class="cover">
+        <div class="sortAndFilter">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByDate" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Date
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllTabletsNewToOld') }}">New to Old</a>
+                    <a class="dropdown-item" href="{{ path('listAllTabletsOldToNew') }}">Old To New</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Price
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllTabletsHighToLow') }}">High to Low</a>
+                    <a class="dropdown-item" href="{{ path('listAllTabletsLowToHigh') }}">Low To High</a>
+                </div>
+            </div>
+            <a href="{{ path('listTabletsDiscount') }}">
+                <button type="button" class="btn onlySales">Only Sales</button>
+            </a>
+        </div>
+    </div>
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for tablet in tablets %}
@@ -14,24 +45,46 @@
                                 <h3 class="price">{{ tablet.original_price }} $</h3>
                             {% else %}
                                 <h3 class="price"><span
-                                            class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }} $
+                                            class="oldPrice">{{ tablet.original_price }}</span> {{ tablet.promotion_price }}
+                                    $
                                 </h3>
                             {% endif %}
                             <div class="buttons">
-                                <a href="{{ path('viewTabletSpecifications', {'id': tablet.id}) }}">
-                                <button class="viewDetails">
-                                    View Details
-                                </button>
-                                </a>
-                                <button class="addToCart">
-                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                    Add To Cart
-                                </button>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('editTablet', {'id': tablet.id}) }}">
+                                        <button class="adminOnly">
+                                            Edit
+                                        </button>
+                                    </a>
+                                    <a href="{{ path('deleteTablet', {'id': tablet.id}) }}">
+                                        <button class="adminOnly">
+                                            Delete
+                                        </button>
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('viewTabletSpecifications', {'id': tablet.id}) }}">
+                                        <button class="viewDetails">
+                                            View Details
+                                        </button>
+                                    </a>
+                                    {% if app.user %}
+                                        <a href="{{ path('addProdToCart', {'productId': tablet.id}) }}">
+                                            <button class="addToCart">
+                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                                Add To Cart
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
-                    </div>p
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </section>
+
+    <div class="navigation">
+        {{ knp_pagination_render(tablets) }}
+    </div>
 {% endblock %}

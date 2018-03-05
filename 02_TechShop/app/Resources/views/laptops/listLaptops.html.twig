@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Laptops
+{% endblock %}
+
 {% block main %}
+    <div class="cover">
+        <div class="sortAndFilter">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByDate" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Date
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsNewToOld') }}">New to Old</a>
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsOldToNew') }}">Old To New</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Price
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsHighToLow') }}">High to Low</a>
+                    <a class="dropdown-item" href="{{ path('listAllLaptopsLowToHigh') }}">Low To High</a>
+                </div>
+            </div>
+            <a href="{{ path('listLaptopsDiscount') }}">
+                <button type="button" class="btn onlySales">Only Sales</button>
+            </a>
+        </div>
+    </div>
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for laptop in laptops %}
@@ -19,15 +50,32 @@
                                 </h3>
                             {% endif %}
                             <div class="buttons">
-                                <a href="{{ path('viewLaptopSpecifications', {id: laptop.id}) }}">
-                                    <button class="viewDetails">
-                                        View Details
-                                    </button>
-                                </a>
-                                <button class="addToCart">
-                                    <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                    Add To Cart
-                                </button>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('editLaptop', {'id': laptop.id}) }}">
+                                        <button class="adminOnly">
+                                            Edit
+                                        </button>
+                                    </a>
+                                    <a href="{{ path('deleteLaptop', {'id': laptop.id}) }}">
+                                        <button class="adminOnly">
+                                            Delete
+                                        </button>
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('viewLaptopSpecifications', {'id': laptop.id}) }}">
+                                        <button class="viewDetails">
+                                            View Details
+                                        </button>
+                                    </a>
+                                    {% if app.user %}
+                                        <a href="{{ path('addProdToCart', {'productId': laptop.id}) }}">
+                                            <button class="addToCart">
+                                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                                Add To Cart
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -35,4 +83,8 @@
             {% endfor %}
         </div>
     </section>
+
+    <div class="navigation">
+        {{ knp_pagination_render(laptops) }}
+    </div>
 {% endblock %}

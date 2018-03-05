@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Product;
 
 /**
  * ProductRepository
@@ -12,21 +11,25 @@ use AppBundle\Entity\Product;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function insertNewProduct(Product $product)
+    public function getNewestProds()
     {
-        $sql = "INSERT INTO products (make, model, original_price, type, image_address, date_added, discount, promotion_price)
-        VALUES (:make, :model, :originalPrice, :type, :imageAddress, :dateAdded, :discount, :promotionPrice);";
+        $sql = "SELECT * FROM products
+        WHERE quantity > 0 AND quantity > 0
+        ORDER BY date_added DESC
+        LIMIT 10";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function getProdByMakeAndType($make, $type)
+    {
+        $sql = "SELECT * FROM products
+        WHERE type=:type AND UPPER(make) = UPPER(:make)";
         $params = array(
-            'make' => $product->getMake(),
-            'model' => $product->getModel(),
-            'originalPrice' => $product->getOriginalPrice(),
-            'type' => $product->getType(),
-            'imageAddress' => $product->getImageAddress(),
-            'dateAdded' => $product->getDateAdded(),
-            'discount' => $product->getDiscount(),
-            'promotionPrice' => $product->getPromotionPrice(),
+            'type' => $type,
+            'make' => $make
         );
 
-        $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
 }

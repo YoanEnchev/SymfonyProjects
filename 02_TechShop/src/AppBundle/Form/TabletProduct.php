@@ -19,6 +19,7 @@ class TabletProduct extends AbstractType
             ->add('originalPrice', NumberType::class)
             ->add('imageAddress', TextType::class)
             ->add('discount', NumberType::class)
+            ->add('quantity', NumberType::class)
             ->add('ram', NumberType::class)
             ->add('capacity', TextType::class)
             ->add('displayDiagonal', NumberType::class)

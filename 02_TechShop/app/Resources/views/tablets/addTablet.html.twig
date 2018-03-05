@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Add tablet
+{% endblock %}
+
 {% block main %}
     <form name="tablet_product" method="post">
         <div id="tablet_product">
@@ -25,6 +29,11 @@
             <div class="form-group">
                 <label for="tablet_product_discount" class="required">Discount</label>
                 <input type="number" class="form-control" id="tablet_product_discount" name="tablet_product[discount]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="tablet_product_quantity" class="required">Quantity</label>
+                <input type="number" class="form-control" id="tablet_product_quantity" name="tablet_product[quantity]" required="required">
             </div>
 
             <div class="form-group">

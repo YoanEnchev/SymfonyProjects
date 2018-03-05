@@ -318,5 +318,18 @@ class Smartphone
 
         return $this;
     }
+
+    public function editData(string $ram, string $resolution, int $frontCameraResolution, int $backCameraResolution,
+    int $screenDiagonalSize, int $memory, int $processorFrequency, string $color)
+    {
+        $this->setRAM($ram);
+        $this->setResolution($resolution);
+        $this->setFrontCameraResolution($frontCameraResolution);
+        $this->setBackCameraResolution($backCameraResolution);
+        $this->setScreenDiagonalSize($screenDiagonalSize);
+        $this->setMemory($memory);
+        $this->setProcessorFrequency($processorFrequency);
+        $this->setColor($color);
+    }
 }
 

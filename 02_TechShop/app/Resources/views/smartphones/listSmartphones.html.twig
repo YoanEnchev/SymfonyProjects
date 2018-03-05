@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Smartphones
+{% endblock %}
+
 {% block main %}
+    <div class="cover">
+        <div class="sortAndFilter">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByDate" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Date
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllSmartphonesNewToOld') }}">New to Old</a>
+                    <a class="dropdown-item" href="{{ path('listAllSmartphonesOldToNew') }}">Old To New</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order By Price
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path('listAllSmartphonesHighToLow') }}">High to Low</a>
+                    <a class="dropdown-item" href="{{ path('listAllSmartphonesLowToHigh') }}">Low To High</a>
+                </div>
+            </div>
+            <a href="{{ path('listSmartphonesDiscount') }}">
+                <button type="button" class="btn onlySales">Only Sales</button>
+            </a>
+        </div>
+    </div>
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
             {% for phone in smartphones %}
@@ -12,23 +43,46 @@
                             <h3 class="price">{{ phone.original_price }} $</h3>
                         {% else %}
                             <h3 class="price"><span
-                                        class="oldPrice">{{ phone.original_price }}</span> {{ phone.promotion_price }} $
+                                        class="oldPrice">{{ phone.original_price }}</span> {{ phone.promotion_price }}
+                                $
                             </h3>
                         {% endif %}
                         <div class="buttons">
-                            <a href="{{ path('viewSmartphoneSpecifications', {'id': phone.id}) }}">
-                            <button class="viewDetails">
-                                View Details
-                            </button>
-                            </a>
-                            <button class="addToCart">
-                                <i class="fa fa-shopping-cart" style="font-size:14px"></i>
-                                Add To Cart
-                            </button>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('editSmartphone', {'id': phone.id}) }}">
+                                    <button class="adminOnly">
+                                        Edit
+                                    </button>
+                                </a>
+                                <a href="{{ path('deleteSmartphone', {'id': phone.id}) }}">
+                                    <button class="adminOnly">
+                                        Delete
+                                    </button>
+                                </a>
+                            {% else %}
+
+                                <a href="{{ path('viewSmartphoneSpecifications', {'id': phone.id}) }}">
+                                    <button class="viewDetails">
+                                        View Details
+                                    </button>
+                                </a>
+                                {% if app.user %}
+                                    <a href="{{ path('addProdToCart', {'productId': phone.id}) }}">
+                                        <button class="addToCart">
+                                            <i class="fa fa-shopping-cart" style="font-size:14px"></i>
+                                            Add To Cart
+                                        </button>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </section>
+
+    <div class="navigation">
+        {{ knp_pagination_render(smartphones) }}
+    </div>
 {% endblock %}
