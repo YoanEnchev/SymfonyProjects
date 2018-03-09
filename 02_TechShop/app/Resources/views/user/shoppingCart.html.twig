@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/shopping-cart.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="notice">
+        <p><span>Notice:</span>Products that have gone out of quantity are automatically removed from shopping cart.</p>
+    </div>
+    <section class="shopingCart">
+        {% for prod in shoppingCart %}
+            <div class="product-in-cart">
+                <div>
+                    <img class="prod-image"
+                         src="{{ prod.product.imageAddress }}"/>
+                </div>
+                <div class="makeAndPrice">
+                    <h3>{{ prod.product.make }} {{ prod.product.model }}</h3>
+                    {% if prod.product.discount == 0 %}
+                        <h3 class="price">{{ prod.product.originalPrice }} $</h3>
+                    {% else %}
+                        <h3 class="price"><span
+                                    class="oldPrice">{{ prod.product.originalPrice }}</span> {{ prod.product.promotionPrice }} $
+                        </h3>
+                    {% endif %}
+                    <div class="buttons">
+                        {% if prod.product.type == 'smartphone' %}
+                            <a href="{{ path('viewSmartphoneSpecifications', {'id': prod.product.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% elseif prod.product.type == 'tablet' %}
+                            <a href="{{ path('viewTabletSpecifications', {'id': prod.product.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% elseif prod.product.type == 'laptop' %}
+                            <a href="{{ path('viewLaptopSpecifications', {'id': prod.product.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% elseif prod.product.type == 'tv' %}
+                            <a href="{{ path('viewTVSpecifications', {'id': prod.product.id}) }}">
+                                <button class="viewDetails">
+                                    View Details
+                                </button>
+                            </a>
+                        {% endif %}
+                        <a href="{{  path('buySingleProduct', {'id': prod.product.id}) }}">
+                        <button class="buyProduct">
+                            Buy Product
+                        </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="setQuantity">
+                    <label for="{{ prod.id }}">Quantity</label>
+                    <input type="number" id="{{ prod.id }}" class="qty" value="{{ prod.userRequiredQuantity }}" >
+                    <a href="{{ path('setQuantity', {'id': prod.id, 'newQuantity': prod.userRequiredQuantity }) }}">
+                    <button class="btn-xs btn-primary">Set Quantity</button>
+                    </a>
+                </div>
+                <a href="{{ path('removeFromCart', {'productId': prod.id}) }}">
+                    <div class="remove">
+                        x
+                    </div>
+                </a>
+            </div>
+            {% else %}
+            <h1>No products in shopping cart.</h1>
+        {% endfor %}
+    </section>
+    {% if totalCost > 0 %}
+    <div class="totalSum">
+        <h3>Your Purchase would cost <span class="price">{{ totalCost|number_format(2, '.', '')}} $</span></h3>
+        <a href="{{ path('buyProdsFromCart') }}">
+            <button class="btn btn-primary">Order Products</button>
+        </a>
+    </div>
+        {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+ {{ parent() }}
+    <script src="{{ asset('js/handleQuantityRedirect.js') }}"></script>
+{% endblock %}

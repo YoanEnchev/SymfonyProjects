@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Purchase Shopping Cart
+{% endblock %}
+
+{% block main %}
+    <form name="cart_purchase" method="post">
+        <div id="cart_purchase">
+            <div class="form-group">
+                <label for="cart_purchase_phone" class="required">Phone</label>
+                <input class="form-control" type="text" id="cart_purchase_phone" name="cart_purchase[phone]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="cart_purchase_city" class="required">City</label>
+                <input class="form-control" type="text" id="cart_purchase_city" name="cart_purchase[city]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="cart_purchase_address" class="required">Address</label>
+                <input class="form-control" type="text" id="cart_purchase_address" name="cart_purchase[address]" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="cart_purchase_creditCardNumber" class="required">Credit card number</label>
+                <input class="form-control" type="text" id="cart_purchase_creditCardNumber" name="cart_purchase[creditCardNumber]" required="required"
+                       placeholder="1111 2222 3333 4444">
+                <div class="form-control-feedback" id="invalid-card-number"></div>
+            </div>
+            {{ form_row(form._token) }}
+            <div class="form-group">
+                <label for="cart_purchase_inputDateValidThrough" class="required">Card valid through</label>
+                <input class="form-control" type="text" id="cart_purchase_inputDateValidThrough" name="cart_purchase[inputDateValidThrough]" required="required"
+                       placeholder="MM/YYYY">
+                <div class="form-control-feedback" id="invalid-card-date"></div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="cart_purchase_submit" name="cart_purchase[submit]">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/purchaseFormValidationForCart.js') }}"></script>
+{% endblock %}
+

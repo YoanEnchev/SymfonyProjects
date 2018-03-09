@@ -138,7 +138,7 @@ textarea {
 
 section#latestProds, .slider-products {
     width: 90%;
-    margin: 10px auto;
+    margin: 65px auto;
     z-index: 1;
 }
 
@@ -232,4 +232,52 @@ button {
 
 #otherSmartphones img {
     margin-bottom: 35px;
+}
+
+.category-name {
+    text-align: center;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+    text-decoration: none;
+}
+
+section.categories div.category {
+    width: 25%;
+    box-sizing: content-box;
+    display: inline-block;
+    float: left;
+}
+
+section.categories img {
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px)
+{
+    section.categories div.category {
+        width: 50%;
+    }
+}
+
+.looking-for {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+section.categories {
+    margin-bottom: 20px;
+}
+
+#latestProds {
+    margin-top: 30px;
+}
+
+#latestProds-heading {
+    position: relative;
+    top: 35px;
+    z-index: -1;
 }

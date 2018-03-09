@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <form name="single_purchase" method="post">
+        <div id="single_purchase">
+            <div class="form-group">
+                <label for="single_purchase_quantity" class="required">Quantity</label>
+                <input class="form-control" type="number" min="1" value="1" step="1" id="single_purchase_quantity"
+                       name="single_purchase[quantity]" required="required">
+                <div id="invalid-quantity" class="form-control-feedback"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="single_purchase_phone" class="required">Phone</label>
+                <input class="form-control" type="text" id="single_purchase_phone" name="single_purchase[phone]"
+                       required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="single_purchase_city" class="required">City</label>
+                <input class="form-control" type="text" id="single_purchase_city" name="single_purchase[city]"
+                       required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="single_purchase_address" class="required">Address</label>
+                <input class="form-control" type="text" id="single_purchase_address" name="single_purchase[address]"
+                       required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="single_purchase_creditCardNumber" class="required">Credit card number</label>
+                <input class="form-control" type="text" id="single_purchase_creditCardNumber"
+                       name="single_purchase[creditCardNumber]" required="required"
+                       placeholder="1111 2222 3333 4444">
+                <div class="form-control-feedback" id="invalid-card-number"></div>
+            </div>
+            {{ form_row(form._token) }}
+            <div class="form-group">
+                <label for="single_purchase_inputDateValidThrough" class="required">Card valid through</label>
+                <input class="form-control" type="text" id="single_purchase_inputDateValidThrough"
+                       name="single_purchase[inputDateValidThrough]" required="required"
+                       placeholder="MM/YYYY">
+                <div class="form-control-feedback" id="invalid-card-date"></div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="single_purchase_submit"
+                        name="single_purchase[submit]">Submit
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/purchaseFormValidation.js') }}"></script>
+{% endblock %}
