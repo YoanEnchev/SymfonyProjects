@@ -19,6 +19,30 @@
     <header class="masthead">
         <img src="{{ asset('images/header-bg.jpg') }}">
     </header>
+    <h2 class="looking-for">Looking For...</h2>
+    <section class="categories">
+        <div class="category">
+            <a href="{{ path('listAllSmartphones') }}">
+                <img src="{{ asset('images/smartphone.jpg') }}">
+            </a>
+        </div>
+        <a href="{{ path('listAllTablets') }}">
+            <div class="category">
+                <img src="{{ asset('images/tablet.jpg') }}">
+            </div>
+        </a>
+        <a href="{{ path('listAllLaptops') }}">
+            <div class="category">
+                <img src="{{ asset('images/laptop.jpg') }}">
+            </div>
+        </a>
+        <a href="{{ path('listAllTVs') }}">
+            <div class="category">
+                <img src="{{ asset('images/tv.jpg') }}">
+            </div>
+        </a>
+    </section>
+
     <h2 class="you-may-like" id="latestProds-heading">View latest products:</h2>
     <section id="latestProds" class="slider-products">
         {% for prod in prods %}

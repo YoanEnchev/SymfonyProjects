@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Purchase Shopping Cart
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Quantity</th>
+            <th scope="col">Phone</th>
+            <th scope="col">City</th>
+            <th scope="col">Address</th>
+            <th scope="col">Credit Card Number</th>
+            <th scope="col">Card Valid Through</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for purchase in purchases %}
+            <tr>
+                <td>{{ purchase.quantity }}</td>
+                <td>{{ purchase.phone }}</td>
+                <td>{{ purchase.city }}</td>
+                <td>{{ purchase.address }}</td>
+                <td>{{ purchase.creditCardNumber }}</td>
+                <td>{{ purchase.cardValidThrough|date("m/d/Y") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
