@@ -77,6 +77,7 @@ class Comment
     public function setGradeNumber($gradeNumber)
     {
         $this->gradeNumber = $gradeNumber;
+        $this->setGradeWords();
 
         return $this;
     }
@@ -93,16 +94,27 @@ class Comment
 
     /**
      * Set gradeWords
-     *
-     * @param string $gradeWords
-     *
-     * @return Comment
      */
-    public function setGradeWords($gradeWords)
+    public function setGradeWords()
     {
-        $this->gradeWords = $gradeWords;
-
-        return $this;
+        switch ($this->gradeNumber)
+        {
+            case 1:
+                $this->gradeWords = 'Bad';
+                break;
+            case 2:
+                $this->gradeWords ='Unsatisfying';
+                break;
+            case 3:
+                $this->gradeWords ='Average';
+                break;
+            case 4:
+                $this->gradeWords = 'Good';
+                break;
+            case 5:
+                $this->gradeWords = 'Excellent';
+                break;
+        }
     }
 
     /**

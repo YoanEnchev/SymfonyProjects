@@ -1,0 +1,34 @@
+article img {
+    height: 250px;
+}
+
+article {
+    width: 400px;
+    display: inline-block;
+    margin: 10px 10px;
+}
+
+article p {
+    text-align: justify;
+}
+
+.wrapper {
+    width: 95%;
+    margin: 20px auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+article .btn-sm {
+    border:none;
+}
+
+article button {
+    width: 100px;
+}

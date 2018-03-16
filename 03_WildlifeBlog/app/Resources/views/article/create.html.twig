@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Create Article {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/create-article.css') }}">
+{% endblock %}
+
+{% block main %}
+    <form name="article" method="post">
+        <div id="article">
+            <div class="form-group">
+                <label for="article_title" class="required">Title</label>
+                <input type="text" id="article_title" name="article[title]" class="form-control" required="required">
+            </div>
+            <div class="form-group">
+                <label for="article_imageAddress" class="required">Image Address</label>
+                <input type="text" id="article_imageAddress" name="article[imageAddress]" class="form-control"
+                       required="required">
+            </div>
+            <div class="form-group">
+                <label for="article_content" class="required">Content</label>
+                <textarea id="article_content" name="article[content]" class="form-control"
+                          required="required"></textarea>
+            </div>
+            <div class="tag-form">
+                <div id="article_tags_0">
+                    <div>
+                        <label for="article_tags_0_name" class="required">Tag 1</label>
+                        <input type="text" id="article_tags_0_name" name="article[tags][0][name]" required="required"
+                               class="form-control">
+                    </div>
+                </div>
+                <div>
+                    <div id="article_tags_1">
+                        <div>
+                            <label for="article_tags_1_name" class="required">Tag 2</label>
+                            <input type="text" id="article_tags_1_name" name="article[tags][1][name]"
+                                   required="required" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="article_tags_2">
+                        <div>
+                            <label for="article_tags_2_name" class="required">Tag 3</label>
+                            <input type="text" id="article_tags_2_name" name="article[tags][2][name]"
+                                   required="required" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_row(form._token) }}
+        <div class="actions">
+            <button type="submit" id="article_submit" name="article[submit]" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-success add-tag">Add Tag</button>
+            <button type="button" class="btn btn-danger remove-tag">Remove Tag</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/article-create-edit.js') }}"></script>
+{% endblock %}

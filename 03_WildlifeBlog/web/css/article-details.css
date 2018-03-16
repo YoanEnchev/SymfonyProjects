@@ -1,0 +1,23 @@
+section.details {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+div.article-image-details {
+    margin: 0 auto;
+}
+
+.heading {
+    margin: 0 auto;
+    text-align: center;
+}
+
+div.article-image-details img {
+    width: 100%;
+    height: auto;
+}
+
+p.content {
+    text-align: justify;
+}

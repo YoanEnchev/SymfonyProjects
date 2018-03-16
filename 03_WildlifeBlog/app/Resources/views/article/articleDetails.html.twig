@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/article-details.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/rate-yo/jquery.rateyo.min.css') }}">
+{% endblock %}
+
+{% block main %}
+    <section class="details">
+        <article>
+            <div class="article-image-details">
+                <img src="{{ article.imageAddress }}"/>
+            </div>
+            <div class="heading">
+                <h1>{{ article.title }}</h1>
+                <h5>Posted on: {{ article.dateAdded|date("m/d/Y") }}</h5>
+            </div>
+            <p class="content">{{ article.content }}</p>
+        </article>
+
+        <h2>Comments: </h2>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/rate-yo/jquery.rateyo.min.js') }}"></script>
+    <script src="{{ asset('js/handleRating.js') }}"></script>
+{% endblock %}

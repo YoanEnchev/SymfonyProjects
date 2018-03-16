@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+}
+
+form {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+@media only screen and (max-width: 815px) {
+    form {
+        width: 90%;
+    }
+}
+
+div.actions {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+textarea {
+    height: 250px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.wrapper {
+    max-width: 1500px;
+    margin: 0 auto;
+}

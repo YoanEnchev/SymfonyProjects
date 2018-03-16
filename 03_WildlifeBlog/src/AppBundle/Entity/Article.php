@@ -32,6 +32,13 @@ class Article
     /**
      * @var string
      *
+     * @ORM\Column(name="image_address", type="text")
+     */
+    private $imageAddress;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content", type="text")
      */
     private $content;
@@ -44,6 +51,12 @@ class Article
     private $dateAdded;
 
     /**
+     * One Article has Many Tags.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="article")
+     */
+    private $tags;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="slug", type="text")
@@ -52,13 +65,14 @@ class Article
 
     /**
      * One Article has Many comments.
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="article", cascade={"persist", "remove"})
      */
     private $comments;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -93,6 +107,30 @@ class Article
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set ImageAddress
+     *
+     * @param string $imageAddress
+     *
+     * @return Article
+     */
+    public function setImageAddress($imageAddress)
+    {
+        $this->imageAddress = $imageAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get ImageAddress
+     *
+     * @return string
+     */
+    public function getImageAddress()
+    {
+        return $this->imageAddress;
     }
 
     /**
@@ -197,6 +235,40 @@ class Article
     public function addComment(Comment $comment)
     {
         $this->comments[] = $comment;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param ArrayCollection $tags
+     *
+     * @return Article
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
+    }
+
+    public function removeCommentsAndTags()
+    {
+        $this->comments->clear();
+        $this->tags->clear();
     }
 }
 

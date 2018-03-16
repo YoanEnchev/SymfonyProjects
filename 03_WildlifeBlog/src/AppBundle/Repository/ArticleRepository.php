@@ -10,4 +10,22 @@ namespace AppBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function removeEmptyTags()
+    {
+        $sql = 'DELETE FROM tags WHERE name = ""';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql);
+    }
+
+    public function removeAllTagsAndComments($id)
+    {
+        $sql = 'DELETE FROM tags WHERE article_id = :id;
+        DELETE FROM comments WHERE article_id = :id';
+
+        $params = array(
+            'id' => $id
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }
