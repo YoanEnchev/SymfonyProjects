@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Tag;
+use AppBundle\Entity\User;
 use AppBundle\Form\ArticleType;
 use AppBundle\Form\CommentType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,7 +30,7 @@ class ArticleController extends Controller
         if($form->isValid() && $form->isSubmitted()) {
             $today = new \DateTime();
             $article->setDateAdded($today);
-            $article->setSlug('???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185 ???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185 ???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???? +359 88 69 66 185???');
+            $article->setSlug();
 
             $em = $this->getDoctrine()->getManager();
 
@@ -42,7 +43,7 @@ class ArticleController extends Controller
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('readArticle', array('id' => $article->getId()));
         }
 
         return $this->render('article/create.html.twig', array(
@@ -61,16 +62,33 @@ class ArticleController extends Controller
         $article = $repo->find($id);
 
         $comment = new Comment();
+        $comments = $article->getComments();
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         $grade = $comment->getGradeNumber();
         $content = $comment->getContent();
+        $averageGrade = $article->calcAverageGrade();
+
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
+        $userCommented = $article->checkIfUserCommented($currentUser);
 
         if($form->isSubmitted() && $form->isValid()) {
             if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade && strlen($content) > 0 && strlen($content) <= 1000) { // valid grade and content
+                $comment->setUser($currentUser);
+                $comment->setArticle($article);
+                $article->addComment($comment);
 
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($comment);
+                $em->flush();
+                $em->persist($article);
+                $em->flush();
+
+                return $this->redirectToRoute('readArticle', array('id' => $id));
             } else {
                 return $this->redirectToRoute('homepage');
             }
@@ -78,7 +96,10 @@ class ArticleController extends Controller
 
         return $this->render('article/articleDetails.html.twig',array(
             'article' => $article,
-            'form' => $form->createView()));
+            'form' => $form->createView(),
+            'userCommented' => $userCommented,
+            'comments' => $comments,
+            'averageGrade' => $averageGrade));
     }
 
     /**
@@ -100,6 +121,8 @@ class ArticleController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $article->setSlug();
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();

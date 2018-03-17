@@ -188,9 +188,9 @@ class Article
      *
      * @return Article
      */
-    public function setSlug($slug)
+    public function setSlug()
     {
-        $this->slug = $slug;
+        $this->slug = substr ( $this->content , 0, 400) . "...";
 
         return $this;
     }
@@ -269,6 +269,42 @@ class Article
     {
         $this->comments->clear();
         $this->tags->clear();
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function checkIfUserCommented(User $user)
+    {
+        /** @var Comment $comment */
+        foreach ($this->comments as $comment) {
+            if ($comment->getUser() === $user) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return float
+     */
+    public function calcAverageGrade()
+    {
+        $sum = 0;
+        $count = $this->comments->count();
+
+        if($count == 0) {
+            return 0;
+        }
+
+        /** @var Comment $comment */
+        foreach ($this->comments as $comment) {
+            $sum += $comment->getGradeNumber();
+        }
+
+        return $sum / $count;
     }
 }
 

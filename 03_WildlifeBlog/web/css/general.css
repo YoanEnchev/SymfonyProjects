@@ -21,10 +21,6 @@ div.actions {
     justify-content: space-between;
 }
 
-textarea {
-    height: 250px;
-}
-
 button:hover {
     cursor: pointer;
 }

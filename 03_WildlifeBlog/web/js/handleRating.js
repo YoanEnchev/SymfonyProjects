@@ -8,42 +8,43 @@ $(function () {
     $("#average").rateYo({
         rating: $('#average-grade').val(),
         readOnly: true,
-        starWidth: "30px"
+        starWidth: "22px"
     });
 
     $(".stars-1").rateYo({
         rating: 1,
         readOnly: true,
-        starWidth: "15px"
+        starWidth: "22px"
     });
 
     $(".stars-2").rateYo({
         rating: 2,
         readOnly: true,
-        starWidth: "15px"
+        starWidth: "22px"
     });
 
     $(".stars-3").rateYo({
         rating: 3,
         readOnly: true,
-        starWidth: "15px"
+        starWidth: "22px"
     });
 
     $(".stars-4").rateYo({
         rating: 4,
         readOnly: true,
-        starWidth: "15px"
+        starWidth: "22px"
     });
 
     $(".stars-5").rateYo({
         rating: 5,
         readOnly: true,
-        starWidth: "15px"
+        starWidth: "22px"
     });
 
 
     const ratingStars = $('#rateUser');
-    const ratingValue = $('#app_bundle_review_type_grade');
+    const ratingValue = $('#comment_gradeNumber');
+    const submitBtn = $('#comment_submit');
 
     ratingStars.click(setRateValue);
 
@@ -51,5 +52,6 @@ $(function () {
         let changesToRates = ratingStars.find('.jq-ry-rated-group.jq-ry-group');
         let stars = Math.ceil((changesToRates.width() / (changesToRates.parent().width())) * 5);
         ratingValue.val(stars);
+        submitBtn.removeAttr('disabled');
     }
 });

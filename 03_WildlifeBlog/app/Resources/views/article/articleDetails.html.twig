@@ -18,12 +18,51 @@
             </div>
             <div class="heading">
                 <h1>{{ article.title }}</h1>
-                <h5>Posted on: {{ article.dateAdded|date("m/d/Y") }}</h5>
+                <div class="info">
+                    <h5>Posted On {{ article.dateAdded|date("m/d/Y") }}</h5>
+                    <div id="average"></div>
+                </div>
+
+                <input type="hidden" value="{{ averageGrade }}" id="average-grade">
             </div>
             <p class="content">{{ article.content }}</p>
         </article>
 
         <h2>Comments: </h2>
+        <div class="comments">
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="heading">
+                        <h3>{{ comment.user.username }}:</h3>
+                        <div class="stars-{{ comment.gradeNumber }}"></div>
+                        <h3>{{ comment.gradeWords }}</h3>
+                    </div>
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% else %}
+                <h1>No comments yet</h1>
+            {% endfor %}
+        </div>
+        {% if app.user and userCommented == false %}
+            <h2>Leave Rating:</h2>
+            <div id="rateUser"></div>
+            <form name="comment" method="post">
+                <div id="comment">
+                    <input type="hidden" id="comment_gradeNumber" name="comment[gradeNumber]" required>
+                    <div class="form-group">
+                        <label for="comment_content" class="required">Your Opinion</label>
+                        <textarea id="comment_content" name="comment[content]" required="required"
+                                  class="form-control"></textarea>
+                    </div>
+                    {{ form_row(form._token) }}
+                    <div>
+                        <button type="submit" disabled="disabled" id="comment_submit" name="comment[submit]"
+                                class="btn btn-primary">Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
     </section>
 {% endblock %}
 

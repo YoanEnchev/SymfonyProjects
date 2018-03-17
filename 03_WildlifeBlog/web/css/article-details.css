@@ -21,3 +21,51 @@ div.article-image-details img {
 p.content {
     text-align: justify;
 }
+
+textarea {
+    height: 70px;
+}
+
+form {
+    margin: 10px 0;
+    width: 100%;
+    max-width: none;
+}
+
+#rateUser {
+    position: relative;
+    left: -10px;
+}
+
+.comment .heading {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.jq-ry-container[readonly=readonly] {
+    position: relative;
+    bottom: -5px;
+    margin: 0 5px;
+}
+
+.comment p {
+    font-size: 20px;
+}
+
+section.details > h2 {
+    margin: 20px 0;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#average {
+    position: relative;
+    top: -5px;
+    left: -3px;
+}

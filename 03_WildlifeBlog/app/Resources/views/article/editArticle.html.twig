@@ -4,6 +4,11 @@
     Edit Article
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/create-edit-article.css') }}">
+{% endblock %}
+
 {% block main %}
     <form name="article" method="post">
         <div id="article">
