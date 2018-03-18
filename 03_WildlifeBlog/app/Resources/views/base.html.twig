@@ -6,6 +6,17 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/general.css') }}">
         <link rel="stylesheet" href="{{ asset('css/boostrap/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/slick/slick.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/slick/slick-theme.css') }}">
+        <style>
+            @font-face {
+                font-family: slick;
+                font-weight: normal;
+                font-style: normal;
+                src: url('{{ asset('fonts/slick.eot') }}');
+                src: url('{{ asset('fonts/slick.eot') }}#iefix') format('embedded-opentype'), url("{{ asset('fonts/slick.woff') }}") format('woff'), url('{{ asset('fonts/slick.ttf') }}') format('truetype'), url('{{ asset('fonts/slick.svg') }}#slick') format('svg');
+            }
+        </style>
     {% endblock %}
 
 </head>
@@ -43,9 +54,65 @@
 {% endblock %}
 
 {% block main %}{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="wrapper">
+            <h2>Explore Different Habitats</h2>
+
+            <section class="slider">
+                <a href="{{ path('listByHabitats', {'habitat': 'Tundra'}) }}">
+                    <div class="category">
+                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/tundra-slider.jpg">
+                        <h4>Tundra</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Savanna'}) }}">
+                    <div class="category">
+                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/savanna-slider.jpg">
+                        <h4>Savanna</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Rainforest'}) }}">
+                    <div class="category">
+                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/rainforest-slider.jpg">
+                        <h4>Rainforest</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Marine'}) }}">
+                    <div class="category">
+                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/marine-slider.jpg">
+                        <h4>Marine</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Desert'}) }}">
+                    <div class="category">
+                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/desert-slider.jpg">
+                        <h4>Desert</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Forest'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/forest.jpg') }}">
+                        <h4>Forest</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Mixed'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/mixed.jpg') }}">
+                        <h4>Mixed</h4>
+                    </div>
+                </a>
+            </section>
+        </div>
+    </footer>
+{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/footer-slider-handle.js') }}"></script>
 {% endblock %}
 </body>
 </html>

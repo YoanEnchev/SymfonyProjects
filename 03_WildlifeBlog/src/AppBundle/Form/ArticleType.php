@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Article;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,6 +20,15 @@ class ArticleType extends AbstractType
         $builder->add('title', TextType::class)
             ->add('imageAddress', TextType::class)
             ->add('content', TextareaType::class)
+            ->add('habitat', ChoiceType::class,
+                array('choices' => array(
+                    'Tundra' => 'Tundra',
+                    'Savanna' => 'Savanna',
+                    'Rainforest' => 'Rainforest',
+                    'Marine' => 'Marine',
+                    'Dessert' => 'Dessert',
+                    'Forest' => 'Forest',
+                    'Mixed' => 'Mixed')))
             ->add('tags', CollectionType::class, array(
                 'entry_type' => TagType::class,
                 'allow_add' => true))

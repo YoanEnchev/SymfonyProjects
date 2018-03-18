@@ -25,7 +25,39 @@ button:hover {
     cursor: pointer;
 }
 
-.wrapper {
+.wrapper, footer {
     max-width: 1500px;
     margin: 0 auto;
+}
+
+.category {
+    display: inline-block;
+    margin: 12px;
+}
+
+footer .wrapper {
+    width: 85%;
+}
+
+footer .wrapper > h2 {
+    text-align: center;
+}
+
+.slider {
+    width: 100%;
+    z-index: 5;
+}
+
+.category {
+    text-align: center;
+    outline: none;
+}
+
+.slick-slide img {
+    width: 250px;
+}
+
+article img {
+    width: 375px;
+    height: 250px;
 }

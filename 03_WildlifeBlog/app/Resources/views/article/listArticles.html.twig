@@ -1,19 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Articles By Habitat
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/list-articles.css') }}">
 {% endblock %}
 
 {% block main %}
-    <header class="masthead">
-        <img src="{{ asset('images/header-1.jpg') }}">
-    </header>
-
-    <div class="wrapper">
-        <h3 class="section-header">Latest Articles: </h3>
-    </div>
+    <h2 class="articles-review">Articles In Habitat:</h2>
 
     <div class="wrapper">
         {% for article in articles %}
@@ -35,8 +32,9 @@
                     {% endif %}
                 </div>
             </article>
-            {% else %}
+        {% else %}
             <h2>No articles found</h2>
         {% endfor %}
     </div>
 {% endblock %}
+

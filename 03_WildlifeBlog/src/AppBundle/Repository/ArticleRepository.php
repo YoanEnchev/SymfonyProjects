@@ -28,4 +28,26 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
     }
+
+    public function latestArticles()
+    {
+        $sql = 'SELECT * FROM articles
+        ORDER BY date_added DESC
+        LIMIT 6';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+
+    }
+
+    public function getArticlesFromHabitat($habitat)
+    {
+        $sql = "SELECT * FROM articles
+        WHERE habitat = :habitat";
+
+        $params = array(
+            'habitat' => $habitat
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }

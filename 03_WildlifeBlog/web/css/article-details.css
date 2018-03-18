@@ -69,3 +69,17 @@ section.details > h2 {
     top: -5px;
     left: -3px;
 }
+
+footer .wrapper > h2 {
+    margin-top: 25px;
+}
+
+footer {
+    max-width: 900px;
+}
+
+@media screen and (min-width: 1200px) {
+    footer .wrapper img {
+        width: 180px;
+    }
+}

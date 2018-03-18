@@ -32,3 +32,8 @@ article .btn-sm {
 article button {
     width: 100px;
 }
+
+.articles-review {
+    text-align: center;
+    margin-top: 20px;
+}

@@ -51,6 +51,13 @@ class Article
     private $dateAdded;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="habitat", type="string", length=255)
+     */
+    private $habitat;
+
+    /**
      * One Article has Many Tags.
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="article")
      */
@@ -182,9 +189,27 @@ class Article
     }
 
     /**
-     * Set slug
+     * @param string $habitat
      *
-     * @param string $slug
+     * @return Article
+     */
+    public function setHabitat($habitat)
+    {
+        $this->habitat = $habitat;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHabitat()
+    {
+        return $this->habitat;
+    }
+
+    /**
+     * Set slug
      *
      * @return Article
      */

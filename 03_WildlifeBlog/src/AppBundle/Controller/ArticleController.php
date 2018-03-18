@@ -73,9 +73,11 @@ class ArticleController extends Controller
 
         /** @var User $currentUser */
         $currentUser = $this->getUser();
+        $userCommented = false;
 
-        $userCommented = $article->checkIfUserCommented($currentUser);
-
+        if($currentUser != null) {
+            $userCommented = $article->checkIfUserCommented($currentUser);
+        }
         if($form->isSubmitted() && $form->isValid()) {
             if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade && strlen($content) > 0 && strlen($content) <= 1000) { // valid grade and content
                 $comment->setUser($currentUser);
@@ -154,5 +156,20 @@ class ArticleController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/articles/{habitat}", name="listByHabitats")
+     * @param string $habitat
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listArticlesByHabitat($habitat)
+    {
+        $repo = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $repo->getArticlesFromHabitat($habitat);
+
+        return $this->render('article/listArticles.html.twig', array(
+            'articles' => $articles,
+        ));
     }
 }
