@@ -25,6 +25,15 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $usernameRegex = "/^\w{3,30}$/";
+            $emailRegex = "/^(\w+)@(\w+)\.(\w+)$/";
+            $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/";
+
+            if (!preg_match($usernameRegex, $user->getUsername()) || !preg_match($emailRegex, $user->getEmail()) //invalid
+                ||  !preg_match($passwordRegex, $user->getPassword())) {
+                return $this->redirectToRoute('register');
+            }
+
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
             // Add Role
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);

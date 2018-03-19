@@ -58,6 +58,14 @@ footer .wrapper > h2 {
 }
 
 article img {
-    width: 375px;
+    width: 380px;
     height: 250px;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.tag:hover {
+    border-color: #0275d8;
 }

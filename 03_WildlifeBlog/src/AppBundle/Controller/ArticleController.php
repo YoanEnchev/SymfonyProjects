@@ -70,6 +70,7 @@ class ArticleController extends Controller
         $grade = $comment->getGradeNumber();
         $content = $comment->getContent();
         $averageGrade = $article->calcAverageGrade();
+        $tags = $article->getTags();
 
         /** @var User $currentUser */
         $currentUser = $this->getUser();
@@ -101,7 +102,8 @@ class ArticleController extends Controller
             'form' => $form->createView(),
             'userCommented' => $userCommented,
             'comments' => $comments,
-            'averageGrade' => $averageGrade));
+            'averageGrade' => $averageGrade,
+            'tags' => $tags));
     }
 
     /**
@@ -170,6 +172,22 @@ class ArticleController extends Controller
 
         return $this->render('article/listArticles.html.twig', array(
             'articles' => $articles,
+        ));
+    }
+
+    /**
+     * @Route("/articles/tag/{tagName}", name="listByTagName")
+     * @param string tagName
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listArticlesByTagName($tagName)
+    {
+        $repo = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $repo->getByTagName($tagName);
+
+        return $this->render('article/listByTagName.html.twig', array(
+            'articles' => $articles,
+            'tagName' => $tagName
         ));
     }
 }

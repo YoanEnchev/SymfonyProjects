@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Articles By Tag
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/list-articles.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h2 class="articles-review">Articles With Tag "{{ tagName }}":</h2>
+
+    <div class="wrapper">
+        {% for article in articles %}
+            <article>
+                <img src="{{ article.image_address }}">
+                <h2 class="title">{{ article.title }}</h2>
+                <p class="slug">{{ article.slug }}</p>
+                <div class="actions">
+                    <a href="{{ path('readArticle', {'id': article.id}) }}">
+                        <button class="btn-sm btn-primary">Read More</button>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('editArticle', {'id': article.id}) }}">
+                            <button class="btn-sm btn-info">Edit</button>
+                        </a>
+                        <a href="{{ path('deleteArticle', {'id': article.id}) }}">
+                            <button class="btn-sm btn-danger">Delete</button>
+                        </a>
+                    {% endif %}
+                </div>
+            </article>
+        {% else %}
+            <h2>No articles found</h2>
+        {% endfor %}
+    </div>
+{% endblock %}

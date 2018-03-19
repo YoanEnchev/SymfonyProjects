@@ -28,6 +28,17 @@
             <p class="content">{{ article.content }}</p>
         </article>
 
+        <h2>Tags:</h2>
+        <section class="tags">
+            {% for tag in tags %}
+                <a href="{{ path('listByTagName', {'tagName': tag.name}) }}">
+                    <div class="tag">
+                        <p>{{ tag.name }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        </section>
+
         <h2>Comments: </h2>
         <div class="comments">
             {% for comment in comments %}

@@ -50,4 +50,17 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
     }
+
+    public function getByTagName($tagName)
+    {
+        $sql = "SELECT title, slug, image_address, tags.name, articles.id FROM articles
+        INNER JOIN tags ON article_id = articles.id
+        WHERE tags.name LIKE :tagName";
+
+        $params = array(
+            'tagName' => $tagName
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }

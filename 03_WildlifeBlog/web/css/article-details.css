@@ -83,3 +83,25 @@ footer {
         width: 180px;
     }
 }
+
+section.tags {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+
+section.tags .tag {
+    border: 1px solid #cecece;
+    border-radius: 20px;
+    text-transform: capitalize;
+    padding:8px 17px;
+    margin: 5px 5px;
+}
+
+.tag p {
+    margin-bottom: 0;
+    position: relative;
+    top: -2px;
+}

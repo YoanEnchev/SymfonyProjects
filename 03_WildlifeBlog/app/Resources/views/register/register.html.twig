@@ -35,7 +35,7 @@
             </div>
             {{ form_row(form._token) }}
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="app_bundle_user_register_submit" name="app_bundle_user_register[submit]">Submit</button>
+                <button type="submit" disabled class="btn btn-primary" id="app_bundle_user_register_submit" name="app_bundle_user_register[submit]">Submit</button>
             </div>
         </div>
     </form>
@@ -43,4 +43,9 @@
 
 {% block footer %}
     <footer></footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/registerFormValidation.js') }}"></script>
 {% endblock %}
