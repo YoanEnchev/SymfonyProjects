@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ user.username }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/userProfile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/rate-yo/jquery.rateyo.min.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="wrapper">
+        <h3 class="intro">{{ user.username }} Profile:</h3>
+        <table class="table">
+            <tbody>
+            <tr class="table-active">
+                <td>Username</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr class="table-info">
+                <td>Email</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h1>User comments:</h1>
+        {% for comment in userComments %}
+            <div class="comment">
+                <div class="heading">
+                    <a href="{{ path('readArticle', {'id': comment.article.id}) }}"><h4>{{ comment.article.title }}</h4></a>
+                    <div class="stars-{{ comment.gradeNumber }}"></div>
+                </div>
+                <h6>{{ comment.content }}</h6>
+            </div>
+        {% else %}
+            <h2>User has not commented yet.</h2>
+        {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(userComments) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer></footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/rate-yo/jquery.rateyo.min.js') }}"></script>
+    <script src="{{ asset('js/handleRating.js') }}"></script>
+{% endblock %}

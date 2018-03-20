@@ -64,6 +64,17 @@ class ArticleController extends Controller
         $comment = new Comment();
         $comments = $article->getComments();
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $comments,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
+        );
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -101,7 +112,7 @@ class ArticleController extends Controller
             'article' => $article,
             'form' => $form->createView(),
             'userCommented' => $userCommented,
-            'comments' => $comments,
+            'comments' => $result,
             'averageGrade' => $averageGrade,
             'tags' => $tags));
     }
@@ -163,31 +174,79 @@ class ArticleController extends Controller
     /**
      * @Route("/articles/{habitat}", name="listByHabitats")
      * @param string $habitat
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listArticlesByHabitat($habitat)
+    public function listArticlesByHabitat($habitat, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $articles = $repo->getArticlesFromHabitat($habitat);
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $articles,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 6)
+        );
+
         return $this->render('article/listArticles.html.twig', array(
-            'articles' => $articles,
+            'articles' => $result,
+            'habitat' => $habitat
         ));
     }
 
     /**
      * @Route("/articles/tag/{tagName}", name="listByTagName")
      * @param string tagName
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listArticlesByTagName($tagName)
+    public function listArticlesByTagName($tagName, Request $request)
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $articles = $repo->getByTagName($tagName);
 
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $articles,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 6)
+        );
+
         return $this->render('article/listByTagName.html.twig', array(
-            'articles' => $articles,
+            'articles' => $result,
             'tagName' => $tagName
         ));
+    }
+
+    /**
+     * @Route("/articles", name="listAllArticles")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAllArticles(Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $repo->findAll();
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $articles,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 6)
+        );
+        return $this->render('article/listAllArticles.html.twig',
+            array('articles' => $result));
     }
 }

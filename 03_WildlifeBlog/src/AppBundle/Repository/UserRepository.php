@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function removeUserComments($id)
+    {
+        $sql = 'DELETE FROM
+        comments WHERE user_id = :id;';
+
+        $params = array(
+            'id' => $id
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }

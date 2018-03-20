@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Articles By Tag
+   Read Later List
 {% endblock %}
 
 {% block stylesheets %}
@@ -10,12 +10,12 @@
 {% endblock %}
 
 {% block main %}
-    <h2 class="articles-review">Articles With Tag "{{ tagName }}":</h2>
+    <h2 class="articles-review">Read Later List:</h2>
 
     <div class="wrapper">
-        {% for article in articles %}
+        {% for article in readLaterList %}
             <article>
-                <img src="{{ article.image_address }}">
+                <img src="{{ article.imageAddress }}">
                 <h2 class="title">{{ article.title }}</h2>
                 <p class="slug">{{ article.slug }}</p>
                 <div class="actions">
@@ -33,10 +33,10 @@
                 </div>
             </article>
         {% else %}
-            <h2>No articles found</h2>
+            <h2>No articles in read later list.</h2>
         {% endfor %}
     </div>
     <div class="navigation">
-        {{ knp_pagination_render(articles) }}
+        {{ knp_pagination_render(readLaterList) }}
     </div>
 {% endblock %}

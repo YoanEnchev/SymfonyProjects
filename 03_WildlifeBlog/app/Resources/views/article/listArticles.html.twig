@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block main %}
-    <h2 class="articles-review">Articles In Habitat:</h2>
+    <h2 class="articles-review">Articles In Habitat {{ habitat }}:</h2>
 
     <div class="wrapper">
         {% for article in articles %}
@@ -35,6 +35,9 @@
         {% else %}
             <h2>No articles found</h2>
         {% endfor %}
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(articles) }}
     </div>
 {% endblock %}
 

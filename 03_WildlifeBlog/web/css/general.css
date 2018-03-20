@@ -69,3 +69,8 @@ a:hover {
 .tag:hover {
     border-color: #0275d8;
 }
+
+.navigation {
+    width: fit-content;
+    margin: 10px auto;
+}

@@ -48,7 +48,7 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
             'habitat' => $habitat
         );
 
-        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
 
     public function getByTagName($tagName)
@@ -61,6 +61,6 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
             'tagName' => $tagName
         );
 
-        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
 }

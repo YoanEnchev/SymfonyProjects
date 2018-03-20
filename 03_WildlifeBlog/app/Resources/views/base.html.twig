@@ -35,6 +35,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('logout') }}">Logout<span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('readLaterList') }}">Read Later List<span class="sr-only">(current)</span></a>
+                    </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">(current)</span></a>
@@ -47,7 +50,27 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('createArticle') }}">Create Article<span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('listUsers') }}">View Users<span class="sr-only">(current)</span></a>
+                    </li>
                 {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Habitats
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Tundra'}) }}">Tundra</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Savanna'}) }}">Savanna</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Rainforest'}) }}">Rainforest</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Marine'}) }}">Marine</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Desert'}) }}">Desert</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Forest'}) }}">Forest</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Mixed'}) }}">Mixed</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('listAllArticles') }}">View Articles<span class="sr-only">(current)</span></a>
+                </li>
             </ul>
         </div>
     </nav>

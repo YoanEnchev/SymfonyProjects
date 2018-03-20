@@ -61,6 +61,16 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * Many Users have Many Articles in readLaterList.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Article")
+     * @ORM\JoinTable(name="users_articles_read_later",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id")}
+     *      )
+     */
+    private $readLaterList;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -223,6 +233,33 @@ class User implements UserInterface
     {
         $this->roles[] = $role;
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReadLaterList()
+    {
+        return $this->readLaterList;
+    }
+
+    /**
+     * @param ArrayCollection $readLaterList
+     * @return User
+     */
+    public function setReadLaterList(ArrayCollection $readLaterList)
+    {
+        $this->readLaterList = $readLaterList;
+
+        return $this;
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function addToReadLaterList(Article $article)
+    {
+        $this->readLaterList[] = $article;
     }
 }
 
