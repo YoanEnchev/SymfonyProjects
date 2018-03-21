@@ -98,48 +98,4 @@ class UserController extends Controller
             'userComments' => $result
         ));
     }
-
-    /**
-     * @Route("/readLaterList", name="readLaterList")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function showReadLaterList()
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        if($user === null) {
-            return $this->redirectToRoute('homepage');
-        }
-
-        $readLaterList = $user->getReadLaterList();
-
-        return $this->render('users/readLaterList.html.twig',array(
-            'readLaterList' => $readLaterList));
-    }
-
-    /**
-     * @Route("/addToReadLater/{articleId}", name="addToReadLater")
-     * @param $articleId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function addToReadLaterList($articleId)
-    {
-        $articleRepo = $this->getDoctrine()->getRepository(Article::class);
-
-        $article = $articleRepo->find($articleId);
-        /** @var User $user */
-        $user = $this->getUser();
-
-        if($user == null) {
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user->addToReadLaterList($article);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        return $this->redirectToRoute('readLaterList');
-    }
 }

@@ -29,6 +29,10 @@
                         <a href="{{ path('deleteArticle', {'id': article.id}) }}">
                             <button class="btn-sm btn-danger">Delete</button>
                         </a>
+                    {% elseif  is_granted('ROLE_USER')%}
+                        <a href="{{ path('removeFromReadLaterList', {'articleId': article.id}) }}">
+                            <button class="btn-sm btn-danger">Remove</button>
+                        </a>
                     {% endif %}
                 </div>
             </article>

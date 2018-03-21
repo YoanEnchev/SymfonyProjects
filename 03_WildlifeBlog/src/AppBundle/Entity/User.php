@@ -261,5 +261,32 @@ class User implements UserInterface
     {
         $this->readLaterList[] = $article;
     }
+
+    /**
+     * @param Article $article
+     * @return bool
+     */
+    public function checkIfArticleAddedInLaterList(Article $article)
+    {
+        foreach ($this->readLaterList as $articleInList) {
+            if($articleInList === $article) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function removeFromReadLaterList(Article $article)
+    {
+        /** @var ArrayCollection $articleInList */
+        $articlesInList = $this->readLaterList;
+
+        foreach ($articlesInList as $articleInList) {
+            if($articleInList === $article) {
+                $articlesInList->removeElement($articleInList);
+            }
+        }
+    }
 }
 

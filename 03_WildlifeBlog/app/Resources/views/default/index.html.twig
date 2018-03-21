@@ -33,7 +33,7 @@
                             <button class="btn-sm btn-danger">Delete</button>
                         </a>
                         {% elseif  is_granted('ROLE_USER')%}
-                            <a href="#">
+                            <a href="{{ path('addToReadLater', {'articleId': article.id}) }}">
                                 <button class="btn-sm btn-info">Read Later</button>
                             </a>
                     {% endif %}
