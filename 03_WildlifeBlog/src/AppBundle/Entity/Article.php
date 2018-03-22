@@ -59,7 +59,7 @@ class Article
 
     /**
      * One Article has Many Tags.
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Tag", mappedBy="article", cascade={"persist"}))
      */
     private $tags;
 
@@ -330,6 +330,21 @@ class Article
         }
 
         return $sum / $count;
+    }
+
+    /**
+     * @param Tag $tagToCheck
+     * @return bool
+     */
+    public function containsTag(Tag $tagToCheck)
+    {
+        foreach ($this->getTags() as $tag) {
+            if($tagToCheck->getName() == $tag->getName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

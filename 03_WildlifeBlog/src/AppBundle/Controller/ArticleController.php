@@ -27,7 +27,7 @@ class ArticleController extends Controller
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()) {
+        if ($form->isValid() && $form->isSubmitted()) {
             $today = new \DateTime();
             $article->setDateAdded($today);
             $article->setSlug();
@@ -35,7 +35,7 @@ class ArticleController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             /** @var Tag $tag */
-            foreach($article->getTags() as $tag) {
+            foreach ($article->getTags() as $tag) {
                 $tag->setArticle($article);
                 $em->persist($tag);
             }
@@ -54,12 +54,16 @@ class ArticleController extends Controller
      * @Route("/article/{id}/read", name="readArticle")
      * @param Request $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function readMore(Request $request, $id)
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $article = $repo->find($id);
+
+        if($article == null) {
+            return $this->redirectToRoute('homepage');
+        }
 
         $comment = new Comment();
         $comments = $article->getComments();
@@ -81,16 +85,16 @@ class ArticleController extends Controller
         $grade = $comment->getGradeNumber();
         $content = $comment->getContent();
         $averageGrade = $article->calcAverageGrade();
-        $tags = $article->getTags();
+        $tags = $repo->articleTags($id);
 
         /** @var User $currentUser */
         $currentUser = $this->getUser();
         $userCommented = false;
 
-        if($currentUser != null) {
+        if ($currentUser != null) {
             $userCommented = $article->checkIfUserCommented($currentUser);
         }
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($grade <= 5 && $grade >= 1 && (int)$grade == $grade && strlen($content) > 0 && strlen($content) <= 1000) { // valid grade and content
                 $comment->setUser($currentUser);
                 $comment->setArticle($article);
@@ -108,7 +112,7 @@ class ArticleController extends Controller
             }
         }
 
-        return $this->render('article/articleDetails.html.twig',array(
+        return $this->render('article/articleDetails.html.twig', array(
             'article' => $article,
             'form' => $form->createView(),
             'userCommented' => $userCommented,
@@ -128,18 +132,33 @@ class ArticleController extends Controller
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $article = $repo->find($id);
 
+        if ($article == null) {
+            return $this->redirectToRoute('homepage');
+        }
+
         /** @var ArrayCollection $tags */
         $tags = $article->getTags();
-        $numberOfTags= $tags->count();
+        $numberOfTags = $tags->count();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $article->setSlug();
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
+            $em->flush();
+
+            $article->setSlug();
+
+            /** @var Tag $tag */
+            foreach ($article->getTags() as $tag) {
+                $tag->setArticle($article);
+                $em->persist($tag);
+            }
+
             $em->flush();
 
             $repo->removeEmptyTags();
@@ -147,7 +166,7 @@ class ArticleController extends Controller
             return $this->redirectToRoute('readArticle', array('id' => $id));
         }
 
-        return $this->render('article/editArticle.html.twig',array(
+        return $this->render('article/editArticle.html.twig', array(
             'article' => $article,
             'form' => $form->createView(),
             'numberOfTags' => $numberOfTags));
@@ -162,6 +181,11 @@ class ArticleController extends Controller
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $article = $repo->find($id);
+
+        if($article == null) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $repo->removeAllTagsAndComments($id);
 
         $em = $this->getDoctrine()->getManager();

@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserRegister;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +18,12 @@ class SecurityController extends Controller
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function regiserAction(Request $request, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder)
+    public function regiserAction(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
         $form = $this->createForm(UserRegister::class, $user);
         $form->handleRequest($request);
-        $error = $authenticationUtils->getLastAuthenticationError();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $usernameRegex = "/^\w{3,30}$/";
@@ -32,6 +33,35 @@ class SecurityController extends Controller
             if (!preg_match($usernameRegex, $user->getUsername()) || !preg_match($emailRegex, $user->getEmail()) //invalid
                 ||  !preg_match($passwordRegex, $user->getPassword())) {
                 return $this->redirectToRoute('register');
+            }
+
+            /** @var ArrayCollection $userList */
+            $userList = $userRepo->findAll();
+
+            /** @var User $registeredUser */
+            foreach ($userList as $registeredUser)
+            {
+                if($registeredUser->getUsername() == $user->getUsername())
+                {
+                    return $this->render('register/register.html.twig', array(
+                        'form' => $form->createView(),
+                        'usernameTaken' => true,
+                        'emailTaken' => false,
+                        'username' => $user->getUsername(),
+                        'email' => ''
+                    ));
+                }
+
+                if($registeredUser->getEmail() == $user->getEmail())
+                {
+                    return $this->render('register/register.html.twig', array(
+                        'form' => $form->createView(),
+                        'usernameTaken' => false,
+                        'emailTaken' => true,
+                        'username' => '',
+                        'email' => $user->getEmail()
+                    ));
+                }
             }
 
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
@@ -51,7 +81,9 @@ class SecurityController extends Controller
         }
         return $this->render('register/register.html.twig', array(
             'form' => $form->createView(),
-            'error' => $error,
+            'usernameTaken' => false,
+            'emailTaken' => false,
+            'username' => ''
         ));
     }
 

@@ -4,9 +4,9 @@ $(function () {
     const removeTag = $('.remove-tag');
     const numberOfTags = $('#numberOfTags');
 
-    let tagIndex = numberOfTags.val(); //starting value for editing article
+    let tagIndex = Number(numberOfTags.val()); //starting value for editing article
 
-    if(!numberOfTags.length) { //when element does not exists (when creating new article)
+    if(!numberOfTags.length) { //when creating new article
         tagIndex = 3;
     }
 
@@ -19,7 +19,7 @@ $(function () {
         let container = $('<div>');
         let main = $("<div id=" + id +  ">");
         let subContainer = $('<div>');
-        let label = $("<label for=" + id + "_name" +  "class=" + "required\>" + "Tag " + (tagIndex + 1) + "</label>");
+        let label = $("<label for=" + id + "_name" +  "class=" + "required\>" + "Tag " + Number(tagIndex + 1) + "</label>");
         let input = $("<input>");
 
         input.attr('type', 'text');

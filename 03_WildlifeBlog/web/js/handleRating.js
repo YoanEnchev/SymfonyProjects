@@ -45,13 +45,35 @@ $(function () {
     const ratingStars = $('#rateUser');
     const ratingValue = $('#comment_gradeNumber');
     const submitBtn = $('#comment_submit');
+    const content = $('#comment_content');
+    const contentWarning = $('.content-overload');
+    let starsSet = false;
 
     ratingStars.click(setRateValue);
+    content.keyup(warnForContentLimit);
 
     function setRateValue() {
         let changesToRates = ratingStars.find('.jq-ry-rated-group.jq-ry-group');
         let stars = Math.ceil((changesToRates.width() / (changesToRates.parent().width())) * 5);
         ratingValue.val(stars);
-        submitBtn.removeAttr('disabled');
+        starsSet = true;
+        warnForContentLimit();
+    }
+
+    function warnForContentLimit() {
+        if(content.val().length > 1000) {
+            contentWarning.show();
+            submitBtn.attr('disabled', true);
+        }
+
+        else if(content.val().length === 0) {
+            submitBtn.attr('disabled', true);
+        }
+        else {
+            contentWarning.hide();
+            if(starsSet) {
+                submitBtn.removeAttr('disabled');
+            }
+        }
     }
 });

@@ -69,6 +69,9 @@
                                   class="form-control"></textarea>
                     </div>
                     {{ form_row(form._token) }}
+                    <div class="content-overload">
+                        <small>Your comment contains more than 1000 characters</small>
+                    </div>
                     <div>
                         <button type="submit" disabled="disabled" id="comment_submit" name="comment[submit]"
                                 class="btn btn-primary">Submit

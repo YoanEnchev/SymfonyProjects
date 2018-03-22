@@ -63,4 +63,29 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
+
+    public function deleteAllTags($articleId)
+    {
+        $sql = "DELETE FROM tags
+        WHERE article_id = :id";
+
+        $params = array(
+            'id' => $articleId
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
+
+    public function articleTags($articleId)
+    {
+        $sql = "SELECT DISTINCT name
+        FROM tags
+        WHERE article_id = :id;";
+
+        $params = array(
+            'id' => $articleId
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
 }

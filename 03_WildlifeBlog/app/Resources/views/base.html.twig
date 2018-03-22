@@ -38,6 +38,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('viewReadLaterList') }}">Read Later List<span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('viewProfile', {'id': app.user.id}) }}">My Profile<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('editUserInfo', {'id': app.user.id}) }}">Edit Profile<span class="sr-only">(current)</span></a>
+                    </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">(current)</span></a>
@@ -86,37 +92,37 @@
             <section class="slider">
                 <a href="{{ path('listByHabitats', {'habitat': 'Tundra'}) }}">
                     <div class="category">
-                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/tundra-slider.jpg">
+                        <img src="{{ asset('images/tundra-slider.jpg') }}">
                         <h4>Tundra</h4>
                     </div>
                 </a>
                 <a href="{{ path('listByHabitats', {'habitat': 'Savanna'}) }}">
                     <div class="category">
-                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/savanna-slider.jpg">
+                        <img src="{{ asset('images/savanna-slider.jpg') }}">
                         <h4>Savanna</h4>
                     </div>
                 </a>
                 <a href="{{ path('listByHabitats', {'habitat': 'Rainforest'}) }}">
                     <div class="category">
-                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/rainforest-slider.jpg">
+                        <img src="{{ asset('images/rainforest-slider.jpg') }}">
                         <h4>Rainforest</h4>
                     </div>
                 </a>
                 <a href="{{ path('listByHabitats', {'habitat': 'Marine'}) }}">
                     <div class="category">
-                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/marine-slider.jpg">
+                        <img src="{{ asset('images/marine-slider.jpg') }}">
                         <h4>Marine</h4>
                     </div>
                 </a>
                 <a href="{{ path('listByHabitats', {'habitat': 'Desert'}) }}">
                     <div class="category">
-                        <img src="http://wildlife.website.tk/wp-content/uploads/2017/08/desert-slider.jpg">
+                        <img src="{{ asset('images/desert-slider.jpg') }}">
                         <h4>Desert</h4>
                     </div>
                 </a>
                 <a href="{{ path('listByHabitats', {'habitat': 'Forest'}) }}">
                     <div class="category">
-                        <img src="{{ asset('images/forest.jpg') }}">
+                        <img src="{{ asset('images/forest-slider.jpg')}}">
                         <h4>Forest</h4>
                     </div>
                 </a>

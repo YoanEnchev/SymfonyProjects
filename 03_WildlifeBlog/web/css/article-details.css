@@ -105,3 +105,8 @@ section.tags .tag {
     position: relative;
     top: -2px;
 }
+
+.content-overload {
+    color:red;
+    display:none;
+}
