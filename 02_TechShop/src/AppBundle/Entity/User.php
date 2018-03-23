@@ -144,7 +144,7 @@ class User implements UserInterface, Serializable
      */
     public function addToShoppingCart(ProductInCart $product)
     {
-        if ( !$this->productsInShoppingCart->contains($product) ) {
+        if (!$this->productsInShoppingCart->contains($product)) {
             $this->productsInShoppingCart[] = $product;
         }
 
@@ -162,7 +162,7 @@ class User implements UserInterface, Serializable
      */
     public function addToWishlist(Product $product)
     {
-        if ( !$this->productsInWishlist->contains($product) ) {
+        if (!$this->productsInWishlist->contains($product)) {
             $this->productsInWishlist[] = $product;
         }
 
@@ -211,7 +211,7 @@ class User implements UserInterface, Serializable
     {
         /** @var ProductInCart $prod */
         foreach ($this->productsInShoppingCart as $prod) {
-            if($prod->getProduct()->getQuantity() <= 0) {
+            if ($prod->getProduct()->getQuantity() <= 0) {
                 $this->productsInShoppingCart->removeElement($prod);
             }
         }
@@ -221,7 +221,7 @@ class User implements UserInterface, Serializable
     {
         /** @var Product $prod */
         foreach ($this->getProductsInWishlist() as $prod) {
-            if($prod->getQuantity() <= 0) {
+            if ($prod->getQuantity() <= 0) {
                 $this->productsInWishlist->removeElement($prod);
             }
         }
@@ -340,8 +340,7 @@ class User implements UserInterface, Serializable
         $totalCost = 0;
 
         /** @var ProductInCart $prodInCart */
-        foreach ($this->productsInShoppingCart as $prodInCart)
-        {
+        foreach ($this->productsInShoppingCart as $prodInCart) {
             $totalCost += $prodInCart->getUserRequiredQuantity() * $prodInCart->getProduct()->getPromotionPrice();
         }
 
@@ -353,12 +352,26 @@ class User implements UserInterface, Serializable
         $prodsInCart = $this->getProductsInShoppingCart();
         /** @var ProductInCart $prodInCart */
         foreach ($prodsInCart as $prodInCart) {
-            if($prodInCart->getUserRequiredQuantity() > $prodInCart->getProduct()->getQuantity()) {
+            if ($prodInCart->getUserRequiredQuantity() > $prodInCart->getProduct()->getQuantity()) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function usernameRegistered($userList)
+    {
+
+        foreach ($userList as $registeredUser) {
+            if ($registeredUser->getUsername() === $this->getUsername() && $registeredUser->getId() !== $this->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

@@ -1,5 +1,7 @@
 <?php
+
 namespace AppBundle\Controller;
+
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserRegister;
@@ -10,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 class SecurityController extends Controller
 {
     /**
@@ -31,37 +34,31 @@ class SecurityController extends Controller
             $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/";
 
             if (!preg_match($usernameRegex, $user->getUsername()) || !preg_match($emailRegex, $user->getEmail()) //invalid
-                ||  !preg_match($passwordRegex, $user->getPassword())) {
+                || !preg_match($passwordRegex, $user->getPassword())) {
                 return $this->redirectToRoute('register');
             }
 
             /** @var ArrayCollection $userList */
             $userList = $userRepo->findAll();
 
-            /** @var User $registeredUser */
-            foreach ($userList as $registeredUser)
-            {
-                if($registeredUser->getUsername() == $user->getUsername())
-                {
-                    return $this->render('register/register.html.twig', array(
-                        'form' => $form->createView(),
-                        'usernameTaken' => true,
-                        'emailTaken' => false,
-                        'username' => $user->getUsername(),
-                        'email' => ''
-                    ));
-                }
+            if ($user->usernameRegistered($userList)) {
+                return $this->render('register/register.html.twig', array(
+                    'form' => $form->createView(),
+                    'usernameTaken' => true,
+                    'emailTaken' => false,
+                    'username' => $user->getUsername(),
+                    'email' => ''
+                ));
+            }
 
-                if($registeredUser->getEmail() == $user->getEmail())
-                {
-                    return $this->render('register/register.html.twig', array(
-                        'form' => $form->createView(),
-                        'usernameTaken' => false,
-                        'emailTaken' => true,
-                        'username' => '',
-                        'email' => $user->getEmail()
-                    ));
-                }
+            if ($user->emailRegistered($userList)) {
+                return $this->render('register/register.html.twig', array(
+                    'form' => $form->createView(),
+                    'usernameTaken' => false,
+                    'emailTaken' => true,
+                    'username' => '',
+                    'email' => $user->getEmail()
+                ));
             }
 
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
@@ -92,7 +89,8 @@ class SecurityController extends Controller
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loginAction(AuthenticationUtils $authenticationUtils)
+    public
+    function loginAction(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $username = $authenticationUtils->getLastUsername();
@@ -101,6 +99,7 @@ class SecurityController extends Controller
             'username' => $username,
         ));
     }
+
     /**
      * @Route("/logout", name="logout")
      */

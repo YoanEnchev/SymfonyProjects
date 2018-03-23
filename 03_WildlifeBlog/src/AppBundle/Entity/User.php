@@ -269,7 +269,7 @@ class User implements UserInterface
     public function checkIfArticleAddedInLaterList(Article $article)
     {
         foreach ($this->readLaterList as $articleInList) {
-            if($articleInList === $article) {
+            if ($articleInList === $article) {
                 return true;
             }
         }
@@ -283,10 +283,40 @@ class User implements UserInterface
         $articlesInList = $this->readLaterList;
 
         foreach ($articlesInList as $articleInList) {
-            if($articleInList === $article) {
+            if ($articleInList === $article) {
                 $articlesInList->removeElement($articleInList);
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function usernameRegistered($userList)
+    {
+
+        foreach ($userList as $registeredUser) {
+            if ($registeredUser->getUsername() === $this->getUsername() && $registeredUser->getId() !== $this->getId()) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function emailRegistered($userList)
+    {
+
+        foreach ($userList as $registeredUser) {
+            if ($registeredUser->getEmail() === $this->getEmail() && $registeredUser->getId() !== $this->getId()) {
+                return true;
+            }
+        }
+        return false;
+
     }
 }
 
