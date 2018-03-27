@@ -7,3 +7,16 @@ form {
     width: 90%;
     margin: 20px auto;
 }
+
+.error {
+    display: none;
+    color: red;
+}
+
+div.actions {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

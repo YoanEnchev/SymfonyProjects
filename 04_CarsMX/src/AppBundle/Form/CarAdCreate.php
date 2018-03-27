@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\CarAd;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -59,23 +60,43 @@ class CarAdCreate extends AbstractType
             ->add('modification', TextType::class)
             ->add('price', NumberType::class)
             ->add('transmission', ChoiceType::class, array('choices' => array(
-                'a' => 'a'
+                'Manual' => 'Manual',
+                'Semiautomatic' => 'Semiautomatic',
+                'Automatic' => 'Automatic'
             )))
             ->add('fuel', ChoiceType::class, array('choices' => array(
-                'a' => 'a'
+                'Gasoline' => 'Gasoline',
+                'Diesel' => 'Diesel',
+                'Gas' => 'Gas',
+                'Electricity' => 'Electricity'
             )))
             ->add('enginePower', NumberType::class)
             ->add('cubicCapacity', NumberType::class)
             ->add('manufactureYear', NumberType::class)
             ->add('mileage', NumberType::class)
             ->add('doors', ChoiceType::class, array('choices' => array(
-                'a' => 'a'
+                '2/3' => '2/3',
+                '4/5' => '4/5'
             )))
             ->add('color', ChoiceType::class, array('choices' => array(
-                'a' => 'a'
+                'Black' => 'Black',
+                'Blue' => 'Blue',
+                'Brown' => 'Brown',
+                'Cyan' => 'Cyan',
+                'Gray' => 'Gray',
+                'Green' => 'Green',
+                'Magenta' => 'Magenta',
+                'Orange' => 'Orange',
+                'Red' => 'Red',
+                'Silver' => 'Silver',
+                'White' => 'White',
+                'Yellow' => 'Yellow',
             )))
             ->add('mainImage', TextType::class)
             ->add('description', TextareaType::class)
+            ->add('additionalImages', CollectionType::class, array(
+                'entry_type' => AdditionaIImageType::class,
+                'allow_add' => true))
             ->add('submit', SubmitType::class);
     }
 

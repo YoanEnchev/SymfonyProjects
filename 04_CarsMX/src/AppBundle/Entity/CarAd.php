@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -133,9 +134,16 @@ class CarAd
      */
     private $user;
 
+    /**
+     * One CarAd has Many AdditionalImage.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AdditionalImage", mappedBy="carAd" ,cascade={"persist"})
+     */
+    private $additionalImages;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime("now"));
+        $this->additionalImages = new ArrayCollection();
     }
 
 
@@ -531,6 +539,34 @@ class CarAd
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAdditionalImages()
+    {
+        return $this->additionalImages;
+    }
+
+    /**
+     * @param AdditionalImage $additionalImages
+     *
+     * @return CarAd
+     */
+    public function setAdditionalImages($additionalImages)
+    {
+        $this->additionalImages = $additionalImages;
+
+        return $this;
+    }
+
+    /**
+     * @param $additionalImages
+     */
+    public function addAdditionalImage($additionalImages)
+    {
+        $this->additionalImages[] = $additionalImages;
     }
 }
 
