@@ -65,6 +65,16 @@ class User implements UserInterface
     private $carAds;
 
     /**
+     * Many Users have Many Ads in checkLaterList.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\CarAd")
+     * @ORM\JoinTable(name="users_ads_check_later",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="ad_id", referencedColumnName="id")}
+     *      )
+     */
+    private $checkLaterAds;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Role")
@@ -79,6 +89,7 @@ class User implements UserInterface
     {
         $this->roles = new ArrayCollection();
         $this->carAds = new ArrayCollection();
+        $this->checkLaterAds = new ArrayCollection();
     }
 
     /**
@@ -320,6 +331,42 @@ class User implements UserInterface
             }
         }
         return false;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCheckLaterAds()
+    {
+        return $this->checkLaterAds;
+    }
+
+    /**
+     * @param ArrayCollection $checkLaterAds
+     *
+     * @return User
+     */
+    public function setCheckLaterAds($checkLaterAds)
+    {
+        $this->checkLaterAds = $checkLaterAds;
+
+        return $this;
+    }
+
+    /**
+     * @param CarAd $carAd
+     */
+    public function addToCheckLaterList($carAd)
+    {
+        $this->checkLaterAds[] = $carAd;
+    }
+
+    /**
+     * @param CarAd $carAd
+     */
+    public function removeFromCheckLaterList($carAd)
+    {
+        $this->checkLaterAds->removeElement($carAd);
     }
 }
 

@@ -3,7 +3,6 @@ $(function () {
     const addImage = $('.add-image');
     const removeImage = $('.remove-image');
     const numberOfImages = $('#numberOfImages');
-    const submitBtn = $('#car_ad_create_submit');
 
 
     let imageIndex = Number(numberOfImages.val()); //starting value for editing article

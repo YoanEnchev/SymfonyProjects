@@ -10,4 +10,68 @@ namespace AppBundle\Repository;
  */
 class CarAdRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function allCars()
+    {
+        $sql = 'SELECT * FROM car_ads';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function allCarsPriceDesc()
+    {
+        $sql = 'SELECT * FROM car_ads
+        ORDER BY price DESC';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function allCarsPriceAsc()
+    {
+        $sql = 'SELECT * FROM car_ads
+        ORDER BY price ASC';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function allCarsYearDesc()
+    {
+        $sql = 'SELECT * FROM car_ads
+        ORDER BY manufacture_year DESC';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function allCarsYearAsc()
+    {
+        $sql = 'SELECT * FROM car_ads
+        ORDER BY manufacture_year ASC';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function allCarsPowerDesc()
+    {
+        $sql = 'SELECT * FROM car_ads
+        ORDER BY engine_power DESC';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function allCarsPowerAsc()
+    {
+        $sql = 'SELECT * FROM car_ads
+        ORDER BY engine_power ASC';
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
+    }
+
+    public function deleteAllAdditionalImages($addId)
+    {
+        $sql = "DELETE FROM additional_images
+        WHERE car_id = :id";
+        $params = array(
+            'id' => $addId
+        );
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }

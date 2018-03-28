@@ -20,3 +20,21 @@ div.actions {
     align-items: center;
     justify-content: space-between;
 }
+
+.makeAndModel {
+    font-size: 17px;
+    text-align: center;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.noAds {
+    text-align: center;
+}
+
+.heading {
+    margin-top: 10px;
+    text-align: center;
+}

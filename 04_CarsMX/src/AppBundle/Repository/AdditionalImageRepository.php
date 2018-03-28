@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class AdditionalImageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function removeEmptyImages()
+    {
+        $sql = "DELETE FROM additional_images
+        WHERE address = ''";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql);
+    }
 }

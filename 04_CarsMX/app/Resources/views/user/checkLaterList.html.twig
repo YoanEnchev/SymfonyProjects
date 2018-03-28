@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Check Later List
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/add-list.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h2 class="userAds heading">Ads In Check Later List</h2>
+    <section id="viewAds">
+        <div id="ads" class="ads centerAllAds">
+            {% for carAd in ads %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ carAd.mainImage }}">
+                    </div>
+                    <div class="present">
+                        <h5 class="price">{{ carAd.price }} $</h5>
+                        <h5 class="makeAndModel">{{ carAd.make }} {{ carAd.model }}</h5>
+                    </div>
+                    <div class="actions">
+                        <a href="#"><button class="viewDetails">View Details</button></a>
+                        <a href="{{ path('removeFromCheckLaterList', {'id': carAd.id}) }}"><button class="deleteBtn">Remove</button></a>
+                    </div>
+                </div>
+                {% else %}
+                <h2 class="noAds">No adds yet</h2>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+

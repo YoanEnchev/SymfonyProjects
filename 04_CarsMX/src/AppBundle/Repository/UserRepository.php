@@ -10,4 +10,29 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function insertIntoCheckLaterList($userId, $adId)
+    {
+        $sql = 'INSERT INTO users_ads_check_later (user_id, ad_id)
+        VALUES (1, 9)';
+
+        $params = array(
+            'userId' => $userId,
+            'adID' => $adId
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
+
+    public function removeFromCheckLaterList($userId, $adId)
+    {
+        $sql = 'DELETE FROM users_ads_check_later
+        WHERE user_id = :userId AND ad_id = :adID';
+
+        $params = array(
+            'userId' => $userId,
+            'adID' => $adId
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
 }

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} ads{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/add-list.css') }}" >
+{% endblock %}
+
+{% block main %}
+    <h2 class="userAds">Your Ads</h2>
+    <section id="viewAds">
+        <div id="ads" class="ads centerAllAds">
+            {% for carAd in carAds %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ carAd.mainImage }}">
+                    </div>
+                    <div class="present">
+                        <h5 class="price">{{ carAd.price }} $</h5>
+                        <h5 class="makeAndModel">{{ carAd.make }} {{ carAd.model }}</h5>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('editAd', {'id': carAd.id}) }}"><button class="viewDetails">Edit</button></a>
+                        <a href="{{ path('deleteAd', {'id': carAd.id}) }}"><button class="deleteBtn">Delete</button></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
