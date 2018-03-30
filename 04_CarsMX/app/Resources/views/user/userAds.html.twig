@@ -25,6 +25,8 @@
                         <a href="{{ path('deleteAd', {'id': carAd.id}) }}"><button class="deleteBtn">Delete</button></a>
                     </div>
                 </div>
+                {% else %}
+                <h3 class="heading">No Adds Published.</h3>
             {% endfor %}
         </div>
     </section>

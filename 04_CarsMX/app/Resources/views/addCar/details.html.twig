@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Details
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/details.css') }}"
+{% endblock %}
+
+{% block main %}
+    <div class="wrapper">
+        <h3 class="heading">Contact & Basic Info</h3>
+        <table class="table basicInfo">
+            <tbody>
+            <tr>
+                <td>Published By: {{ add.user.username }}</td>
+                <td>{{ add.make }} {{ add.model }}</td>
+            </tr>
+            <tr>
+                <td>Phone: {{ add.user.phone }}</td>
+                <td>{{ add.price }} $</td>
+            </tr>
+            <tr>
+                <td>Location: {{ add.user.city }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p>Description</p>
+                    {{ add.description }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3 class="heading">Parameters</h3>
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <td>Engine Power</td>
+                <td>{{ add.enginePower }}</td>
+            </tr>
+            <tr>
+                <td>Fuel</td>
+                <td>{{ add.fuel }}</td>
+            </tr>
+            <tr>
+                <td>Cubic Capacity</td>
+                <td>{{ add.enginePower }}</td>
+            </tr>
+            <tr>
+                <td>Manufacture Year</td>
+                <td>{{ add.manufactureYear }}</td>
+            </tr>
+            <tr>
+                <td>Mileage</td>
+                <td>{{ add.mileage }}</td>
+            </tr>
+            <tr>
+                <td>Doors</td>
+                <td>{{ add.doors }}</td>
+            </tr>
+            <tr>
+                <td>Modification</td>
+                <td>{{ add.modification }}</td>
+            </tr>
+            <tr>
+                <td>Color</td>
+                <td>{{ add.color }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3 class="heading">Images</h3>
+        <div id="mainImg">
+            <img src="{{ add.mainImage }}">
+        </div>
+        <div class="ad-images">
+            {% for img in add.additionalImages %}
+                <img src="{{ img.address }}"/>
+            {% endfor %}
+            <img src="{{ add.mainImage }}">
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/image-setter.js') }}"></script>
+{% endblock %}

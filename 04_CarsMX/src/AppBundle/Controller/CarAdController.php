@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+
+header("Access-Control-Allow-Origin: *");
 
 class CarAdController extends Controller
 {
@@ -39,8 +42,11 @@ class CarAdController extends Controller
             $fuel = $carAd->getFuel();
             $doors = $carAd->getDoors();
             $color = $carAd->getColor();
+            $year = $carAd->getManufactureYear();
+            $price = $carAd->getPrice();
 
 
+            //data validation
             if ($make != "Alfa Romeo" && $make != "Audi" && $make != "BMW" && $make != "Chevrolet" && $make != "Citroen"
                 && $make != "Dacia" && $make != "Fiat" && $make != "Ford" && $make != "Great wall" && $make != "Honda"
                 && $make != "Hyundai" && $make != "Infiniti" && $make != "Isuzu" && $make != "Jaguar" && $make != "Jeep"
@@ -65,6 +71,9 @@ class CarAdController extends Controller
             && $color != "Yellow") {
                 return $this->redirectToRoute('homepage');
             }
+            if($year <= 1900 || $year > date("Y") || $price <= 0 && $price > 100000000) {
+                return $this->redirectToRoute('homepage');
+            }
 
                 /** @var AdditionalImage $additionalImage */
                 foreach ($carAd->getAdditionalImages() as $additionalImage) {
@@ -76,7 +85,7 @@ class CarAdController extends Controller
             $em->persist($carAd);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('viewDetails', array('id' => $carAd->getId()));
         }
 
         return $this->render('addCar/create.html.twig', array(
@@ -209,6 +218,8 @@ class CarAdController extends Controller
                 $em->flush();
             }
 
+            $repo->removeFromCheckLaterLists($id);
+
             $em->persist($ad);
             $em->remove($ad);
             $em->flush();
@@ -255,7 +266,6 @@ class CarAdController extends Controller
                 }
 
                 $em->flush();
-
                 $em->persist($ad);
                 $em->flush();
 
@@ -273,6 +283,25 @@ class CarAdController extends Controller
             'form' => $form->createView(),
             'ad' => $ad,
             'additionalImageCount' => $additionalImageCount
+        ));
+    }
+
+    /**
+     * @Route("/details/{id}", name="viewDetails")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function viewDetails($id)
+    {
+        $addRepo = $this->getDoctrine()->getRepository(CarAd::class);
+        $add = $addRepo->find($id);
+
+        if($add === null) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('addCar/details.html.twig', array(
+            'add' => $add
         ));
     }
 }

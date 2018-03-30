@@ -70,8 +70,78 @@ class CarAdRepository extends \Doctrine\ORM\EntityRepository
         $sql = "DELETE FROM additional_images
         WHERE car_id = :id";
         $params = array(
-            'id' => $addId
+            'id' => $addId,
         );
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
+
+    public function removeFromCheckLaterLists($addId)
+    {
+        $sql = "DELETE FROM users_ads_check_later
+        WHERE ad_id = :id";
+        $params = array(
+            'id' => $addId,
+        );
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params);
+    }
+
+    public function searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear)
+    {
+        $sql = "SELECT * FROM car_ads
+        WHERE id > 0";
+
+        if($make !== "Any") {
+            $sql .= "AND make = :make ";
+        }
+        if($model !== "") {
+            $sql .= "AND model = :model ";
+        }
+        if($fuel !== "Any") {
+            $sql .= "AND fuel = :fuel ";
+        }
+        if($transmission !== "Any") {
+            $sql .= "AND transmission = :transmission ";
+        }
+        if($doors !== "Any") {
+            $sql .= "AND doors = :doors ";
+        }
+        if($fromYear !== "") {
+            $sql .= "AND year > :fromYear ";
+        }
+        if($maxPrice !== "") {
+            $sql .= "AND price < :maxPrice ";
+        }
+        if($toYear !== "") {
+            $sql .= "AND year < :toYear";
+        }
+
+        switch ($sort)
+        {
+            case 'expensiveCheap':
+                $sql .= "ORDER BY price DESC";
+                break;
+            case 'cheapExpensive':
+                $sql .= "ORDER BY price ASC";
+                break;
+            case 'Year':
+                $sql .= "ORDER BY manufacture_year DESC";
+                break;
+            case 'Power':
+                $sql .= "ORDER BY engine_power DESC";
+                break;
+        }
+
+        $params = array(
+            'make' => $make,
+            'model' => $model,
+            'fuel' => $fuel,
+            'transmission' => $transmission,
+            'doors' => $doors,
+            'fromYear' => $fromYear,
+            'maxPrice' => $maxPrice,
+            'toYear' => $toYear
+        );
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
     }
 }

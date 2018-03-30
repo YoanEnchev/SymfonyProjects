@@ -7,6 +7,8 @@ use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+header('Access-Control-Allow-Origin: *');
+
 class UserController extends Controller
 {
     /**

@@ -59,10 +59,10 @@
                     <a href="{{ path('editAd', {'id': carAd.id}) }}"><button class="editBtn">Edit</button></a>
                     <a href="{{ path('deleteAd', {'id': carAd.id}) }}"><button class="deleteBtn">Delete</button></a>
                 {% elseif app.user %}
-                    <a><button class="viewDetails">View Details</button></a>
+                    <a href="{{ path('viewDetails', {'id': carAd.id}) }}"><button class="viewDetails">View Details</button></a>
                     <a href="{{ path('addToCheckLaterList', {'id': carAd.id}) }}"><button class="checkLater">Check Later</button></a>
                 {% else %}
-                    <button class="viewDetails">View Details</button>
+                    <a href="{{ path('viewDetails', {'id': carAd.id}) }}"><button class="viewDetails">View Details</button></a>
                 {% endif %}
             </div>
         </div>

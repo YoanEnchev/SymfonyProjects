@@ -1,0 +1,23 @@
+header img {
+    width: 100%;
+    height: auto;
+}
+
+#search_car {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#search_car .form-fields {
+    width: 400px;
+    display: inline-block;
+    margin: 20px;
+}
+
+#search_car .form-fields:nth-child(3)
+{
+    position: relative;
+    top: 25px;
+}
