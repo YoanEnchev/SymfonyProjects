@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Cars From Search
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/add-list.css') }}">
+{% endblock %}
+
+{% block main %}
+    <div class="sort">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Order By Price
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item"
+                   href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
+                        'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'expensiveCheap', 'toYear': toYear }) }}">Expensive - Cheap</a>
+                <a class="dropdown-item" href="{{ path('priceASC') }}">Ascending</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle orderByYear" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Order By Year
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{{ path('yearDESC') }}">Descending</a>
+                <a class="dropdown-item" href="{{ path('yearASC') }}">Ascending</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle orderByPower" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Power
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{{ path('yearDESC') }}">Descending</a>
+                <a class="dropdown-item" href="{{ path('yearASC') }}">Ascending</a>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="viewAll">Cars From Search: </h4>
+    <section id="viewAds">
+        <div id="ads" class="ads centerAllAds">
+            {% for carAd in cars %}
+                <div class="advert">
+                    <div>
+                        <img src="{{ carAd.main_image }}">
+                    </div>
+                    <div class="present">
+                        <h5 class="price">{{ carAd.price }} $</h5>
+                        <h5 class="makeAndModel">{{ carAd.make }} {{ carAd.model }}</h5>
+                    </div>
+                    <div class="actions">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('editAd', {'id': carAd.id}) }}"><button class="editBtn">Edit</button></a>
+                            <a href="{{ path('deleteAd', {'id': carAd.id}) }}"><button class="deleteBtn">Delete</button></a>
+                        {% elseif app.user %}
+                            <a href="{{ path('viewDetails', {'id': carAd.id}) }}"><button class="viewDetails">View Details</button></a>
+                            <a href="{{ path('addToCheckLaterList', {'id': carAd.id}) }}"><button class="checkLater">Check Later</button></a>
+                        {% else %}
+                            <a href="{{ path('viewDetails', {'id': carAd.id}) }}"><button class="viewDetails">View Details</button></a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <h4 class="heading">No Adds found.</h4>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+

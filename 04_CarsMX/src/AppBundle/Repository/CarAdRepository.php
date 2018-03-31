@@ -88,31 +88,31 @@ class CarAdRepository extends \Doctrine\ORM\EntityRepository
     public function searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear)
     {
         $sql = "SELECT * FROM car_ads
-        WHERE id > 0";
+        WHERE id > 0 ";
 
-        if($make !== "Any") {
+        if($make != "Any") {
             $sql .= "AND make = :make ";
         }
-        if($model !== "") {
+        if($model != "Any") {
             $sql .= "AND model = :model ";
         }
-        if($fuel !== "Any") {
+        if($fuel != "Any") {
             $sql .= "AND fuel = :fuel ";
         }
-        if($transmission !== "Any") {
+        if($transmission != "Any") {
             $sql .= "AND transmission = :transmission ";
         }
-        if($doors !== "Any") {
+        if($doors != "Any") {
             $sql .= "AND doors = :doors ";
         }
-        if($fromYear !== "") {
-            $sql .= "AND year > :fromYear ";
+        if($fromYear != "Any") {
+            $sql .= "AND manufacture_year > :fromYear ";
         }
-        if($maxPrice !== "") {
+        if($maxPrice != "Any") {
             $sql .= "AND price < :maxPrice ";
         }
-        if($toYear !== "") {
-            $sql .= "AND year < :toYear";
+        if($toYear != "Any") {
+            $sql .= "AND manufacture_year < :toYear ";
         }
 
         switch ($sort)

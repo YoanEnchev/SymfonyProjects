@@ -164,9 +164,9 @@ class CarAdController extends Controller
     }
 
     /**
- * @Route("/listAllAds/powerDESC", name="powerDESC")
- * @return \Symfony\Component\HttpFoundation\Response
- */
+    * @Route("/listAllAds/powerDESC", name="powerDESC")
+    * @return \Symfony\Component\HttpFoundation\Response
+    */
     public function powerDesc()
     {
         $repo = $this->getDoctrine()->getRepository(CarAd::class);
@@ -302,6 +302,73 @@ class CarAdController extends Controller
 
         return $this->render('addCar/details.html.twig', array(
             'add' => $add
+        ));
+    }
+
+    /**
+     * @Route("search/{make}/{model}/{fuel}/{transmission}/{doors}/{fromYear}/{maxPrice}/{sort}/{toYear}", name="searchCar")
+     * @param $make
+     * @param $model
+     * @param $fuel
+     * @param $transmission
+     * @param $doors
+     * @param $fromYear
+     * @param $maxPrice
+     * @param $sort
+     * @param $toYear
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear)
+    {
+        //data validation:
+        if ($make != "Alfa Romeo" && $make != "Audi" && $make != "BMW" && $make != "Chevrolet" && $make != "Citroen"
+            && $make != "Dacia" && $make != "Fiat" && $make != "Ford" && $make != "Great wall" && $make != "Honda"
+            && $make != "Hyundai" && $make != "Infiniti" && $make != "Isuzu" && $make != "Jaguar" && $make != "Jeep"
+            && $make != "Jeep" && $make != "Kia" && $make != "Lada" && $make != "Land Rover" && $make != "Lexus"
+            && $make != "Mazda" && $make != "Mercedes-Benz" && $make != "Mini" && $make != "Mitsubishi" && $make != "Nissan"
+            && $make != "Opel" && $make != "Peugeot" && $make != "Porsche" && $make != "Renault" && $make != "Seat"
+            && $make != "Skoda" && $make != "Ssangyong" && $make != "Subaru" && $make != "Suzuki" && $make != "Toyota"
+            && $make != "Volvo" && $make != "VW" && $make != "Any") {
+            return $this->redirectToRoute('homepage');
+        }
+        if ($transmission != "Manual" && $transmission != "Semiautomatic" && $transmission != "Automatic" && $transmission != "Any") {
+            return $this->redirectToRoute('homepage');
+        }
+        if ($fuel != "Gasoline" && $fuel != "Diesel" && $fuel != "Gas" && $fuel != "Electricity" && $fuel != "Any") {
+            return $this->redirectToRoute('homepage');
+        }
+        if ($doors != "2/3" && $doors != "4/5" && $doors != "Any") {
+            return $this->redirectToRoute('homepage');
+        }
+
+        if ($fromYear != "Any" && ($fromYear <= 1900 || $fromYear > date("Y"))) {
+            return $this->redirectToRoute('homepage');
+        }
+        if ($toYear != "Any" && ($toYear <= 1900 || $toYear > date("Y"))) {
+            return $this->redirectToRoute('homepage');
+        }
+        if ($maxPrice != "Any" && ($maxPrice <= 0 || $maxPrice > 100000000)) {
+            return $this->redirectToRoute('homepage');
+        }
+        if ($sort != "expensiveCheap" && $sort != "cheapExpensive" && $sort != "newOld" && $sort != "oldNew" &&
+            $sort != "morePowerLessPower" && $sort != "lessPowerMorePower") {
+            return $this->redirectToRoute('homepage');
+        }
+
+        $repo = $this->getDoctrine()->getRepository(CarAd::class);
+        $cars = $repo->searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear);
+
+        return $this->render('addCar/listCars.html.twig', array(
+            'cars' => $cars,
+            'make' => $make,
+            'model' => $model,
+            'fuel' => $fuel,
+            'transmission' => $transmission,
+            'doors' => $doors,
+            'fromYear' => $fromYear,
+            'maxPrice' => $maxPrice,
+            'sort' => $sort,
+            'toYear' => $toYear
         ));
     }
 }

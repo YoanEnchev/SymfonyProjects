@@ -76,8 +76,10 @@ class SearchCar extends AbstractType
             ->add('sort', ChoiceType::class, array('choices' => array(
                 'Expensive - Cheap' => 'expensiveCheap',
                 'Cheap - Expensive' => 'cheapExpensive',
-                'Year' => 'Year',
-                'Power' => 'Power')))
+                'New - Old' => 'newOld',
+                'Old - New<' => 'oldNew',
+                'More Power - Less Power' => 'morePowerLessPower',
+                'Less Power - More Power' => 'lessPowerMorePower')))
             ->add('toYear', NumberType::class)
             ->add('submit', SubmitType::class);
     }
