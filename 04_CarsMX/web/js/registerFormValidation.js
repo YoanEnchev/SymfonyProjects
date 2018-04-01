@@ -1,12 +1,14 @@
 (function validate() {
     //fields:
-    const usermameBox = $('#app_bundle_user_type_username');
-    const emailBox = $('#app_bundle_user_type_email');
-    const passwordBox = $('#app_bundle_user_type_password_first');
-    const repeatPasswordBox = $('#app_bundle_user_type_password_second');
+    const usermameBox = $('#user_username');
+    const emailBox = $('#user_email');
+    const phoneBox = $('#user_phone');
+    const cityBox = $('#user_city');
+    const passwordBox = $('#user_password_first');
+    const repeatPasswordBox = $('#user_password_second');
 
     const allFields = $('input');
-    const submitBtn = $('#app_bundle_user_type_submit');
+    const submitBtn = $('#user_submit');
 
     //regexes:
     const usernameRegex_length = /^.{3,30}$/;
@@ -22,6 +24,8 @@
     //error message boxes:
     const usernameError = $('#invalidUsername');
     const emailError = $('#invalidEmail');
+    const cityError = $('#invalidCity');
+    const phoneError = $('#invalidPhone');
     const passwordError = $('#invalidPassword');
     const confirmPasswordError = $('#invalidConfirmPassword');
 
@@ -39,6 +43,11 @@
     passwordBox.keyup(() => passwordMatchAction('Passwords do not match.'));
 
     repeatPasswordBox.keyup(() => passwordMatchAction('Passwords do not match.'));
+
+    phoneBox.keyup(() => validatePhoneOrCity(phoneBox, phoneError, 'Please fill your phone.'));
+    cityBox.keyup(() => validatePhoneOrCity(cityBox, cityError, 'Please fill your location.'));
+
+
     allFields.keyup(checkIfAllValid);
 
     function invalidAction(textfield ,regex, errorBox, message) {
@@ -74,9 +83,19 @@
         errorBox.text('');
     }
 
+    function validatePhoneOrCity(textfield, errorBox, message) {
+        if(textfield.val() === "") {
+            showInvalid(textfield, errorBox, message)
+        }
+        else {
+            showValid(textfield, errorBox);
+        }
+    }
+
     function checkIfAllValid() {
         if(usernameRegex_complete.test(usermameBox.val()) && emailRegex.test(emailBox.val()) &&
-            passwordRegex_complete.test(passwordBox.val()) && passwordBox.val() === repeatPasswordBox.val())
+            passwordRegex_complete.test(passwordBox.val()) && passwordBox.val() === repeatPasswordBox.val() &&
+            phoneBox.val() !== "" && cityBox.val() !== "")
         {
             submitBtn.removeAttr("disabled")
         } else {

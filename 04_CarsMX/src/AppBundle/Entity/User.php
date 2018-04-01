@@ -368,5 +368,16 @@ class User implements UserInterface
     {
         $this->checkLaterAds->removeElement($carAd);
     }
+
+    public function alreadyInCheckLaterList(CarAd $addToSearch)
+    {
+        foreach($this->checkLaterAds as $add) {
+            if($add === $addToSearch) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 

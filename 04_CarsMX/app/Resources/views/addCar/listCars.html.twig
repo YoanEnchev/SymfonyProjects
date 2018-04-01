@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block main %}
+<div class="wrapper">
     <div class="sort">
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle orderByPrice" type="button" id="dropdownMenuButton"
@@ -19,8 +20,11 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item"
                    href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
-                        'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'expensiveCheap', 'toYear': toYear }) }}">Expensive - Cheap</a>
-                <a class="dropdown-item" href="{{ path('priceASC') }}">Ascending</a>
+                        'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'expensiveCheap', 'toYear': toYear }) }}"
+                >Expensive - Cheap</a>
+                <a class="dropdown-item"
+                   href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
+                       'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'cheapExpensive', 'toYear': toYear }) }}">Cheap - Expensive</a>
             </div>
         </div>
         <div class="dropdown">
@@ -29,8 +33,11 @@
                 Order By Year
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{ path('yearDESC') }}">Descending</a>
-                <a class="dropdown-item" href="{{ path('yearASC') }}">Ascending</a>
+                <a class="dropdown-item"
+                   href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
+                       'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'newOld', 'toYear': toYear }) }}">New - Old</a>
+                <a class="dropdown-item" href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
+                    'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'oldNew', 'toYear': toYear }) }}">Old - New</a>
             </div>
         </div>
         <div class="dropdown">
@@ -39,12 +46,16 @@
                 Power
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{ path('yearDESC') }}">Descending</a>
-                <a class="dropdown-item" href="{{ path('yearASC') }}">Ascending</a>
+                <a class="dropdown-item"
+                   href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
+                       'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'morePowerLessPower', 'toYear': toYear }) }}">
+                    More Power - Less Power</a>
+                <a class="dropdown-item"
+                   href="{{ path('searchCar',{'make': make, 'model': model, 'fuel': fuel, 'transmission':transmission, 'doors':doors,
+                    'fromYear': fromYear, 'maxPrice': maxPrice, 'sort': 'lessPowerMorePower', 'toYear': toYear }) }}">Less Power - More Power</a>
             </div>
         </div>
     </div>
-
     <h4 class="viewAll">Cars From Search: </h4>
     <section id="viewAds">
         <div id="ads" class="ads centerAllAds">
@@ -74,5 +85,9 @@
             {% endfor %}
         </div>
     </section>
+    <div class="navigation">
+        {{ knp_pagination_render(cars) }}
+    </div>
+</div>
 {% endblock %}
 

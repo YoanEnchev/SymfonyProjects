@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block main %}
+
     {% if usernameTaken %}
         <div class="alert alert-danger" role="alert">
             <strong>Error!</strong> Username {{ username }} already taken.
@@ -13,7 +14,6 @@
             <strong>Error!</strong> Email {{ email }} already taken.
         </div>
     {% endif %}
-
     <div class="wrapper">
         <form name="user" method="post">
             <div id="user">
@@ -21,29 +21,41 @@
                     <label for="user_username" class="required">Username</label>
                     <input type="text" id="user_username" name="user[username]" required="required"
                            class="form-control">
+                    <div class="errorMsg" id="invalidUsername"></div>
                 </div>
+
                 <div class="form-group">
                     <label for="user_email" class="required">Email</label>
                     <input type="email" id="user_email" name="user[email]" required="required" class="form-control">
+                    <div class="errorMsg" id="invalidEmail"></div>
                 </div>
+
                 <div class="form-group">
                     <label for="user_phone" class="required">Phone</label>
                     <input type="text" id="user_phone" name="user[phone]" required="required" class="form-control">
+                    <div class="errorMsg" id="invalidPhone"></div>
                 </div>
+
                 <div class="form-group">
                     <label for="user_city" class="required">City</label>
                     <input type="text" id="user_city" name="user[city]" required="required" class="form-control">
+                    <div class="errorMsg" id="invalidCity"></div>
                 </div>
+
                 <div class="form-group">
                     <label for="user_password_first" class="required">Password</label>
                     <input type="password" id="user_password_first" name="user[password][first]" required="required"
                            class="form-control">
+                    <div class="errorMsg" id="invalidPassword"></div>
                 </div>
+
                 <div class="form-group">
                     <label for="user_password_second" class="required">Repeat Password</label>
                     <input type="password" id="user_password_second" name="user[password][second]" required="required"
                            class="form-control">
+                    <div class="errorMsg" id="invalidRepeatPassword"></div>
                 </div>
+
                 <div class="form-group">
                     <button type="submit" id="user_submit" name="user[submit]" class="btn btn-primary">Submit</button>
                 </div>

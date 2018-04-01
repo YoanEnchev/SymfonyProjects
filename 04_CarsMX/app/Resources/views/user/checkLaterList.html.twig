@@ -23,7 +23,7 @@
                         <h5 class="makeAndModel">{{ carAd.make }} {{ carAd.model }}</h5>
                     </div>
                     <div class="actions">
-                        <a href="#"><button class="viewDetails">View Details</button></a>
+                        <a href="{{ path('viewDetails', {'id': carAd.id}) }}"><button class="viewDetails">View Details</button></a>
                         <a href="{{ path('removeFromCheckLaterList', {'id': carAd.id}) }}"><button class="deleteBtn">Remove</button></a>
                     </div>
                 </div>
@@ -32,5 +32,8 @@
             {% endfor %}
         </div>
     </section>
+    <div class="navigation">
+        {{ knp_pagination_render(ads) }}
+    </div>
 {% endblock %}
 

@@ -20,6 +20,9 @@ class HomeController extends Controller
         $form = $this->createForm(SearchCar::class);
         $form->handleRequest($request);
 
+        $addRepo = $this->getDoctrine()->getRepository(CarAd::class);
+        $cars = $addRepo->latestAddedAds();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
@@ -55,7 +58,8 @@ class HomeController extends Controller
         }
 
         return $this->render('home/index.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'cars' => $cars
         ));
     }
 }

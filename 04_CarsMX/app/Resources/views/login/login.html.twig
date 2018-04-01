@@ -8,7 +8,7 @@
             <strong>Error!</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
         </div>
     {% endif %}
-
+    <div class="wrapper">
     <form action="{{ path('login') }}" method="post">
         <div class="form-group">
             <label for="username">Username:</label>
@@ -26,4 +26,5 @@
             <button type="submit" class="btn btn-primary">login</button>
         </div>
     </form>
+    </div>
 {% endblock %}

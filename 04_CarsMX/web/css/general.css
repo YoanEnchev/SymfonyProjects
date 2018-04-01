@@ -26,8 +26,9 @@ div.actions {
     text-align: center;
 }
 
-a:hover {
+a:hover, button:hover {
     cursor: pointer;
+    text-decoration: none;
 }
 
 .noAds {
@@ -38,3 +39,13 @@ a:hover {
     margin-top: 10px;
     text-align: center;
 }
+
+.lastAdded  {
+    z-index: 1;
+}
+
+.navigation {
+    margin: 10px auto;
+    width: fit-content;
+}
+

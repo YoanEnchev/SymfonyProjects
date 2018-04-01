@@ -123,11 +123,17 @@ class CarAdRepository extends \Doctrine\ORM\EntityRepository
             case 'cheapExpensive':
                 $sql .= "ORDER BY price ASC";
                 break;
-            case 'Year':
+            case 'newOld':
                 $sql .= "ORDER BY manufacture_year DESC";
                 break;
-            case 'Power':
+            case 'oldNew':
+                $sql .= "ORDER BY manufacture_year ASC";
+                break;
+            case 'morePowerLessPower':
                 $sql .= "ORDER BY engine_power DESC";
+                break;
+            case 'lessPowerMorePower':
+                $sql .= "ORDER BY engine_power ASC";
                 break;
         }
 
@@ -143,5 +149,14 @@ class CarAdRepository extends \Doctrine\ORM\EntityRepository
         );
 
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    public function latestAddedAds()
+    {
+        $sql = "SELECT * FROM car_ads
+        ORDER BY date_added DESC
+        LIMIT 10";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
     }
 }

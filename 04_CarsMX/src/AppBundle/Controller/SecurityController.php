@@ -29,6 +29,37 @@ class SecurityController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //data validation:
+            $usernameRegex = "/^\w{3,30}$/";
+            $emailRegex = "/^(\w+)@(\w+)\.(\w+)$/";
+            $passwordRegex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/";
+            if (!preg_match($usernameRegex, $user->getUsername()) || !preg_match($emailRegex, $user->getEmail()) //invalid
+                || !preg_match($passwordRegex, $user->getPassword()) && $user->getPhone() != "" && $user->getCity() != ""){
+                return $this->redirectToRoute('register');
+            }
+
+            //check if username or email taken
+            /** @var ArrayCollection $userList */
+            $userList = $userRepo->findAll();
+            if ($user->usernameRegistered($userList)) {
+                return $this->render('register/register.html.twig', array(
+                    'form' => $form->createView(),
+                    'usernameTaken' => true,
+                    'emailTaken' => false,
+                    'username' => $user->getUsername(),
+                    'email' => ''
+                ));
+            }
+            if ($user->emailRegistered($userList)) {
+                return $this->render('register/register.html.twig', array(
+                    'form' => $form->createView(),
+                    'usernameTaken' => false,
+                    'emailTaken' => true,
+                    'username' => '',
+                    'email' => $user->getEmail()
+                ));
+            }
+
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
             // Add Role
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);

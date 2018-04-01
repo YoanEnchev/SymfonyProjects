@@ -94,104 +94,6 @@ class CarAdController extends Controller
     }
 
     /**
-     * @Route("/listAllAds", name="listAllAds")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listAll()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCars();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
-     * @Route("/listAllAds/priceDESC", name="priceDESC")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function priceDesc()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCarsPriceDesc();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
-     * @Route("/listAllAds/priceASC", name="priceASC")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function priceAsc()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCarsPriceAsc();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
-     * @Route("/listAllAds/yearDESC", name="yearDESC")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function yearDesc()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCarsYearDesc();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
-     * @Route("/listAllAds/yearASC", name="yearASC")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function yearAsc()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCarsYearAsc();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
-    * @Route("/listAllAds/powerDESC", name="powerDESC")
-    * @return \Symfony\Component\HttpFoundation\Response
-    */
-    public function powerDesc()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCarsPowerDesc();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
-     * @Route("/listAllAds/powerASC", name="powerASC")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function powerASC()
-    {
-        $repo = $this->getDoctrine()->getRepository(CarAd::class);
-        $carAds = $repo->allCarsPowerAsc();
-
-        return $this->render('addCar/listAll.html.twig',array(
-            'carAds' => $carAds
-        ));
-    }
-
-    /**
      * @Route("/deleteAd/{id}", name="deleteAd")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -316,9 +218,10 @@ class CarAdController extends Controller
      * @param $maxPrice
      * @param $sort
      * @param $toYear
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear)
+    public function searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear, Request $request)
     {
         //data validation:
         if ($make != "Alfa Romeo" && $make != "Audi" && $make != "BMW" && $make != "Chevrolet" && $make != "Citroen"
@@ -351,15 +254,27 @@ class CarAdController extends Controller
             return $this->redirectToRoute('homepage');
         }
         if ($sort != "expensiveCheap" && $sort != "cheapExpensive" && $sort != "newOld" && $sort != "oldNew" &&
-            $sort != "morePowerLessPower" && $sort != "lessPowerMorePower") {
+            $sort != "morePowerLessPower" && $sort != "lessPowerMorePower"  && $sort != "noSort") {
             return $this->redirectToRoute('homepage');
         }
 
         $repo = $this->getDoctrine()->getRepository(CarAd::class);
         $cars = $repo->searchForCar($make, $model, $fuel, $transmission, $doors, $fromYear, $maxPrice, $sort, $toYear);
 
+
+        //pagination:
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $cars,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10)
+        );
+
         return $this->render('addCar/listCars.html.twig', array(
-            'cars' => $cars,
+            'cars' => $result,
             'make' => $make,
             'model' => $model,
             'fuel' => $fuel,

@@ -15,7 +15,7 @@
         <table class="table basicInfo">
             <tbody>
             <tr>
-                <td>Published By: {{ add.user.username }}</td>
+                <td>Published By: <a href="{{ path('userProfile', {'id': add.user.id}) }}">{{ add.user.username }}</a></td>
                 <td>{{ add.make }} {{ add.model }}</td>
             </tr>
             <tr>
