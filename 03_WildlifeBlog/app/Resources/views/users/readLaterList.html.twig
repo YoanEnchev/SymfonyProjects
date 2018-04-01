@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+   Read Later List
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/list-articles.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h2 class="articles-review">Read Later List:</h2>
+
+    <div class="wrapper">
+        {% for article in readLaterList %}
+            <article>
+                <img src="{{ article.imageAddress }}">
+                <h2 class="title">{{ article.title }}</h2>
+                <p class="slug">{{ article.slug }}</p>
+                <div class="actions">
+                    <a href="{{ path('readArticle', {'id': article.id}) }}">
+                        <button class="btn-sm btn-primary">Read More</button>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('editArticle', {'id': article.id}) }}">
+                            <button class="btn-sm btn-info">Edit</button>
+                        </a>
+                        <a href="{{ path('deleteArticle', {'id': article.id}) }}">
+                            <button class="btn-sm btn-danger">Delete</button>
+                        </a>
+                    {% elseif  is_granted('ROLE_USER')%}
+                        <a href="{{ path('removeFromReadLaterList', {'articleId': article.id}) }}">
+                            <button class="btn-sm btn-danger">Remove</button>
+                        </a>
+                    {% endif %}
+                </div>
+            </article>
+        {% else %}
+            <h2>No articles in read later list.</h2>
+        {% endfor %}
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(readLaterList) }}
+    </div>
+{% endblock %}

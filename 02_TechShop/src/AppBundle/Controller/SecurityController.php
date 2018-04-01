@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +20,13 @@ class SecurityController extends Controller
      * @Route("/register", name="register")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function regiserAction(Request $request, AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder)
+    public function regiserAction(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        $error = $authenticationUtils->getLastAuthenticationError();
 
         if ($form->isSubmitted() && $form->isValid()) {
             //validation
@@ -35,6 +35,18 @@ class SecurityController extends Controller
             }
             else if (!preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/", $user->getPassword())) {
                 return $this->redirectToRoute('invalidPassword');
+            }
+
+            $userRepo = $this->getDoctrine()->getRepository(User::class);
+            $userList = $userRepo->findAll();
+
+            if($user->usernameRegistered($userList))
+            {
+                return $this->render('register/register.html.twig', array(
+                    'form' => $form->createView(),
+                    'usernameTaken' => true,
+                    'username' => $user->getUsername()
+                ));
             }
 
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
@@ -56,7 +68,7 @@ class SecurityController extends Controller
         }
         return $this->render('register/register.html.twig', array(
             'form' => $form->createView(),
-            'error' => $error,
+            'usernameTaken' => false
         ));
     }
 

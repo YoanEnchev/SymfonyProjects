@@ -1,0 +1,119 @@
+.advert {
+    width: fit-content;
+    margin: 10px 10px;
+}
+
+.advert img {
+    width: 190px;
+    height: 170px;
+}
+
+.description {
+    width: 220px;
+    margin: 2.5px auto;
+    text-align: center;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+
+.price {
+    text-align: center;
+    margin: 5px auto;
+    color: #d21d0c;
+    font-size: 20px;
+}
+
+.advert button {
+    text-align: center;
+    width: 110px;
+    height: 30px;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 0 5px;
+    color: white;
+}
+
+.advert button.viewDetails {
+    background: #1d36ff;
+}
+
+.advert button {
+    font-size: 12px;
+    width: 85px;
+    height: 24px
+}
+
+.advert .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+#viewAds {
+    margin-top: 30px;
+}
+
+.centerInsideAd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+}
+
+.centerAllAds {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.sort {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.orderByYear, .orderByPrice, .orderByPower {
+    color: white;
+    border: none;
+}
+
+.orderByYear, .viewDetails {
+    background: #1d36ff;
+}
+
+.orderByPrice, .editBtn, .checkLater {
+    background: #da4c00;
+}
+
+.orderByPower, .deleteBtn {
+    background: red;
+}
+
+.cover {
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+.viewAll {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.userAds {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.img-holder {
+    width: fit-content;
+    margin: 0 auto;
+}

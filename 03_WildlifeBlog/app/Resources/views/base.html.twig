@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/boostrap/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/slick/slick.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/slick/slick-theme.css') }}">
+        <style>
+            @font-face {
+                font-family: slick;
+                font-weight: normal;
+                font-style: normal;
+                src: url('{{ asset('fonts/slick.eot') }}');
+                src: url('{{ asset('fonts/slick.eot') }}#iefix') format('embedded-opentype'), url("{{ asset('fonts/slick.woff') }}") format('woff'), url('{{ asset('fonts/slick.ttf') }}') format('truetype'), url('{{ asset('fonts/slick.svg') }}#slick') format('svg');
+            }
+        </style>
+    {% endblock %}
+
+</head>
+<body>
+{% block navigation %}
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{{ path('homepage') }}">Wildlife Blog</a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}">Logout<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('viewReadLaterList') }}">Read Later List<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('viewProfile', {'id': app.user.id}) }}">My Profile<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('editUserInfo', {'id': app.user.id}) }}">Edit Profile<span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login') }}">Login<span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('createArticle') }}">Create Article<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('listUsers') }}">View Users<span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Habitats
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Tundra'}) }}">Tundra</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Savanna'}) }}">Savanna</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Rainforest'}) }}">Rainforest</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Marine'}) }}">Marine</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Desert'}) }}">Desert</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Forest'}) }}">Forest</a>
+                        <a class="dropdown-item" href="{{ path('listByHabitats', {'habitat': 'Mixed'}) }}">Mixed</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('listAllArticles') }}">View Articles<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main %}{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="wrapper">
+            <h2>Explore Different Habitats</h2>
+
+            <section class="slider">
+                <a href="{{ path('listByHabitats', {'habitat': 'Tundra'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/tundra-slider.jpg') }}">
+                        <h4>Tundra</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Savanna'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/savanna-slider.jpg') }}">
+                        <h4>Savanna</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Rainforest'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/rainforest-slider.jpg') }}">
+                        <h4>Rainforest</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Marine'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/marine-slider.jpg') }}">
+                        <h4>Marine</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Desert'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/desert-slider.jpg') }}">
+                        <h4>Desert</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Forest'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/forest-slider.jpg')}}">
+                        <h4>Forest</h4>
+                    </div>
+                </a>
+                <a href="{{ path('listByHabitats', {'habitat': 'Mixed'}) }}">
+                    <div class="category">
+                        <img src="{{ asset('images/mixed.jpg') }}">
+                        <h4>Mixed</h4>
+                    </div>
+                </a>
+            </section>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/footer-slider-handle.js') }}"></script>
+{% endblock %}
+</body>
+</html>

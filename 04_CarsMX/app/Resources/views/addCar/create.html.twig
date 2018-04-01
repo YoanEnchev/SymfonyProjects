@@ -1,0 +1,197 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publish Add{% endblock %}
+
+{% block main %}
+    <div class="wrapper">
+        <form name="car_ad_create" method="post">
+            <div id="car_ad_create">
+                <div class="form-group">
+                    <label for="car_ad_create_make" class="required">Make</label>
+                    <select id="car_ad_create_make" name="car_ad_create[make]" class="form-control">
+                        <option value="Alfa Romeo">Alfa Romeo</option>
+                        <option value="Audi">Audi</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Citroen">Citroen</option>
+                        <option value="Dacia">Dacia</option>
+                        <option value="Fiat">Fiat</option>
+                        <option value="Ford">Ford</option>
+                        <option value="Great wall">Great wall</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Infiniti">Infiniti</option>
+                        <option value="Isuzu">Isuzu</option>
+                        <option value="Jaguar">Jaguar</option>
+                        <option value="Jeep">Jeep</option>
+                        <option value="Kia">Kia</option>
+                        <option value="Lada">Lada</option>
+                        <option value="Land Rover">Land Rover</option>
+                        <option value="Lexus">Lexus</option>
+                        <option value="Mazda">Mazda</option>
+                        <option value="Mercedes-Benz">Mercedes-Benz</option>
+                        <option value="Mini">Mini</option>
+                        <option value="Mitsubishi">Mitsubishi</option>
+                        <option value="Nissan">Nissan</option>
+                        <option value="Opel">Opel</option>
+                        <option value="Peugeot">Peugeot</option>
+                        <option value="Porsche">Porsche</option>
+                        <option value="Renault">Renault</option>
+                        <option value="Seat">Seat</option>
+                        <option value="Skoda">Skoda</option>
+                        <option value="Ssangyong">Ssangyong</option>
+                        <option value="Subaru">Subaru</option>
+                        <option value="Suzuki">Suzuki</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Volvo">Volvo</option>
+                        <option value="VW">VW</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_model" class="required">Model</label>
+                    <input type="text" id="car_ad_create_model" name="car_ad_create[model]" required="required"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_modification" class="required">Modification (Like TDI, CDI)</label>
+                    <input type="text" id="car_ad_create_modification" name="car_ad_create[modification]"
+                           required="required" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_price" class="required">Price</label>
+                    <input type="text" id="car_ad_create_price" name="car_ad_create[price]" required="required"
+                           class="form-control" min="0" max="100000000">
+                    <div class="error" id="invalidPrice">Invalid Price</div>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_transmission" class="required">Transmission</label>
+                    <select id="car_ad_create_transmission" name="car_ad_create[transmission]" class="form-control">
+                        <option value="Manual">Manual</option>
+                        <option value="Semiautomatic">Semiautomatic</option>
+                        <option value="Automatic">Automatic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_fuel" class="required">Fuel</label>
+                    <select id="car_ad_create_fuel" name="car_ad_create[fuel]" class="form-control">
+                        <option value="Gasoline">Gasoline</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Gas">Gas</option>
+                        <option value="Electricity">Electricity</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_enginePower" class="required">Engine power (BHP)</label>
+                    <input type="text" id="car_ad_create_enginePower" name="car_ad_create[enginePower]"
+                           required="required" class="form-control" min="0" step="1" max="1000000">
+                    <div class="error" id="invalidEnginePower">Engine power is positive integer (like 2100).</div>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_cubicCapacity" class="required">Cubic capacity</label>
+                    <input type="text" id="car_ad_create_cubicCapacity" name="car_ad_create[cubicCapacity]"
+                           required="required" class="form-control" min="0" step="1" max="1000000">
+                    <div class="error" id="invalidCapacity">Cubic Capacity is positive integer (like 200).</div>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_manufactureYear" class="required">Manufacture year</label>
+                    <input type="text" id="car_ad_create_manufactureYear" name="car_ad_create[manufactureYear]"
+                           required="required" class="form-control" min="1900" step="1">
+                    <div class="error" id="invalidYear-ordinary">Invalid Year</div>
+                    <div class="error late-year" id="invalidYear-future">Year cannot be further than current one</div>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_mileage" class="required">Mileage</label>
+                    <input type="text" id="car_ad_create_mileage" name="car_ad_create[mileage]" required="required"
+                           class="form-control"
+                           min="0" step="1" max="1000000000">
+                    <div class="error" id="invalidMileage">Invalid Mileage</div>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_doors" class="required">Doors</label>
+                    <select id="car_ad_create_doors" name="car_ad_create[doors]" class="form-control">
+                        <option value="2/3">2/3</option>
+                        <option value="4/5">4/5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_color" class="required">Color</label>
+                    <select id="car_ad_create_color" name="car_ad_create[color]" class="form-control">
+                        <option value="Black">Black</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Brown">Brown</option>
+                        <option value="Cyan">Cyan</option>
+                        <option value="Gray">Gray</option>
+                        <option value="Green">Green</option>
+                        <option value="Magenta">Magenta</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Red">Red</option>
+                        <option value="Silver">Silver</option>
+                        <option value="White">White</option>
+                        <option value="Yellow">Yellow</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_mainImage" class="required">Main Image Link</label>
+                    <input type="text" id="car_ad_create_mainImage" name="car_ad_create[mainImage]" required="required"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="car_ad_create_description" class="required">Description</label>
+                    <textarea id="car_ad_create_description" name="car_ad_create[description]"
+                              required="required" class="form-control"></textarea>
+                </div>
+
+                <p class="aditionalImages">Additional Images (Min 3 Max 15)</p>
+                <div>
+                    <div class="additional-images">
+                        <div>
+                            <div id="car_ad_create_additionalImages_0" class="form-group">
+                                <div><label for="car_ad_create_additionalImages_0_address" class="required">
+                                        Image Link 1</label>
+                                    <input type="text" id="car_ad_create_additionalImages_0_address"
+                                           name="car_ad_create[additionalImages][0][address]" required="required"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id="car_ad_create_additionalImages_1" class="form-group">
+                                <div>
+                                    <label for="car_ad_create_additionalImages_1_address" class="required">
+                                        Image Link 2</label>
+                                    <input type="text" id="car_ad_create_additionalImages_1_address"
+                                           name="car_ad_create[additionalImages][1][address]" required="required"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id="car_ad_create_additionalImages_2" class="form-group">
+                                <div>
+                                    <label for="car_ad_create_additionalImages_2_address" class="required">
+                                        Image Link 3</label>
+                                    <input type="text" id="car_ad_create_additionalImages_2_address"
+                                           name="car_ad_create[additionalImages][2][address]" required="required"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary" id="car_ad_create_submit" disabled
+                            name="car_ad_create[submit]">Submit</button>
+                    <button type="button" class="btn btn-success add-image">Add Image</button>
+                    <button type="button" class="btn btn-danger remove-image">Remove Image</button>
+                </div>
+                {{ form_row(form._token) }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/add-remove-additional-images.js') }}"></script>
+    <script src="{{ asset('js/carAd-edit-create.js') }}"></script>
+{% endblock %}

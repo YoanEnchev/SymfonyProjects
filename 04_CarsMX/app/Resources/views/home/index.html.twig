@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('slick/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('slick/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/add-list.css') }}">
+    <style>
+        @font-face {
+            font-family: slick;
+            font-weight: normal;
+            font-style: normal;
+            src: url('{{ asset('fonts/slick.eot') }}');
+            src: url('{{ asset('fonts/slick.eot') }}#iefix') format('embedded-opentype'), url("{{ asset('fonts/slick.woff') }}") format('woff'), url('{{ asset('fonts/slick.ttf') }}') format('truetype'), url('{{ asset('fonts/slick.svg') }}#slick') format('svg');
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <header class="masthead">
+        <img src="{{ asset('images/header.jpg') }}">
+    </header>
+    <div class="wrapper">
+        <h3 class="heading">Find The Car You Need</h3>
+        <form name="search_car" method="post">
+            <div id="search_car">
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label for="search_car_make" class="required">Make</label>
+                        <select id="search_car_make" name="search_car[make]" class="form-control">
+                            <option value="Any">Any</option>
+                            <option value="Alfa Romeo">Alfa Romeo</option>
+                            <option value="Audi">Audi</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                            <option value="Citroen">Citroen</option>
+                            <option value="Dacia">Dacia</option>
+                            <option value="Fiat">Fiat</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Great wall">Great wall</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Infiniti">Infiniti</option>
+                            <option value="Isuzu">Isuzu</option>
+                            <option value="Jaguar">Jaguar</option>
+                            <option value="Jeep">Jeep</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Lada">Lada</option>
+                            <option value="Land Rover">Land Rover</option>
+                            <option value="Lexus">Lexus</option>
+                            <option value="Mazda">Mazda</option>
+                            <option value="Mercedes-Benz">Mercedes-Benz</option>
+                            <option value="Mini">Mini</option>
+                            <option value="Mitsubishi">Mitsubishi</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="Opel">Opel</option>
+                            <option value="Peugeot">Peugeot</option>
+                            <option value="Porsche">Porsche</option>
+                            <option value="Renault">Renault</option>
+                            <option value="Seat">Seat</option>
+                            <option value="Skoda">Skoda</option>
+                            <option value="Ssangyong">Ssangyong</option>
+                            <option value="Subaru">Subaru</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Volvo">Volvo</option>
+                            <option value="VW">VW</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search_car_model">Model</label>
+                        <input type="text" class="form-control" id="search_car_model" name="search_car[model]"
+                               placeholder="Any">
+                    </div>
+                    <div class="form-group">
+                        <label for="search_car_fuel" class="required">Fuel</label>
+                        <select id="search_car_fuel" name="search_car[fuel]" class="form-control">
+                            <option value="Any">Any</option>
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Gas">Gas</option>
+                            <option value="Electricity">Electricity</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label for="search_car_transmission" class="required">Transmission</label>
+                        <select id="search_car_transmission" name="search_car[transmission]" class="form-control">
+                            <option value="Any">Any</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Semiautomatic">Semiautomatic</option>
+                            <option value="Automatic">Automatic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search_car_doors" class="required">Doors</label>
+                        <select id="search_car_doors" name="search_car[doors]" class="form-control">
+                            <option value="Any">Any</option>
+                            <option value="2/3">2/3</option>
+                            <option value="4/5">4/5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search_car_fromYear">From Year</label>
+                        <input type="text" id="search_car_fromYear" name="search_car[fromYear]"
+                               class="form-control" placeholder="Any">
+                        <div class="error" id="invalidFromYear">Invalid From Year</div>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label for="search_car_maxPrice" class="required">Max Price</label>
+                        <input type="text" id="search_car_maxPrice" name="search_car[maxPrice]"
+                               class="form-control" placeholder="Any">
+                        <div class="error" id="invalidMaxPrice">Invalid Max Price</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="search_car_sort" class="required">Sort</label>
+                        <select id="search_car_sort" name="search_car[sort]" class="form-control">
+                            <option value="expensiveCheap">Expensive - Cheap</option>
+                            <option value="cheapExpensive">Cheap - Expensive</option>
+                            <option value="newOld">New - Old</option>
+                            <option value="oldNew">Old - New</option>
+                            <option value="morePowerLessPower">More Power - Less Power</option>
+                            <option value="lessPowerMorePower">Less Power - More Power</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search_car_toYear">To Year</label>
+                        <input type="text" id="search_car_toYear" name="search_car[toYear]"
+                               class="form-control" placeholder="Any">
+                        <div class="error" id="invalidToYear">Invalid To Year</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="search_car_submit" name="search_car[submit]">
+                            Search
+                        </button>
+                    </div>
+                    {{ form_row(form._token) }}
+                </div>
+            </div>
+        </form>
+        <h3 class="heading" id="latest-heading">Last Added Ads</h3>
+        <div class="lastAdded">
+            {% for carAd in cars %}
+                <div class="advert">
+                    <div class="img-holder">
+                        <img src="{{ carAd.main_image }}">
+                    </div>
+                    <div class="present">
+                        <h5 class="price">{{ carAd.price }} $</h5>
+                        <h5 class="makeAndModel">{{ carAd.make }} {{ carAd.model }}</h5>
+                    </div>
+                    <div class="actions">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('editAd', {'id': carAd.id}) }}">
+                                <button class="editBtn">Edit</button>
+                            </a>
+                            <a href="{{ path('deleteAd', {'id': carAd.id}) }}">
+                                <button class="deleteBtn">Delete</button>
+                            </a>
+                        {% elseif app.user %}
+                            <a href="{{ path('viewDetails', {'id': carAd.id}) }}">
+                                <button class="viewDetails">View Details</button>
+                            </a>
+                            <a href="{{ path('addToCheckLaterList', {'id': carAd.id}) }}">
+                                <button class="checkLater">Check Later</button>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('viewDetails', {'id': carAd.id}) }}">
+                                <button class="viewDetails">View Details</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <h4>No Adds Published.</h4>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/searchValidation.js') }}"></script>
+    <script src="{{ asset('slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/TwoRowSlider.js') }}"></script>
+{% endblock %}

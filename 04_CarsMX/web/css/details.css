@@ -1,0 +1,33 @@
+.ad-images img {
+    width: 100px;
+    height: 80px;
+    margin: 10px;
+}
+
+.ad-images {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    flex-flow:row wrap;
+    margin: 10px auto
+}
+
+#mainImg {
+    margin: 10px auto;
+    width: fit-content;
+}
+
+#mainImg img {
+    height: auto;
+    max-width: 600px;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+table {
+    max-width: 800px !important;
+    margin: 0 auto;
+}
+

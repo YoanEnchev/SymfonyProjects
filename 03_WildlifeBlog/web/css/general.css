@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+}
+
+form {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+@media only screen and (max-width: 815px) {
+    form {
+        width: 90%;
+    }
+}
+
+div.actions {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.wrapper, footer {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.category {
+    display: inline-block;
+    margin: 12px;
+}
+
+footer .wrapper {
+    width: 85%;
+}
+
+footer .wrapper > h2 {
+    text-align: center;
+}
+
+.slider {
+    width: 100%;
+    z-index: 5;
+}
+
+.category {
+    text-align: center;
+    outline: none;
+}
+
+.slick-slide img {
+    width: 250px;
+}
+
+article img {
+    width: 380px;
+    height: 250px;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.tag:hover {
+    border-color: #0275d8;
+}
+
+.navigation {
+    width: fit-content;
+    margin: 10px auto;
+}

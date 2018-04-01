@@ -1,0 +1,51 @@
+form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.error {
+    display: none;
+    color: red;
+}
+
+div.actions {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.makeAndModel {
+    font-size: 17px;
+    text-align: center;
+}
+
+a:hover, button:hover {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.noAds {
+    text-align: center;
+}
+
+.heading {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.lastAdded  {
+    z-index: 1;
+}
+
+.navigation {
+    margin: 10px auto;
+    width: fit-content;
+}
+
